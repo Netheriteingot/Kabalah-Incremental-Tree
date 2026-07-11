@@ -7,8 +7,8 @@ addLayer("Ktr", {
             unlocked: true,
             points: new Decimal(0),
             memory: new Decimal(0),
-            stallar: new Decimal(0),
-            stallarFreeze: new Decimal(0),
+            stellar: new Decimal(0),
+            stellarFreeze: new Decimal(0),
             ark: new Decimal(0),
             fuel: new Decimal(0),
             totalFuel: new Decimal(0),
@@ -74,10 +74,10 @@ addLayer("Ktr", {
         if (hasAchievement('Ain', 'Hkm-14')) req = req.div(buyableEffect('Hkm', 'Hkm-f1'))
         return n(req)
     },
-    stallarEff() {
-        let eff = player.Ktr.stallar.add(2.7).log(2.7)
+    stellarEff() {
+        let eff = player.Ktr.stellar.add(2.7).log(2.7)
         if (tmp.Ktr.memoryLevel.gte(tmp.Ktr.memoryBonus[5].start)) eff = eff.pow(4.5)
-        if (hasUpgrade('Hkm', 'Hkm-8')) eff = player.Ktr.stallar.add(1).pow(0.05)
+        if (hasUpgrade('Hkm', 'Hkm-8')) eff = player.Ktr.stellar.add(1).pow(0.05)
         return eff
     },
     solarLayer() {
@@ -131,7 +131,7 @@ addLayer("Ktr", {
         return persec
     },
     solarEnergy() {
-        let gain = player.Ktr.stallar.pow(0.05).mul(tmp.Ktr.solarBoost[player.Ktr.solarLayer])
+        let gain = player.Ktr.stellar.pow(0.05).mul(tmp.Ktr.solarBoost[player.Ktr.solarLayer])
         if (player.Ktr.solarPower[0].gte(1)) gain = gain.mul(tmp.Ktr.clickables['Ktr-r-c1'].effect1)
         if (player.Ktr.solarPower[2].gte(1)) gain = gain.mul(tmp.Ktr.clickables['Ktr-r-c3'].effect1)
         if (player.Ktr.solarPower[4].gte(1)) gain = gain.mul(tmp.Ktr.clickables['Ktr-r-c5'].effect1)
@@ -228,7 +228,7 @@ addLayer("Ktr", {
             color: "lightyellow"
         },
         5: {
-            desc: 'Stallar effect',
+            desc: 'Stellar effect',
             effect() { return n(4.5) },
             start: n(50),
             prev: '^',
@@ -242,7 +242,7 @@ addLayer("Ktr", {
             color: "lavender"
         },
         7: {
-            desc: 'stallar effect',
+            desc: 'stellar effect',
             effect() { return n(4.5) },
             start: n(101),
             prev: '^',
@@ -318,7 +318,7 @@ addLayer("Ktr", {
             text() {
                 let text = `<text style='color:magenta'>[Ain] No, this is not true. The Miracle Continent has been destroyed I actually witnessed its destruction with my own eyes.</text><br>`
                 if (player.Ktr.storyUnlocked == 3) text += `<br><br>
-                <i style='color: #444444'>[Locked] Reach 200 stallar points to continue. Create a giant gas planet to start collecting it.</i>`
+                <i style='color: #444444'>[Locked] Reach 200 stellar points to continue. Create a giant gas planet to start collecting it.</i>`
                 if (player.Ktr.storyUnlocked >= 4) text += `
                 <text style='color:white'>[Kether] This world is plunged into conflict and chaos, and on a memory level, everyone is endowed with the ability to change the memories of others. Your desires are hidden in your heart, your dreams seem so unattainable, all because of your weakness. Come on, let me give you the power to change the situation.</text><br>
                 <text style='color:#999999'>[Illustration] Ain's mind flashed with many memories, unwilling to lose more, unable to face fate anymore, and unwilling to accept the predetermined outcome!</text><br>
@@ -334,7 +334,7 @@ addLayer("Ktr", {
                 <text style='color:magenta'>[Ain] I saw it with my own eyes!</text><br>
                 <text style='color:white'>[Kether] What you see is not true, go and search for the answer you want in my memory.</text><br>`
                 if (player.Ktr.storyUnlocked == 4) text += `<br><br>
-                <i style='color: #444444'>[Locked] Build 3 arks to continue. Everytime you build a ark you will lost all stars as well as stallar points.</i>`
+                <i style='color: #444444'>[Locked] Build 3 arks to continue. Everytime you build a ark you will lost all stars as well as stellar points.</i>`
                 if (player.Ktr.storyUnlocked >= 5) text += `
                 <text style='color:white'>[Kether] Are you saying that my calculation is incorrect?</text><br>
                 <text style='color:magenta'>[Ain] I will not question your calculations. I am the insignificance in your mouth, and I cannot see the truth you speak in this starry sky; I am the stupidity in your mouth, and I will never compromise until the destruction is complete.</text><br>`
@@ -377,7 +377,7 @@ addLayer("Ktr", {
                 <text style='color:white'>[Kether] Why not have a try?</text><br>
                 <text style='color:#999999'>[Illustration] You walked through the mirror, and a brand new world appeared before my eyes.</text><br>`
                 if (player.Ktr.storyUnlocked == 6) text += `<br><br>
-                <i style='color: #444444'>[Locked] Let the ark reach the remote space to continue. Maybe you need more stallar points.</i>`
+                <i style='color: #444444'>[Locked] Let the ark reach the remote space to continue. Maybe you need more stellar points.</i>`
                 if (player.Ktr.storyUnlocked >= 7) text += `
                 <text style='color:#999999'>[Illustration] On the vast and calm sea surface, various magical buildings float: a serene garden, a museum like building, and a clock tower with dials and clocks separated. The tracks of a train connect these buildings like chains.</text><br>
                 <text style='color:pink'>[You] Is this what Kether called the ark that carries all the memories of civilization? What's going on? Aren't we in a world of stars? After waking up from that dream in the starry sea, everything returned to normal. I wanted to know what connection Saphirah's Shadow had with Kether, so I went back to the ark first.</text><br>
@@ -444,24 +444,24 @@ addLayer("Ktr", {
                 if (player.Ktr.activeChallenge == 'Ktr-g1') gain = gain.pow(tmp.Ktr.gateEff)
                 if (player.Ktr.storyUnlocked >= 9 || hasMilestone('Hkm', 'Hkm-6')) gain = gain.mul(player.Ktr.timeWrap)
                 if (hasMilestone('Hkm', 'Hkm-1')) gain = gain.mul(tmp.Hkm.effect)
-                if (tmp.Ktr.antimatter.gt(player.Ktr.stallar)) gain = n(0)
+                if (tmp.Ktr.antimatter.gt(player.Ktr.stellar)) gain = n(0)
                 return gain
             },
-            display() { return "Absorb some stallar energy from your stallars.<br>+" + formatWhole(this.gain()) + ' stallar points until ' + format(player.Ktr.stallarFreeze) + ' sec' },
-            canClick() { return player.Ktr.stallarFreeze.lte(0) },
+            display() { return "Absorb some stellar energy from your stellars.<br>+" + formatWhole(this.gain()) + ' stellar points until ' + format(player.Ktr.stellarFreeze) + ' sec' },
+            canClick() { return player.Ktr.stellarFreeze.lte(0) },
             style() {
                 if (this.canClick()) return { 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px Moccasin', 'background-color': 'lightyellow', 'color': 'black', 'height': '200px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px' }
                 else return { 'height': '200px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px', 'background-color': 'black', 'color': 'white', 'border-color': 'lightyellow' }
             },
             onClick() {
-                player.Ktr.stallarFreeze = tmp.Ktr.stallarFreezeLimit
-                player.Ktr.stallar = player.Ktr.stallar.add(this.gain())
+                player.Ktr.stellarFreeze = tmp.Ktr.stellarFreezeLimit
+                player.Ktr.stellar = player.Ktr.stellar.add(this.gain())
             },
         },
         'Ktr-a1': {
             title() { return "<h4>Build +1 Ark<br>" },
-            display() { return "Reset your stars and stallar points, but build a new ark, and gain some fuel as well.<br>" + "in ark " + getBonusDesc() + "<br>" + formatWhole(player.Ktr.ark.add(1)) + " fuel" },
-            canClick() { return player.Ktr.stallar.gte(tmp.Ktr.arkFullReq) },
+            display() { return "Reset your stars and stellar points, but build a new ark, and gain some fuel as well.<br>" + "in ark " + getBonusDesc() + "<br>" + formatWhole(player.Ktr.ark.add(1)) + " fuel" },
+            canClick() { return player.Ktr.stellar.gte(tmp.Ktr.arkFullReq) },
             style() {
                 if (this.canClick()) return { 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px white', 'background': `repeating-linear-gradient(90deg, white 0, white 1px, black 0, black 100px)`, "background-position": player.timePlayed % 10 + '% ' + player.timePlayed % 10 + "%", 'background-size': `1000% 1000%`, 'color': 'white', 'height': '200px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px' }
                 else return { 'height': '200px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px', 'background-color': 'gray', 'color': 'black', 'border-color': 'white' }
@@ -473,7 +473,7 @@ addLayer("Ktr", {
                 if (player.Ktr.ark.lt(21)) for (var i = 1; i <= 6; i++) {
                     setBuyableAmount('Ktr', 'Ktr-s' + i, n(0))
                 }
-                player.Ktr.stallar = n(0)
+                player.Ktr.stellar = n(0)
             },
         },
         'Ktr-a2': {
@@ -505,15 +505,15 @@ addLayer("Ktr", {
                 for (var i = 1; i <= 6; i++) {
                     setBuyableAmount('Ktr', 'Ktr-s' + i, n(0))
                 }
-                player.Ktr.stallar = n(0)
+                player.Ktr.stellar = n(0)
                 player.Ktr.respeced = true
             },
             unlocked() { return player.Ktr.distant }
         },
         'Ktr-a4': {
             title() { return "Travel into remote space" },
-            display() { return "Requires 2e42 stallar points. Unlock a new tab." },
-            canClick() { return player.Ktr.stallar.gte(2e42) },
+            display() { return "Requires 2e42 stellar points. Unlock a new tab." },
+            canClick() { return player.Ktr.stellar.gte(2e42) },
             style() {
                 if (this.canClick()) return { 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px lavender', 'background': `repeating-linear-gradient(90deg, lavender 0, lavender 1px, black 0, black 100px)`, "background-position": player.timePlayed % 10 + '% ' + player.timePlayed % 10 + "%", 'background-size': `1000% 1000%`, 'color': 'white', 'height': '200px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px', 'margin-left': '5px' }
                 else return { 'height': '200px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px', 'background-color': 'gray', 'color': 'black', 'border-color': 'lavender', 'margin-left': '5px' }
@@ -525,8 +525,8 @@ addLayer("Ktr", {
         },
         'Ktr-r1': {
             title() { return "Transition to the cosmic level " + tmp.Ktr.solarLayer[player.Ktr.solarLayer + 1] },
-            display() { return "<br>Requires " + format(tmp.Ktr.solarReq[player.Ktr.solarLayer]) + " stallar points. Unlock some new Celestials." },
-            canClick() { return player.Ktr.stallar.gte(tmp.Ktr.solarReq[player.Ktr.solarLayer]) },
+            display() { return "<br>Requires " + format(tmp.Ktr.solarReq[player.Ktr.solarLayer]) + " stellar points. Unlock some new Celestials." },
+            canClick() { return player.Ktr.stellar.gte(tmp.Ktr.solarReq[player.Ktr.solarLayer]) },
             style() {
                 if (this.canClick()) return { 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px inset ' + tmp.Ktr.solarColor[player.Ktr.solarLayer + 1], 'background-color': `black`, 'color': 'white', 'height': '150px', 'width': '300px', 'border-radius': '5px', 'font-size': '13px', 'margin-left': '5px', 'border-color': tmp.Ktr.solarColor[player.Ktr.solarLayer + 1] }
                 else return { 'height': '150px', 'width': '300px', 'border-radius': '5px', 'font-size': '13px', 'background-color': 'gray', 'color': 'black', 'border-color': 'lavender', 'margin-left': '5px' }
@@ -723,8 +723,8 @@ addLayer("Ktr", {
     buyables: {
         'Ktr-s3': {
             title() { return '<h3>[Ktr-s3] Red Dwarf<br>Lv.' + getBuyableAmount(this.layer, this.id) },
-            tooltip() { return quickBackgColor("[Mass] 90 Mjupitar<br>[Temp.] 2500K", "#FF0000") + '<br><br>Multiply stallar points gain again.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ×" + formatWhole(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stallar points" },
-            canAfford() { return player.Ktr.stallar.gte(this.cost()) },
+            tooltip() { return quickBackgColor("[Mass] 90 Mjupitar<br>[Temp.] 2500K", "#FF0000") + '<br><br>Multiply stellar points gain again.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ×" + formatWhole(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stellar points" },
+            canAfford() { return player.Ktr.stellar.gte(this.cost()) },
             cost(x) {
                 let cost = Decimal.pow(3, new Decimal(x).pow(1.8)).mul(200).floor()
                 if (x > 10) cost = cost.mul(Decimal.pow(1e3, Decimal.pow(x - 10, 3)))
@@ -738,7 +738,7 @@ addLayer("Ktr", {
                 return eff
             },
             buy() {
-                player.Ktr.stallar = player.Ktr.stallar.sub(this.cost())
+                player.Ktr.stellar = player.Ktr.stellar.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             style() {
@@ -765,14 +765,14 @@ addLayer("Ktr", {
         },
         'Ktr-m2': {
             title() { return '<h3>[Ktr-m2] The Track of Memory<br>' },
-            display() { return 'Add 25% to the progress for the recollection of Kether.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Cost: " + format(this.cost()) + " Stallar points" },
-            canAfford() { return player.Ktr.stallar.gte(this.cost()) && tmp.Ktr.memoryLevel.lt(100) },
+            display() { return 'Add 25% to the progress for the recollection of Kether.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Cost: " + format(this.cost()) + " Stellar points" },
+            canAfford() { return player.Ktr.stellar.gte(this.cost()) && tmp.Ktr.memoryLevel.lt(100) },
             cost(x) {
                 let cost = Decimal.pow(n(10), Decimal.pow(x, 1.05))
                 return cost
             },
             buy() {
-                if (!hasMilestone('Hkm', 'Hkm-4')) player.Ktr.stallar = player.Ktr.stallar.sub(this.cost())
+                if (!hasMilestone('Hkm', 'Hkm-4')) player.Ktr.stellar = player.Ktr.stellar.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             style() {
@@ -807,9 +807,9 @@ addLayer("Ktr", {
             },
             display() {
                 if (tmp.Ktr.memoryLevel.lt(15)) return '<h2>Nothing special. (Tips: Reach depth 15, 42, 75 will change the strength of wave effects SIGNIFICANTLY!)'
-                else if (tmp.Ktr.memoryLevel.lt(42)) return '<h2>Raise recollection wave 1 to ^2 and improve its formula, but divide stallar gain by /100<br>Click to reset Kether’s memory.'
-                else if (tmp.Ktr.memoryLevel.lt(75)) return '<h2>Boost stallar and solar power gain by 100×(Uneffected by the 1st softcap), and lower the requirement of Ktr-m3.<br>Click to reset Kether’s memory.'
-                else if (tmp.Ktr.memoryLevel.lt(100)) return '<h2>Boost stallar gain by 1000×, and boost all resource in remote space gain by 10×.<br>Click to reset Kether’s memory.'
+                else if (tmp.Ktr.memoryLevel.lt(42)) return '<h2>Raise recollection wave 1 to ^2 and improve its formula, but divide stellar gain by /100<br>Click to reset Kether’s memory.'
+                else if (tmp.Ktr.memoryLevel.lt(75)) return '<h2>Boost stellar and solar power gain by 100×(Uneffected by the 1st softcap), and lower the requirement of Ktr-m3.<br>Click to reset Kether’s memory.'
+                else if (tmp.Ktr.memoryLevel.lt(100)) return '<h2>Boost stellar gain by 1000×, and boost all resource in remote space gain by 10×.<br>Click to reset Kether’s memory.'
                 else return '<h2>The passage of the Heart Gate has been opened.<br>It‘s the time to rewrite the story of Miracle Continent.'
             },
             canAfford() { return tmp.Ktr.memoryLevel.gte(15) },
@@ -822,7 +822,7 @@ addLayer("Ktr", {
         },
         'Ktr-s1': {
             title() { return '<h3>[Ktr-s1] Giant gas planet<br>Lv.' + getBuyableAmount(this.layer, this.id) },
-            tooltip() { return quickBackgColor("[Mass] >0.6 Mjupiter<br>[Temp.] 200K", "#775500") + '<br><br>Multiply stallar points gain.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ×" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Kether points" },
+            tooltip() { return quickBackgColor("[Mass] >0.6 Mjupiter<br>[Temp.] 200K", "#775500") + '<br><br>Multiply stellar points gain.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ×" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Kether points" },
             canAfford() { return player.Ktr.points.gte(this.cost()) },
             cost(x) {
                 let cost = Decimal.pow(n(10), Decimal.pow(3, x)).mul(n(x).add(1))
@@ -844,8 +844,8 @@ addLayer("Ktr", {
         },
         'Ktr-s2': {
             title() { return '<h3>[Ktr-s2] Brown Dwarf<br>Lv.' + getBuyableAmount(this.layer, this.id) },
-            tooltip() { return quickBackgColor("[Mass] 20 Mjupiter<br>[Temp.] 1000K", "#AA5500") + '<br><br>Cut stallar absorbing interval into half.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: /" + formatWhole(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stallar points" },
-            canAfford() { return player.Ktr.stallar.gte(this.cost()) && getBuyableAmount(this.layer, this.id).lt(200) },
+            tooltip() { return quickBackgColor("[Mass] 20 Mjupiter<br>[Temp.] 1000K", "#AA5500") + '<br><br>Cut stellar absorbing interval into half.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: /" + formatWhole(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stellar points" },
+            canAfford() { return player.Ktr.stellar.gte(this.cost()) && getBuyableAmount(this.layer, this.id).lt(200) },
             cost(x) {
                 let cost = Decimal.pow(n(1.8), new Decimal(x).pow(1.5)).mul(10).floor()
                 return cost
@@ -855,7 +855,7 @@ addLayer("Ktr", {
                 return eff
             },
             buy() {
-                player.Ktr.stallar = player.Ktr.stallar.sub(this.cost())
+                player.Ktr.stellar = player.Ktr.stellar.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             style() {
@@ -865,8 +865,8 @@ addLayer("Ktr", {
         },
         'Ktr-s4': {
             title() { return '<h3>[Ktr-s4] Orange Dwarf<br>Lv.' + getBuyableAmount(this.layer, this.id) },
-            tooltip() { return quickBackgColor("[Mass] 0.4 Msun<br>[Temp.] 4000K", "#FF8800") + '<br><br>Add to the base of red dwarf.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: +" + formatWhole(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stallar points" },
-            canAfford() { return player.Ktr.stallar.gte(this.cost()) },
+            tooltip() { return quickBackgColor("[Mass] 0.4 Msun<br>[Temp.] 4000K", "#FF8800") + '<br><br>Add to the base of red dwarf.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: +" + formatWhole(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stellar points" },
+            canAfford() { return player.Ktr.stellar.gte(this.cost()) },
             cost(x) {
                 let cost = Decimal.pow(6, new Decimal(3).pow(x)).mul(6666).floor()
                 return cost
@@ -877,7 +877,7 @@ addLayer("Ktr", {
                 return eff
             },
             buy() {
-                player.Ktr.stallar = player.Ktr.stallar.sub(this.cost())
+                player.Ktr.stellar = player.Ktr.stellar.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             style() {
@@ -887,8 +887,8 @@ addLayer("Ktr", {
         },
         'Ktr-s5': {
             title() { return '<h3>[Ktr-s5] Yellow Dwarf<br>Lv.' + getBuyableAmount(this.layer, this.id) },
-            tooltip() { return quickBackgColor2("[Mass] 0.92 Msun<br>[Temp.] 5500K", "#FFFF00") + '<br><br>Automally absorb energy from your stars.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: " + formatWhole(this.effect()) + " / sec<br>Cost: " + format(this.cost()) + " Stallar points" },
-            canAfford() { return player.Ktr.stallar.gte(this.cost()) },
+            tooltip() { return quickBackgColor2("[Mass] 0.92 Msun<br>[Temp.] 5500K", "#FFFF00") + '<br><br>Automally absorb energy from your stars.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: " + formatWhole(this.effect()) + " / sec<br>Cost: " + format(this.cost()) + " Stellar points" },
+            canAfford() { return player.Ktr.stellar.gte(this.cost()) },
             cost(x) {
                 let cost = Decimal.pow(3, new Decimal(3).pow(x)).times(1e7).floor()
                 return cost
@@ -901,7 +901,7 @@ addLayer("Ktr", {
                 return eff
             },
             buy() {
-                player.Ktr.stallar = player.Ktr.stallar.sub(this.cost())
+                player.Ktr.stellar = player.Ktr.stellar.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             style() {
@@ -911,8 +911,8 @@ addLayer("Ktr", {
         },
         'Ktr-s6': {
             title() { return '<h3>[Ktr-s6] White Dwarf<br>Lv.' + getBuyableAmount(this.layer, this.id) },
-            tooltip() { return quickBackgColor2("[Mass] 1.6 Msun<br>[Temp.] 7000K", "#FFFFFF") + '<br><br>Decrease the cost scale of red dwarf.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stallar points" },
-            canAfford() { return player.Ktr.stallar.gte(this.cost()) },
+            tooltip() { return quickBackgColor2("[Mass] 1.6 Msun<br>[Temp.] 7000K", "#FFFFFF") + '<br><br>Decrease the cost scale of red dwarf.<br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Stellar points" },
+            canAfford() { return player.Ktr.stellar.gte(this.cost()) },
             cost(x) {
                 let cost = Decimal.pow(2, new Decimal(2.8).pow(x)).mul(1e27).floor()
                 return cost
@@ -923,7 +923,7 @@ addLayer("Ktr", {
                 return eff
             },
             buy() {
-                player.Ktr.stallar = player.Ktr.stallar.sub(this.cost())
+                player.Ktr.stellar = player.Ktr.stellar.sub(this.cost())
                 setBuyableAmount(this.layer, this.id, getBuyableAmount(this.layer, this.id).add(1))
             },
             style() {
@@ -1111,11 +1111,11 @@ addLayer("Ktr", {
             exp: "",
             color: '#FFFFFF',
             challengeDescription() {
-                let desc = "↑↑Click the symbol of current saphirah to enter the Heart Gate!<br>——————————————————<br>Heart Gate Effect:<br>1) Extremely Decrease the generation of stallar points. But it also gains a raising exponent based on the real time after entrying the gate.<br>2) Antimatter will increase after a short time period. If it go beyond your stallar points, you will gain no stallar points.<br>3)Gains memory crystal after exiting the gate.<br>3) Yellow Dwarf have no effect.<br>——————————————————<br>Reach 1e6 and 1e10 memory crystals to unlock more content.<br>——————————————————Goal: 1e20 memory crystals<br>Reward: Unlock Hokma."
+                let desc = "↑↑Click the symbol of current saphirah to enter the Heart Gate!<br>——————————————————<br>Heart Gate Effect:<br>1) Extremely Decrease the generation of stellar points. But it also gains a raising exponent based on the real time after entrying the gate.<br>2) Antimatter will increase after a short time period. If it go beyond your stellar points, you will gain no stellar points.<br>3)Gains memory crystal after exiting the gate.<br>3) Yellow Dwarf have no effect.<br>——————————————————<br>Reach 1e6 and 1e10 memory crystals to unlock more content.<br>——————————————————Goal: 1e20 memory crystals<br>Reward: Unlock Hokma."
                 return desc
             },
             gain() {
-                let gain = player.Ktr.stallar.add(1).pow(0.22).floor()
+                let gain = player.Ktr.stellar.add(1).pow(0.22).floor()
                 if (layers.Ktr.buyables['Ktr-g-h1'].enabled()) gain = gain.mul(20)
                 if (gain.gte(1e20)) gain = softcap(gain, 'root', n(1e20), 15)
                 if (gain.gte(1e35)) gain = n(1e35)
@@ -1132,7 +1132,7 @@ addLayer("Ktr", {
                 for (var i = 1; i <= 6; i++) {
                     setBuyableAmount('Ktr', 'Ktr-s' + i, n(0))
                 }
-                player.Ktr.stallar = n(0)
+                player.Ktr.stellar = n(0)
             },
             onExit() {
                 if (this.gain().gte((player.Ktr.lastCrystal).mul(7))) player.Ktr.gate1 += 1
@@ -1157,8 +1157,8 @@ addLayer("Ktr", {
             direction: RIGHT,
             width: 600,
             height: 30,
-            display() { return formatWhole(player.Ktr.stallar) + ' / ' + formatWhole(tmp.Ktr.arkFullReq) + ' stallar points for next ark' },
-            progress() { return player.Ktr.stallar.div(tmp.Ktr.arkFullReq) },
+            display() { return formatWhole(player.Ktr.stellar) + ' / ' + formatWhole(tmp.Ktr.arkFullReq) + ' stellar points for next ark' },
+            progress() { return player.Ktr.stellar.div(tmp.Ktr.arkFullReq) },
             fillStyle() { return { 'background-color': 'lightyellow' } },
             borderStyle() { return { 'border-color': 'lightyellow' } },
         },
@@ -1166,8 +1166,8 @@ addLayer("Ktr", {
             direction: RIGHT,
             width: 600,
             height: 30,
-            display() { return 'Req1: ' + format(player.Ktr.stallar) + ' / ' + format(1e245) + ' stallar points' },
-            progress() { return player.Ktr.stallar.add(1).log(10).div(245) },
+            display() { return 'Req1: ' + format(player.Ktr.stellar) + ' / ' + format(1e245) + ' stellar points' },
+            progress() { return player.Ktr.stellar.add(1).log(10).div(245) },
             fillStyle() {
                 if (this.progress().lt(1)) return { 'background-color': '#999999' }
                 else return { 'background-color': 'green' }
@@ -1207,7 +1207,7 @@ addLayer("Ktr", {
         if (mult.gte(1e100)) mult = softcap(mult, 'root', n(1e100), 1.8)
         if (hasMilestone('Hkm', 'Hkm-1')) mult = mult.mul(tmp.Hkm.effect)
         if (hasUpgrade('Hkm', 'Hkm-5')) mult = mult.mul(1e50)
-        if (player.Hkm.storyUnlocked >= 6) mult = mult.mul(tmp.Hkm.foemEff1)
+        if (player.Hkm.storyUnlocked >= 6) mult = mult.mul(tmp.Hkm.foamEff1)
         if (hasUpgrade('Ktr', 'Ktr-18')) mult = mult.mul(tmp.Hkm.BatteryEff2)
         return mult
     },
@@ -1221,12 +1221,12 @@ addLayer("Ktr", {
         if (player.Ktr.points.gte(1)) story = 1;
         if (hasUpgrade('Ktr', 'Ktr-1') && player.Ktr.storyUnlocked == 1) story = 2;
         if (player.points.gte(200000) && player.Ktr.storyUnlocked == 2) story = 3;
-        if (player.Ktr.stallar.gte(200) && player.Ktr.storyUnlocked == 3) story = 4;
+        if (player.Ktr.stellar.gte(200) && player.Ktr.storyUnlocked == 3) story = 4;
         if (player.Ktr.ark.gte(3) && player.Ktr.storyUnlocked == 4) story = 5;
         if (player.Ktr.distant && player.Ktr.storyUnlocked == 5) story = 6;
         if (player.Ktr.remote && player.Ktr.storyUnlocked == 6) story = 7;
         if (player.Ktr.ark.gte(21) && player.Ktr.storyUnlocked == 7) story = 8;
-        if (tmp.Ktr.memoryLevel.gte(100) && player.Ktr.stallar.gte(1e245) && player.Ktr.solarLayer >= 3 && player.Ktr.storyUnlocked == 8) story = 9;
+        if (tmp.Ktr.memoryLevel.gte(100) && player.Ktr.stellar.gte(1e245) && player.Ktr.solarLayer >= 3 && player.Ktr.storyUnlocked == 8) story = 9;
         return story
     },
     memoryLevel() {
@@ -1238,7 +1238,7 @@ addLayer("Ktr", {
         let memory = getBuyableAmount('Ktr', 'Ktr-m1').mul(25).add(getBuyableAmount('Ktr', 'Ktr-m2').mul(50)).add(getBuyableAmount('Ktr', 'Ktr-m3').mul(200))
         return (memory.div(200).sub(memory.div(200).floor())).mul(100).min(100)
     },
-    stallarFreezeLimit() {
+    stellarFreezeLimit() {
         return n(2).div(buyableEffect('Ktr', 'Ktr-s2'))
     },
     row: 0, // Row the layer is in on the tree (0 is the first row)
@@ -1686,7 +1686,7 @@ addLayer("Ktr", {
         },
         'Ktr-24': {
             title() { return quickColor('[' + this.id + ']' + '<h3>Light Tachyon<br>', hasUpgrade(this.layer, this.id) ? 'green' : '') },
-            description() { return 'Each time foem slightly boosts Pe-box transfer rate.' },
+            description() { return 'Each time foam slightly boosts Pe-box transfer rate.' },
             color() { return '#ffffff' },
             canAfford() { return player.Ktr.points.gte(this.cost()) },
             cost() { return n('1e3550') },
@@ -1696,7 +1696,7 @@ addLayer("Ktr", {
                 else return { 'background-color': this.color(), 'color': 'black', 'border-color': 'green', 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px ' + this.color(), 'height': '130px', 'width': '130px' }
             },
             effect() {
-                let eff = Decimal.pow(1.3, player.Hkm.foems).mul(100)
+                let eff = Decimal.pow(1.3, player.Hkm.foams).mul(100)
                 return eff
             },
             effectDisplay() { return '×' + format(layers.Ktr.upgrades[this.layer, this.id].effect()) },
@@ -1738,7 +1738,7 @@ addLayer("Ktr", {
         },
         "Star Observation Platform": {
             content: [
-                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(player.Ktr.stallar), 'Moccasin') + ' Stallar points, boosting essence gain by ' + quickBigColor('×' + format(tmp.Ktr.stallarEff), 'moccasin') + ' .' }],
+                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(player.Ktr.stellar), 'Moccasin') + ' Stellar points, boosting essence gain by ' + quickBigColor('×' + format(tmp.Ktr.stellarEff), 'moccasin') + ' .' }],
                 "blank",
                 ['clickable', 'Ktr-s1'],
                 "blank",
@@ -1819,11 +1819,11 @@ addLayer("Ktr", {
                 ['display-text', function () { if (player.Ktr.storyUnlocked >= 9) return '<h4>You have collected a total of   ' + quickBigColor(formatWhole(player.Ktr.memoryCrystal), 'white') + ' memory crystal. Itself boosts the effect of solar energy. (Unaffected by the nerf of heart gate)' }],
                 ['display-text', function () { if (player.Ktr.infinityPoint >= 1) return '<h4>You have   ' + quickBigColor(formatWhole(player.Ktr.infinityPoint), 'white') + ' Infinity Points, boosting your antimatter production by   ' + quickBigColor('×' + format(1), 'white')}],
                 ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>Universal timespan: ' + quickBigColor(formatTime(player.Ktr.universalTime), 'white') }],
-                ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>Kether timespan: ' + quickBigColor(formatTime(player.Ktr.realTime), 'white') + ', translated to a stallar nerf of ' + quickBigColor('^' + format(tmp.Ktr.gateEff), 'white') }],
+                ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>Kether timespan: ' + quickBigColor(formatTime(player.Ktr.realTime), 'white') + ', translated to a stellar nerf of ' + quickBigColor('^' + format(tmp.Ktr.gateEff), 'white') }],
                 ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>You have ' + quickBigColor(formatWhole(tmp.Ktr.antimatter), 'white') + ' antimatter.' }],
                 "blank",
                 ['row', [['challenge', 'Ktr-g1'], ["column", [["raw-html", function () { }],
-                    "blank", ['display-text', function () { return '<h3>[Black Hole controller]<br>Change the stallar and universal timespan rate.' }],
+                    "blank", ['display-text', function () { return '<h3>[Black Hole controller]<br>Change the stellar and universal timespan rate.' }],
                 ['column', ["blank", ["clickable", 'Ktr-g1k'], ["clickable", 'Ktr-g10'], ["clickable", 'Ktr-g2'], ["clickable", 'Ktr-g1'], ["clickable", 'Ktr-g1/2'], ["clickable", 'Ktr-g1/4'], ["clickable", 'Ktr-g1/8']]],
                     "blank",
                 ],
@@ -1850,13 +1850,13 @@ addLayer("Ktr", {
     update(diff) {
         if (document.getElementById('Ktr') != null) player.Ktr.posk1 = document.getElementById('Ktr').getBoundingClientRect().left - 225
         if (document.getElementById('Ktr') != null) player.Ktr.posk2 = document.getElementById('Ktr').getBoundingClientRect().top - 150
-        if (player.Ktr.stallarFreeze.gt(0)) player.Ktr.stallarFreeze = player.Ktr.stallarFreeze.sub(diff).max(0)
+        if (player.Ktr.stellarFreeze.gt(0)) player.Ktr.stellarFreeze = player.Ktr.stellarFreeze.sub(diff).max(0)
         if (tmp.Ktr.storyPending > player[this.layer].storyUnlocked) {
             player[this.layer].storyUnlocked = tmp.Ktr.storyPending;
             player[this.layer].newStory = true
             if (!hasMilestone('Hkm', 'Hkm-9')) doPopup(type = "none", text = "New Kether story unlocked!<br>(No. " + formatWhole(player[this.layer].storyUnlocked) + ")", title = "Ancient Universal Memory Awaken...", timer = 5, color = "white")
         }
-        if (getBuyableAmount('Ktr', 'Ktr-s5').gte(1) || hasMilestone('Hkm', 'Hkm-1')) player.Ktr.stallar = player.Ktr.stallar.add((player.Ktr.activeChallenge == 'Ktr-g1' ? n(0) : buyableEffect('Ktr', 'Ktr-s5')).mul(tmp.Ktr.clickables['Ktr-s1'].gain).mul(diff))
+        if (getBuyableAmount('Ktr', 'Ktr-s5').gte(1) || hasMilestone('Hkm', 'Hkm-1')) player.Ktr.stellar = player.Ktr.stellar.add((player.Ktr.activeChallenge == 'Ktr-g1' ? n(0) : buyableEffect('Ktr', 'Ktr-s5')).mul(tmp.Ktr.clickables['Ktr-s1'].gain).mul(diff))
         if (player.Ktr.activeChallenge == 'Ktr-g1') {
             player.Ktr.realTime = player.Ktr.realTime.add(n(diff).mul(player.Hkm.unlocked ? tmp.Hkm.effect : 1))
             player.Ktr.universalTime = player.Ktr.universalTime.add(n(diff).mul(player.Ktr.timeWrap))
@@ -1877,7 +1877,7 @@ addLayer("Ktr", {
                             for (var i = 1; i <= 6; i++) {
                                 setBuyableAmount('Ktr', 'Ktr-s' + i, n(0))
                             }
-                            player.Ktr.stallar = n(0)
+                            player.Ktr.stellar = n(0)
                             player.Ktr.universalTime = n(0)
                             player.Ktr.realTime = n(0)
                             player.Ktr.infinityPoint += 1
@@ -1899,14 +1899,14 @@ addLayer("Ktr", {
             }
         }
         if (hasMilestone('Hkm', 'Hkm-3')) {
-            if (player.Ktr.stallar.gte(tmp.Ktr.arkFullReq)) {
+            if (player.Ktr.stellar.gte(tmp.Ktr.arkFullReq)) {
                 player.Ktr.ark = player.Ktr.ark.add(1)
                 player.Ktr.fuel = player.Ktr.fuel.add(player.Ktr.ark)
                 player.Ktr.totalFuel = player.Ktr.totalFuel.add(player.Ktr.ark)
                 if (player.Ktr.ark.lt(21)) for (var i = 1; i <= 6; i++) {
                     setBuyableAmount('Ktr', 'Ktr-s' + i, n(0))
                 }
-                player.Ktr.stallar = n(0)
+                player.Ktr.stellar = n(0)
             }
         }
         if (hasMilestone('Hkm', 'Hkm-4')) {
@@ -1914,7 +1914,7 @@ addLayer("Ktr", {
             buyBuyable('Ktr', 'Ktr-m2')
             buyBuyable('Ktr', 'Ktr-m3')
         }
-        if (hasMilestone('Hkm', 'Hkm-5') && player.Ktr.stallar.gte(tmp.Ktr.solarReq[player.Ktr.solarLayer])) player.Ktr.solarLayer++
+        if (hasMilestone('Hkm', 'Hkm-5') && player.Ktr.stellar.gte(tmp.Ktr.solarReq[player.Ktr.solarLayer])) player.Ktr.solarLayer++
         if (hasMilestone('Hkm', 'Hkm-6')) player.Ktr.timeWrap = n(1000)
         if (hasMilestone('Hkm', 'Hkm-9')) { buyBuyable('Ktr', 'Ktr-s-d2'), buyBuyable('Ktr', 'Ktr-s-d3') }
         if (hasMilestone('Hkm', 'Hkm-10')) { buyBuyable('Ktr', 'Ktr-s-d1'), buyBuyable('Ktr', 'Ktr-s-d4'), buyBuyable('Ktr', 'Ktr-s-d5'), buyBuyable('Ktr', 'Ktr-s-d6') }
@@ -1934,7 +1934,7 @@ addLayer("Hkm", {
             totalTimeThroem: new Decimal(0),
             batteryThroem: new Decimal(0),
             gridTime: new Decimal(0),
-            foems: new Decimal(0),
+            foams: new Decimal(0),
             PeBox: new Decimal(0),
             NeBox: new Decimal(0),
             maxBet: new Decimal(0),
@@ -1977,13 +1977,13 @@ addLayer("Hkm", {
         return mult              // Factor in any bonuses multiplying gain here.
     },
     effectDescription() {
-        return "boosting your essence gain, kether points gain, kether time gain and stallar gain by " + quickBigColor(' ×' + format(tmp.Hkm.effect), 'grey')
+        return "boosting your essence gain, kether points gain, kether time gain and stellar gain by " + quickBigColor(' ×' + format(tmp.Hkm.effect), 'grey')
     },
     gainExp() {                             // Returns the exponent to your gain of the prestige resource.
         return new Decimal(1)
     },
     canReset() {
-        return player.Ktr.memoryCrystal.gte(1e20) && player.Ktr.stallar.gte('1e330')
+        return player.Ktr.memoryCrystal.gte(1e20) && player.Ktr.stellar.gte('1e330')
     },
     storyPending() {
         let story = 0;
@@ -2046,20 +2046,20 @@ addLayer("Hkm", {
         else if (!hasMilestone('Hkm', 'Hkm-19')) return 4
         else return 5
     },
-    foemReq() {
+    foamReq() {
         let req = n(0)
-        if (player.Hkm.foems.lt(20)) req = new Decimal(2.5e4).pow(player.Hkm.foems).mul(1e24)
-        if (player.Hkm.foems.gte(20)) req = new Decimal(2.5e4).pow(player.Hkm.foems).mul(1e24).mul(new Decimal(5e4).pow(player.Hkm.foems.sub(19)))
+        if (player.Hkm.foams.lt(20)) req = new Decimal(2.5e4).pow(player.Hkm.foams).mul(1e24)
+        if (player.Hkm.foams.gte(20)) req = new Decimal(2.5e4).pow(player.Hkm.foams).mul(1e24).mul(new Decimal(5e4).pow(player.Hkm.foams.sub(19)))
         if (hasMilestone('Hkm', 'Hkm-20')) req = req.div(1e20)
         return req
     },
-    foemEff1() {
-        let eff = Decimal.pow(1e40, player.Hkm.foems).mul(player.Hkm.foems.pow(7)).add(1)
+    foamEff1() {
+        let eff = Decimal.pow(1e40, player.Hkm.foams).mul(player.Hkm.foams.pow(7)).add(1)
         if (hasUpgrade('Ktr', 'Ktr-21')) eff = eff.mul(tmp.Hkm.Sebox)
         return eff
     },
-    foemEff2() {
-        let eff = Decimal.pow(3, player.Hkm.foems).sub(1).pow(hasUpgrade('Ktr', 'Ktr-18') ? buyableEffect('Hkm', 'Hkm-b1').add(1) : 1)
+    foamEff2() {
+        let eff = Decimal.pow(3, player.Hkm.foams).sub(1).pow(hasUpgrade('Ktr', 'Ktr-18') ? buyableEffect('Hkm', 'Hkm-b1').add(1) : 1)
         if (hasUpgrade('Ktr', 'Ktr-16')) eff = eff.mul(upgradeEffect('Ktr', 'Ktr-16'))
         if (hasUpgrade('Ktr', 'Ktr-19')) eff = eff.mul(upgradeEffect('Ktr', 'Ktr-19'))
         if (hasUpgrade('Ktr', 'Ktr-21')) eff = eff.mul(upgradeEffect('Ktr', 'Ktr-21'))
@@ -2088,7 +2088,7 @@ addLayer("Hkm", {
         return eff
     },
     NeBoxGain() {
-        return tmp.Hkm.foemEff2.sub(tmp.Hkm.boxGain)
+        return tmp.Hkm.foamEff2.sub(tmp.Hkm.boxGain)
     },
     PeBoxExp() {
         let exp = n(1.4).add(hasUpgrade('Ktr', 'Ktr-18') ? buyableEffect('Hkm', 'Hkm-b1') : 0)
@@ -2100,7 +2100,7 @@ addLayer("Hkm", {
         return eff
     },
     PeBoxGain() {
-        if (tmp.Hkm.NeBoxGain.lte(0)) return tmp.Hkm.foemEff2
+        if (tmp.Hkm.NeBoxGain.lte(0)) return tmp.Hkm.foamEff2
         else return tmp.Hkm.boxGain
     },
     Sebox() {
@@ -2149,7 +2149,7 @@ addLayer("Hkm", {
         }
         if (player.Hkm.NeBox.gte(tmp.Hkm.NeBoxStroage)) {
             player.Hkm.PeBox = n(0)
-            player.Hkm.foems = player.Hkm.foems.div(2).floor()
+            player.Hkm.foams = player.Hkm.foams.div(2).floor()
             setBuyableAmount('Hkm', 'Hkm-f4', n(0))
             player.Hkm.NeBox = n(0)
         }
@@ -2269,7 +2269,7 @@ addLayer("Hkm", {
         },
         'Hkm-8': {
             title() { return quickColor('[' + this.id + ']' + '<h3>Heart meteor<br>', hasUpgrade(this.layer, this.id) ? 'lime' : '') },
-            description() { return 'Greatly boost the formula of stallar points.' },
+            description() { return 'Greatly boost the formula of stellar points.' },
             color() { return 'grey' },
             canAfford() { return player.Hkm.points.gte(this.cost()) },
             cost() { return n(1e30) },
@@ -2315,7 +2315,7 @@ addLayer("Hkm", {
         		<text style='color: #999999'>[Illustration] Ain had a dream about Kether, in which she mentioned that she had buried a key in Wonderland.</text><br>
 		        <text style='color: #999999'>[Illustration] When Ain woke up from her dream, she and I were riding on a wooden boat on the lake. I asked Ain where to go first, and Ain said that the clues provided by Ktr-2 pointed to Starfeather Town in the Kingdom of Niniel.</text><br>`
                 if (player.Hkm.storyUnlocked < 1) text += `<br><br>
-                <i style='color: #444444'>[Locked] Reach 1 hokma point to continue.(Tips: Press the prestige button in the hokma layer to gain kether points. The requirement is 1e20 memory crystals and 1e330 stallar points. You will LOSE ALL PROGRESS IN THE KETHER LAYER!!)</i>`
+                <i style='color: #444444'>[Locked] Reach 1 hokma point to continue.(Tips: Press the prestige button in the hokma layer to gain kether points. The requirement is 1e20 memory crystals and 1e330 stellar points. You will LOSE ALL PROGRESS IN THE KETHER LAYER!!)</i>`
                 if (player.Hkm.storyUnlocked >= 1) text += `
                 <text style='color: #999999'>[Illustration] On the way by boat, the girl rowing the boat chatted with Ain, introducing that the Kingdom of Niniel is a romantic fantasy land woven from fairy tales, and each city is a place where Niniel's different fairy tales take place. Ain was curious about the fairy tale of Star Feather Town, and the boating girl replied that it was a Star Feather Swan.</text><br>
                 <text style='color:magenta'>[Ain] Legend has it that Silver Moon Lake is a mirror left by the great designer Kether in the forest, which can reflect the beautiful starry sky. The true beauty is that it can summon a grand meteor shower, and the wishes made under the meteor shower will definitely come true.</text><br>
@@ -2434,7 +2434,7 @@ addLayer("Hkm", {
                 <text style='color: #777777'>[Hokma-768] Ain, I also want to sign up to participate. Can you accompany me to compete on stage once? The theme is my favorite "Nick of time"!</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 6) text += `<br><br>
-                <i style='color: #444444'>[Locked] Unlock Time foem to continue.</i>`
+                <i style='color: #444444'>[Locked] Unlock Time foam to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 6) text += `
                 <text style='color: #999999'>[Illustration] Ain awakened Sephirah's power and put on the headgear of Meteor Feather - Star Feather.</text><br>
                 <text style='color: #999999'>[Illustration] At this moment, Ah Huan was not aware of the seriousness of the problem, and the all-out Ain made Ah Huan feel the power of matching and was rubbed against the ground.</text><br>
@@ -2459,7 +2459,7 @@ addLayer("Hkm", {
                 <text style='color:magenta'>[Ain] Is beauty and ugliness really important? Isn't the meaning of pairing existence to enable all those who aspire to shine to realize themselves?</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 7) text += `<br><br>
-                <i style='color: #444444'>[Locked] Unlock Time foem constructor to continue.</i>`
+                <i style='color: #444444'>[Locked] Unlock Time foam constructor to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 7) text += `
                 <text style='color: #777777'>[Hokma-768] If you are so interested in that fire, you can go to the police station to inquire, maybe the case record is still kept.</text><br>
                 <text style='color:magenta'>[Ain] Let's go now!</text><br>
@@ -2867,7 +2867,7 @@ addLayer("Hkm", {
         },
         'Hkm-13': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Expend time-space grid.(0×0 → 1×1)` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(0×0 → 1×1)` },
             req: n(1e13),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2878,7 +2878,7 @@ addLayer("Hkm", {
         },
         'Hkm-14': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Expend time-space grid.(1×1 → 2×2)` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(1×1 → 2×2)` },
             req: n(1e20),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2889,7 +2889,7 @@ addLayer("Hkm", {
         },
         'Hkm-15': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Expend time-space grid.(2×2 → 3×3)` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(2×2 → 3×3)` },
             req: n(1e32),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2900,7 +2900,7 @@ addLayer("Hkm", {
         },
         'Hkm-16': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Unlock Time foem.` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Unlock Time foam.` },
             req: n(1e42),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2911,7 +2911,7 @@ addLayer("Hkm", {
         },
         'Hkm-17': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Expend time-space grid.(3×3 → 4×4)` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(3×3 → 4×4)` },
             req: n(1e63),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2933,7 +2933,7 @@ addLayer("Hkm", {
         },
         'Hkm-19': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Expend time-space grid.(4×4 → 5×5)<br>2.Divide 1e20 from the cost of time foem.<br>3.The gain of hokma points is softcapped.` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(4×4 → 5×5)<br>2.Divide 1e20 from the cost of time foam.<br>3.The gain of hokma points is softcapped.` },
             req: n(1e150),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -3055,7 +3055,7 @@ addLayer("Hkm", {
             }
         },
         'Hkm-f1': {
-            title() { return '<h3>[Hkm-f1] Milli-foem<br>' },
+            title() { return '<h3>[Hkm-f1] Milli-foam<br>' },
             display() { return 'Reduce the requirement of the next ark.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: /" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Pe-boxes" },
             canAfford() { return player.Hkm.PeBox.gte(this.cost()) },
             effect(x) {
@@ -3081,7 +3081,7 @@ addLayer("Hkm", {
             }
         },
         'Hkm-f2': {
-            title() { return '<h3>[Hkm-f2] Micro-foem<br>' },
+            title() { return '<h3>[Hkm-f2] Micro-foam<br>' },
             display() { return 'Strengthen the time-space grid.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: +" + format(this.effect().mul(100)) + "%<br>Cost: " + format(this.cost()) + " Pe-boxes" },
             canAfford() { return player.Hkm.PeBox.gte(this.cost()) },
             effect(x) {
@@ -3107,7 +3107,7 @@ addLayer("Hkm", {
             }
         },
         'Hkm-f3': {
-            title() { return '<h3>[Hkm-f3] Nano-foem<br>' },
+            title() { return '<h3>[Hkm-f3] Nano-foam<br>' },
             display() { return 'Multiply solar energy gain.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ×" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Pe-boxes" },
             canAfford() { return player.Hkm.PeBox.gte(this.cost()) },
             effect(x) {
@@ -3133,7 +3133,7 @@ addLayer("Hkm", {
             }
         },
         'Hkm-f4': {
-            title() { return '<h3>[Hkm-f4] Pico-foem<br>' },
+            title() { return '<h3>[Hkm-f4] Pico-foam<br>' },
             display() { return 'Make the Pe-box transformation speed faster.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ×" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Pe-boxes" },
             canAfford() { return player.Hkm.PeBox.gte(this.cost()) },
             effect(x) {
@@ -3159,7 +3159,7 @@ addLayer("Hkm", {
             }
         },
         'Hkm-f5': {
-            title() { return '<h3>[Hkm-f5] Femto-foem<br>' },
+            title() { return '<h3>[Hkm-f5] Femto-foam<br>' },
             display() { return 'Make the effect of Pe-box massively better.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " time energy" },
             canAfford() { return player.Hkm.timeEnergy.gte(this.cost()) },
             cost(x) {
@@ -3185,7 +3185,7 @@ addLayer("Hkm", {
             }
         },
         'Hkm-f6': {
-            title() { return '<h3>[Hkm-f6] Atto-foem<br>' },
+            title() { return '<h3>[Hkm-f6] Atto-foam<br>' },
             display() { return 'Decrease the negative effect of Ne-boxes.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: ^" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " time energy" },
             canAfford() { return player.Hkm.timeEnergy.gte(this.cost()) },
             cost(x) {
@@ -3212,7 +3212,7 @@ addLayer("Hkm", {
         },
         'Hkm-b1': {
             title() { return '<h3>[Hkm-b1] Battery Mk.1EZ<br>' },
-            display() { return 'Add 0.1 to exp of Pe-box effect and time foem effect.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: +" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Pe-box" },
+            display() { return 'Add 0.1 to exp of Pe-box effect and time foam effect.<br><br>Amount: ' + getBuyableAmount(this.layer, this.id) + "<br>Effect: +" + format(this.effect()) + "<br>Cost: " + format(this.cost()) + " Pe-box" },
             canAfford() { return player.Hkm.PeBox.gte(this.cost()) },
             cost(x) {
                 return Decimal.pow(1e4, getBuyableAmount('Hkm', 'Hkm-b1').add(getBuyableAmount('Hkm', 'Hkm-b2')).add(getBuyableAmount('Hkm', 'Hkm-b3')).sub(2).max(0).pow(1.05)).mul(1e7).max(1e7).div(buyableEffect('Hkm', 'Hkm-fb-1-4')).div(buyableEffect('Hkm', 'Hkm-fb-2-4')).div(buyableEffect('Hkm', 'Hkm-fb-3-4')).div(buyableEffect('Hkm', 'Hkm-fb-4-4'))
@@ -3383,15 +3383,15 @@ addLayer("Hkm", {
             unlocked() { return hasMilestone('Hkm', 'Hkm-13') }
         },
         'Hkm-f1': {
-            title() { return "Get +1 time foem" },
-            display() { return "<br>Requires " + format(tmp.Hkm.foemReq) + " time energy. <br>Resetting this to get time foem resets all your time energy." },
-            canClick() { return player.Hkm.timeEnergy.gte(tmp.Hkm.foemReq) },
+            title() { return "Get +1 time foam" },
+            display() { return "<br>Requires " + format(tmp.Hkm.foamReq) + " time energy. <br>Resetting this to get time foam resets all your time energy." },
+            canClick() { return player.Hkm.timeEnergy.gte(tmp.Hkm.foamReq) },
             style() {
                 if (this.canClick()) return { 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px inset #444', 'background-color': `black`, 'color': 'white', 'height': '150px', 'width': '300px', 'border-radius': '5px', 'font-size': '13px', 'margin-left': '5px', 'border-color': '#444' }
                 else return { 'height': '150px', 'width': '300px', 'border-radius': '5px', 'font-size': '13px', 'background-color': 'gray', 'color': 'black', 'border-color': '#444', 'margin-left': '5px' }
             },
             onClick() {
-                player.Hkm.foems = player.Hkm.foems.add(1)
+                player.Hkm.foams = player.Hkm.foams.add(1)
                 player.Hkm.timeEnergy = n(0)
             },
         },
@@ -3741,7 +3741,7 @@ addLayer("Hkm", {
                 'main-display',
                 'prestige-button',
                 'blank',
-                ['display-text', function () { if (player.Hkm.points.lt(10)) return '<h4>' + quickColor("[Hints] Reach 1e20 memory crystals and 1e330 stallar points to reset for 1 hokma point. You will LOSE ALL PROGRESS IN THE KETHER LAYER!!", 'grey') }],
+                ['display-text', function () { if (player.Hkm.points.lt(10)) return '<h4>' + quickColor("[Hints] Reach 1e20 memory crystals and 1e330 stellar points to reset for 1 hokma point. You will LOSE ALL PROGRESS IN THE KETHER LAYER!!", 'grey') }],
                 'blank',
                 'milestones',
             ]
@@ -3771,16 +3771,16 @@ addLayer("Hkm", {
             unlocked() { return player.Hkm.storyUnlocked >= 2 },
             buttonStyle() { return { 'background': 'grey', 'color': 'black', 'box-shadow': '2px 2px 2px grey' } }
         },
-        "Time Foem": {
+        "Time Foam": {
             content: [
-                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(player.Hkm.foems), '#555') + ' time foems. This provides a ' + quickBigColor('×' + format(tmp.Hkm.foemEff1), '#555') + ' to essence and kether points gain, as well as giving ' + quickBigColor('+' + formatWhole(tmp.Hkm.foemEff2) + "/sec", '#f00') + ' Ne-box per second.(Can be transfered to Pe-Box by time compressors)' }],
+                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(player.Hkm.foams), '#555') + ' time foams. This provides a ' + quickBigColor('×' + format(tmp.Hkm.foamEff1), '#555') + ' to essence and kether points gain, as well as giving ' + quickBigColor('+' + formatWhole(tmp.Hkm.foamEff2) + "/sec", '#f00') + ' Ne-box per second.(Can be transfered to Pe-Box by time compressors)' }],
                 ['display-text', function () { return '<h4>Your time compressors are transfering ' + quickBigColor('+' + formatWhole(tmp.Hkm.boxGain) + '/sec', 'turquoise') + ' Pe-Boxes from Ne-Boxes per second.' }],
                 "blank",
                 ['clickable', 'Hkm-f1'],
                 "blank",
                 ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(player.Hkm.PeBox), 'turquoise') + ' Pe-Boxes. Raised to a power of ' + quickBigColor(format(tmp.Hkm.PeBoxExp), 'turquoise') + ', translated to a ' + quickBigColor('×' + format(tmp.Hkm.PeBoxEff), 'turquoise') + ' boost to hokma points gain.' }],
                 ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(player.Hkm.NeBox), 'red') + ' Ne-Boxes, nerf the effect of Pe-Box to ' + quickBigColor(format(tmp.Hkm.NeBoxEff.mul(100)) + '%', 'red') }],
-                ['display-text', function () { if (hasUpgrade('Ktr', 'Ktr-21')) return '<h4>You have ' + quickBigColor(formatWhole(tmp.Hkm.Sebox), 'yellow') + ' Se-Boxes, itself multiplies the 1st effect of foem and reduce the negative effect of Ne-box.' }],
+                ['display-text', function () { if (hasUpgrade('Ktr', 'Ktr-21')) return '<h4>You have ' + quickBigColor(formatWhole(tmp.Hkm.Sebox), 'yellow') + ' Se-Boxes, itself multiplies the 1st effect of foam and reduce the negative effect of Ne-box.' }],
                 ['bar', 'Hkm-f1'],
                 ["row", [["buyable", "Hkm-f1"], ["buyable", "Hkm-f2"], ["buyable", "Hkm-f3"]]],
                 ["row", [["buyable", "Hkm-f4"], ["buyable", "Hkm-f5"], ["buyable", "Hkm-f6"]]],
@@ -3790,7 +3790,7 @@ addLayer("Hkm", {
         },
         "Eternal Battery": {
             content: [
-                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(getBuyableAmount('Hkm', 'Hkm-b1').add(getBuyableAmount('Hkm', 'Hkm-b2')).add(getBuyableAmount('Hkm', 'Hkm-b3'))), GlowingColor('#ffaa00', 10, '#ffdd00')) + ' eternal batteries. Divides the cost of all foems by ' + quickBigColor('/' + format(tmp.Hkm.BatteryEff1), GlowingColor('#ff8800', 10, '#ffaa00')) + ', as well as giving ' + quickBigColor('×' + formatWhole(tmp.Hkm.BatteryEff2), GlowingColor('#ff6600', 10, '#ff8800')) + ' to essence and kether points gain.' }],
+                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(getBuyableAmount('Hkm', 'Hkm-b1').add(getBuyableAmount('Hkm', 'Hkm-b2')).add(getBuyableAmount('Hkm', 'Hkm-b3'))), GlowingColor('#ffaa00', 10, '#ffdd00')) + ' eternal batteries. Divides the cost of all foams by ' + quickBigColor('/' + format(tmp.Hkm.BatteryEff1), GlowingColor('#ff8800', 10, '#ffaa00')) + ', as well as giving ' + quickBigColor('×' + formatWhole(tmp.Hkm.BatteryEff2), GlowingColor('#ff6600', 10, '#ff8800')) + ' to essence and kether points gain.' }],
                 ["row", [["buyable", "Hkm-b1"], ["buyable", "Hkm-b2"], ["buyable", "Hkm-b3"]]],
                 ["row", [["clickable", "Hkm-b1"], ["clickable", "Hkm-b2"], ["clickable", "Hkm-b3"]]],
                 'blank',
@@ -4156,7 +4156,7 @@ addLayer("Ain", {
         },
         'Hkm-13': {
             name() { return "Clock Paradox" },
-            tooltip() { return 'Unlock time foem. (+2 AP)' },
+            tooltip() { return 'Unlock time foam. (+2 AP)' },
             done() { return player.Hkm.storyUnlocked >= 6 },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(2)
@@ -4165,8 +4165,8 @@ addLayer("Ain", {
         },
         'Hkm-14': {
             name() { return "ASTELLION" },
-            tooltip() { return 'Get over 1e1,000 stallar points. (+2 AP)' },
-            done() { return player.Ktr.stallar.gte('1e1000') },
+            tooltip() { return 'Get over 1e1,000 stellar points. (+2 AP)' },
+            done() { return player.Ktr.stellar.gte('1e1000') },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(2)
             },
@@ -4219,7 +4219,7 @@ addLayer("Ain", {
         },
         'Hkm-20': {
             name() { return "Khalid" },
-            tooltip() { return 'Have 100 time throems. (+3 AP, get an extra eternal battery Mk.2HD and the foem constructors will never be reseted before Binah layer.)' },
+            tooltip() { return 'Have 100 time throems. (+3 AP, get an extra eternal battery Mk.2HD and the foam constructors will never be reseted before Binah layer.)' },
             done() { return player.Hkm.timeThroem.gte(100) },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(3)
@@ -4319,7 +4319,7 @@ addLayer("Ain", {
                         "background-color": "#AAAAAA",
                     }],
                 ["column", [["raw-html", function () { }],
-                    "blank", ['display-text', function () { return '<h3>[Stage 2-2] The Cruelty Behind the Gate<br>Unlock all achievement in this row to unlock foem constructor!' }],
+                    "blank", ['display-text', function () { return '<h3>[Stage 2-2] The Cruelty Behind the Gate<br>Unlock all achievement in this row to unlock foam constructor!' }],
                 ['row', [["achievement", 'Hkm-8'], ["achievement", 'Hkm-9'], ["achievement", 'Hkm-10'], ["achievement", 'Hkm-11'], ["achievement", 'Hkm-12'], ["achievement", 'Hkm-13'], ["achievement", 'Hkm-14']]],
                     "blank",
                 ],
@@ -4423,7 +4423,7 @@ function batteryReset() {
     for (var i = 1; i <= 6; i++) {
         setBuyableAmount('Hkm', 'Hkm-f' + i, n(0))
     }
-    player.Hkm.foems = n(0)
+    player.Hkm.foams = n(0)
     player.Hkm.PeBox = n(0)
     player.Hkm.NeBox = n(0)
     player.Hkm.timeEnergy = n(0)

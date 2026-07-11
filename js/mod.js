@@ -18,7 +18,10 @@ let VERSION = {
 }
 
 let changelog = 
-`<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:30px;'>vHkm.Hbc.11.1</span><br>Fixed some typos and grammar mistakes, and rephrased many descriptions.<br>Some typos are too hard to fix, as fixing it may break your save.<br>Added an Easter egg.<br>
+`
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:30px;'>vHkm.Hbc.11.2</span><br>More text fixes.<br>
+<br><br>
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:30px;'>vHkm.Hbc.11.1</span><br>Fixed some typos and grammar mistakes, and rephrased many descriptions.<br>Some typos are too hard to fix, as fixing it may break your save.<br>Added an Easter egg.<br>
 `
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
@@ -45,12 +48,12 @@ function getPointGen() {
 	if(hasUpgrade('Ktr','Ktr-1')) gain = gain.add(1)
 	if(hasUpgrade('Ktr','Ktr-2')) gain = gain.mul(upgradeEffect('Ktr','Ktr-2'))
 	if(hasUpgrade('Ktr','Ktr-3')) gain = gain.mul(upgradeEffect('Ktr','Ktr-3'))
-	if(player.Ktr.storyUnlocked >= 3) gain = gain.mul(tmp.Ktr.stallarEff)
+	if(player.Ktr.storyUnlocked >= 3) gain = gain.mul(tmp.Ktr.stellarEff)
 	if(tmp.Ktr.memoryLevel.gte(tmp.Ktr.memoryBonus[0].start)) gain = gain.mul(tmp.Ktr.memoryBonus[0].effect)
 	if(player.Ktr.ark.gte(1)) gain = gain.mul(tmp.Ktr.arkEff)
 	if(hasMilestone('Hkm','Hkm-1')) gain = gain.mul(tmp.Hkm.effect)
 	if(hasUpgrade('Hkm','Hkm-4')) gain = gain.mul(1e50)
-	if(player.Hkm.storyUnlocked >= 6) gain = gain.mul(tmp.Hkm.foemEff1)
+	if(player.Hkm.storyUnlocked >= 6) gain = gain.mul(tmp.Hkm.foamEff1)
 	if(hasUpgrade('Ktr','Ktr-18')) gain = gain.mul(tmp.Hkm.BatteryEff2)
 	return gain
 }
@@ -218,11 +221,11 @@ var displayThings = [
 			return "<text style='color:grey'>[2nd Hokma Dimension] If you write 2 numbers per second, writing down your essence amount will need " + formatTime(player.points.add(1).log10().div(2)) + ". During this period, the author has already completed " + format(player.points.add(1).log10().div(2).div(60).div(3.75).mul(100)) + "% of 800m run."
 	}, function() {
 		if ((player.points.add(1).log10().gte(494)) && (player.points.add(1).log10().lt(3600)))
-			return "<text style='color:grey'>[3rd Hokma Dimension] If you write 2 numbers per second, and determine to end writing in 2024, you need to start at 2023/12/31 " + formatTime(n(86400).sub(player.points.add(1).log10().div(2))) + ". (An average Chinese people go bed at 23:30)"
+			return "<text style='color:grey'>[3rd Hokma Dimension] If you write 2 numbers per second, and determine to end writing in 2024, you need to start at 2023/12/31 " + formatTime(n(86400).sub(player.points.add(1).log10().div(2))) + ". (An average Chinese person go bed at 23:30)"
 	},
 	function() {
 		if ((player.points.add(1).log10().gte(3600)) && (player.points.add(1).log10().lt(7500)))
-			return "<text style='color:grey'>[4th Hokma Dimension] If you write 2 numbers per second, and determine to end writing in 2024, you need to start at 2023/12/31 " + formatTime(n(86400).sub(player.points.add(1).log10().div(2))) + ". (An average World people go bed at 22:55)"
+			return "<text style='color:grey'>[4th Hokma Dimension] If you write 2 numbers per second, and determine to end writing in 2024, you need to start at 2023/12/31 " + formatTime(n(86400).sub(player.points.add(1).log10().div(2))) + ". (An average person go bed at 22:55)"
 	},
 	
 ]
@@ -249,6 +252,20 @@ function maxTickLength() {
 // Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
 // you can cap their current resources with this.
 function fixOldSave(oldVersion){
+    if(player.Ktr.stallar !== undefined && player.Ktr.stellar === undefined) {
+        // Migrate old stallar data to stellar
+        player.Ktr.stellar = player.Ktr.stallar
+        delete player.Ktr.stallar
+        console.log("Migrated stallar to stellar: " + format(player.Ktr.stellar))
+    }
+    if(player.Ktr.stallarFreeze !== undefined && player.Ktr.stellarFreeze === undefined) {
+        player.Ktr.stellarFreeze = player.Ktr.stallarFreeze
+        delete player.Ktr.stallarFreeze
+    }
+    if(player.Ktr.foems !== undefined && player.Ktr.foams === undefined) {
+        player.Ktr.foams = player.Ktr.foems
+        delete player.Ktr.foems
+    }
 }
 
 addNode("P",{
