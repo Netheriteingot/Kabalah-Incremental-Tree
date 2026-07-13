@@ -9,6 +9,8 @@ addLayer("Ktr", {
             memory: new Decimal(0),
             stellar: new Decimal(0),
             stellarFreeze: new Decimal(0),
+            stallar: new Decimal(0), //compatibility
+            stallarFreeze: new Decimal(0), //compatibility
             ark: new Decimal(0),
             fuel: new Decimal(0),
             totalFuel: new Decimal(0),
@@ -1935,6 +1937,7 @@ addLayer("Hkm", {
             batteryThroem: new Decimal(0),
             gridTime: new Decimal(0),
             foams: new Decimal(0),
+            foems: new Decimal(0), //compatibility
             PeBox: new Decimal(0),
             NeBox: new Decimal(0),
             maxBet: new Decimal(0),
@@ -1945,7 +1948,7 @@ addLayer("Hkm", {
     color: "grey",                       // The color for this layer, which affects many elements.
     resource: "hokma points",            // The name of this layer's main prestige resource.
     row: 1,                                 // The row this layer is on (0 is the first row).
-    passiveGeneration() { return hasAchievement('Ain', 'Hkm-7') ? 10 : 0 },
+    passiveGeneration() { return hasAchievement('Ain', 'Hkm-7') ? 100 : 0 },
     baseResource: "kether points",                 // The name of the resource your prestige gain is based on.
     baseAmount() { return player.Ktr.points },  // A function to return the current amount of baseResource.
 
@@ -2021,7 +2024,7 @@ addLayer("Hkm", {
         let strength = n(1)
         if (player.Hkm.gridTime.lt(100)) strength = strength.sub(n(100).sub(player.Hkm.gridTime).div(100).mul(0.1))
         if (hasUpgrade('Hkm', 'Hkm-9')) strength = strength.add(0.05)
-        if (hasUpgrade('Hkm', 'Hkm-9') && player.Hkm.gridTime.gte(100)) strength = strength.add(player.Hkm.gridTime.add(1).log(10).sub(2).div(100))
+        if (hasUpgrade('Hkm', 'Hkm-9') && player.Hkm.gridTime.gte(100)) strength = strength.add(player.Hkm.gridTime.mul(2).add(1).log(10).sub(2).div(100))
         for (var i = 103; i <= 1300; i += 100) {
             if (hasGrid('Hkm', i)) strength = strength.add(getEffect('', i))
         }
@@ -2328,17 +2331,17 @@ addLayer("Hkm", {
         2: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] There is a rule in the design brochure that if creating a set of records, it requires the designer's inspiration to echo. Now Ain has the design inspiration for "Meteor Feather" in the album. You suggest going to the design workshop in Star Feather Town to make it. Hokma-46, a boat girl, took Ain to the shore with you and introduced her name as Ah Huan. Welcome to Star Feather Town in the future and take her boat frequently.</text><br>
-                <text style='color: #999999'>[Illustration] In the design workshop, Ain held the newly made bag and longed for the power of the Sephirah Shadow summoned after the design drawings of Meteor Feather were completed. He also longed to create more design drawings in the future and have stronger Sephirah power.</text><br>
+                <text style='color: #999999'>[Illustration] There is a rule in the design brochure that when creating a set of records, it requires the designer's inspiration to echo. Now Ain has the design inspiration for "Meteor Feather" in the album. You suggest going to the design workshop in Star Feather Town to make it. Hokma-46, a boat girl, took Ain to the shore with you and introduced her name as Ah Huan. Welcome to Star Feather Town in the future and take her boat frequently, she said.</text><br>
+                <text style='color: #999999'>[Illustration] In the design workshop, Ain held the newly made bag and longed for the power of the Sephirah Shadow summoned after the design drawings of Meteor Feather were completed. She also longed to create more design drawings in the future and have stronger Sephirah power.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 2) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock at least 7 achievements to continue. The more milestones you have, the faster the next Hokma run will be.</i>`
                 if (player.Hkm.storyUnlocked >= 2) text += `
-                <text style='color: #999999'>[Illustration] Ain was pulling out his wallet to pay for the production fee when a handsome young man in gorgeous attire approached the shop owner. He made a delicate glove, but the shop owner offered it for free. The young man repeatedly thanked him, but Ain was very puzzled as to why it was free and whether there were any activities?</text><br>
+                <text style='color: #999999'>[Illustration] Ain was pulling out her wallet to pay for the production fee when a handsome young man in gorgeous attire approached the shop owner. He laid his eyes upon a pair of delicate gloves and wanted to buy them, but the shop owner offered them for free. The young man repeatedly thanked him, but Ain was very puzzled as to why it was free and whether there were any special discounts in the shop.</text><br>
                 <text style='color: #999999'>[Illustration] The handsome young man blinked at Ain and left. The shop owner explained to Ain that beauty is everything in Star Feather Town, and as a member of Star Feather Town, it is natural to give preferential treatment to beautiful people. Ain found this approach unbelievable. The shop owner said that people always think that Star Feather Town is a town that places too much emphasis on beauty, and there is no need to reject human nature. Instead, it is better to give more happiness to beautiful people like Star Feather Town, as unattractive people are not suitable to be born in Star Feather Town.</text><br>
                 <text style='color:magenta'>[Ain] Absurdly absurd, treating people differently based on their appearance?</text><br>
                 <text style='color: #999999'>[Illustration] Ain said that no one has a way to determine their natural beauty or ugliness. The shop owner An An said that you are already very beautiful and there is no need to underestimate yourself. Ain knew the shopkeeper had misunderstood him and explained that the evaluation system of Star Feather Town was just unreasonable.</text><br>
-                <text style='color: #999999'>[Illustration] Ain, who walked out of the store, looked at the fairy tale like street view of Feather Town again and had a different feeling. She found that the people walking on the street were all very beautiful. In the Feather Town of the Stars, beauty is everything. So, where have people who are not good-looking gone?</text><br>
+                <text style='color: #999999'>[Illustration] Ain, walking out of the store, looked at the fairy tale like street view of Feather Town again and had a different feeling. She found that the people walking on the street were all very beautiful. In the Feather Town of the Stars, beauty is everything. So, where have people who are not good-looking gone?</text><br>
                 `
                 return text
             }
@@ -2632,7 +2635,7 @@ addLayer("Hkm", {
                 <text style='color: #999999'>[Illustration] "Grey grass, the stage and costumes are ready for you. It's time to go on stage. Are you scared?</text><br>
                 <text style='color: #999999'>[Illustration] "What do you think you know? "Grey Grass rushed from the Heart Gate to Ain, then lowered her head a moment later, her bangs blocking her eyes.</text><br>
                 <text style='color:pink'>[You] You can no longer hurt Ain!</text><br>
-                <text style='color: #777777'>[Hokma-9] Mocking, trampling, mocking, clothes taken away, violin broken...</text><br>
+                <text style='color: #777777'>[Hokma-9] M ocking, trampling, mocking, clothes taken away, violin broken...</text><br>
                 <text style='color: #999999'>[Illustration] Some moments filled with resentment and angry.</text><br>
                 <text style='color: magenta'>[Ain] The fire did not burn away your pain, your hope is gone, the hope you want is a grand meteor shower. Come on, the old musician has been waiting for you to take the stage.</text><br>
                 <text style='color: #777777'>[Hokma-9] Don't be arrogant anymore, you don't even understand my feelings, you don't even know how powerful my heart is.</text><br>
@@ -2659,8 +2662,8 @@ addLayer("Hkm", {
                 <text style='color: #999999'>[Illustration] ......</text><br>
                 <text style='color: magenta'>[Ain] Goodbye, old musician. Death is also the beginning of an unknown journey. Goodbye, old musician.</text><br>
                 <text style='color: #999999'>[Illustration] Ain heard a familiar voice and turned to see Binah in the crowd.</text><br>
-                <text style='color: magenta'>[Ain] Binah？ Last time at the bar...</text><br>
-                <text style='color: #3a3a3a'>[Binah] We meet again, Ain and FallenCat.</text><br>
+                <text style='color: magenta'>[Ain] Binah? Last time at the bar...</text><br>
+                <text style='color: #3a3a3a'>[Binah] We meet again, Ain and Fallen_Cat.</text><br>
                 <text style='color: magenta'>[Ain] Thank you... I misunderstood you before.</text><br>
                 <text style='color: #3a3a3a'>[Binah] It's my fault for not explaining clearly. Are you also attending the funeral of the old musician?</text><br>
                 <text style='color: magenta'>[Ain] Sure.</text><br>
@@ -3790,7 +3793,7 @@ addLayer("Hkm", {
         },
         "Eternal Battery": {
             content: [
-                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(getBuyableAmount('Hkm', 'Hkm-b1').add(getBuyableAmount('Hkm', 'Hkm-b2')).add(getBuyableAmount('Hkm', 'Hkm-b3'))), GlowingColor('#ffaa00', 10, '#ffdd00')) + ' eternal batteries. Divides the cost of all foams by ' + quickBigColor('/' + format(tmp.Hkm.BatteryEff1), GlowingColor('#ff8800', 10, '#ffaa00')) + ', as well as giving ' + quickBigColor('×' + formatWhole(tmp.Hkm.BatteryEff2), GlowingColor('#ff6600', 10, '#ff8800')) + ' to essence and kether points gain.' }],
+                ['display-text', function () { return '<h4>You have ' + quickBigColor(formatWhole(getBuyableAmount('Hkm', 'Hkm-b1').add(getBuyableAmount('Hkm', 'Hkm-b2')).add(getBuyableAmount('Hkm', 'Hkm-b3'))), GlowingColor('#ffaa00', 10, '#ffdd00')) + ' eternal batteries, dividing the cost of all foams by ' + quickBigColor('/' + format(tmp.Hkm.BatteryEff1), GlowingColor('#ff8800', 10, '#ffaa00')) + ', as well as giving ' + quickBigColor('×' + formatWhole(tmp.Hkm.BatteryEff2), GlowingColor('#ff6600', 10, '#ff8800')) + ' to essence and kether points gain.' }],
                 ["row", [["buyable", "Hkm-b1"], ["buyable", "Hkm-b2"], ["buyable", "Hkm-b3"]]],
                 ["row", [["clickable", "Hkm-b1"], ["clickable", "Hkm-b2"], ["clickable", "Hkm-b3"]]],
                 'blank',
@@ -4102,7 +4105,7 @@ addLayer("Ain", {
         },
         'Hkm-7': {
             name() { return "Dash" },
-            tooltip() { return 'Do a hokma reset within 400ms. (+1 AP, Bonus: Gain 1000% Hokma points on reset per second.)' },
+            tooltip() { return 'Do a hokma reset within 400ms. (+1 AP, Bonus: Gain 100x Hokma points on reset per second.)' },
             done() { return hasMilestone('Hkm', 'Hkm-1') && player.Ain.bestReset <= 0.4 },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(1)
