@@ -1,3 +1,8 @@
+// Add this constant at the top of your js/layers.js file
+const TOTAL_HOKMA_STORIES = 14;
+const STORIES_PER_PAGE = 10;
+
+
 addLayer("Ktr", {
     name: "prestige", // This is optional, only used in a few places, If absent it just uses the layer id.
     symbol() { return "Ktr<sup>" + player.Ktr.storyUnlocked }, // This appears on the layer's node. Default is the id with the first letter capitalized
@@ -3909,110 +3914,68 @@ function ketherStory() {
 
 function hokmaStory() {
     player.Hkm.newStory = false
+    
+    // Initialize pageCount if it doesn't exist
+    if (player.Hkm.pageCount === undefined) {
+        player.Hkm.pageCount = 1
+    }
+    
+    // Calculate pagination
+    const totalPages = Math.ceil(TOTAL_HOKMA_STORIES / STORIES_PER_PAGE)
+    const currentPage = Math.max(1, Math.min(player.Hkm.pageCount, totalPages))
+    const startStory = (currentPage - 1) * STORIES_PER_PAGE + 1
+    const endStory = Math.min(currentPage * STORIES_PER_PAGE, TOTAL_HOKMA_STORIES)
+    
+    // Build buttons object dynamically
+    let buttons = {}
+    let buttonIndex = 1
+    
+    // Previous button (visible on page 2+)
+    if (currentPage > 1) {
+        buttons[buttonIndex++] = {
+            text: `<`,
+            onClick() {
+                player.Hkm.pageCount--
+                hokmaStory() // Refresh the modal
+            },
+            unlocked() { return true }
+        }
+    }
+    
+    // Story buttons for current page
+    for (let storyNum = startStory; storyNum <= endStory; storyNum++) {
+        buttons[buttonIndex++] = {
+            text: String(storyNum).padStart(2, '0'),
+            onClick() {
+                player.Hkm.storyShowing = storyNum
+            },
+            unlocked() { 
+                // Story 1 is always unlocked, others require storyUnlocked >= storyNum - 1
+                return storyNum === 1 || player.Hkm.storyUnlocked >= storyNum - 1
+            }
+        }
+    }
+    
+    // Next button (visible on pages before last)
+    if (currentPage < totalPages) {
+        buttons[buttonIndex++] = {
+            text: `>`,
+            onClick() {
+                player.Hkm.pageCount++
+                hokmaStory() // Refresh the modal
+            },
+            unlocked() { return true }
+        }
+    }
+    
     Modal.show({
         color: 'gray',
-        title() { return `<text style='color:gray'>Hokma's Quotes > Story ` + player.Hkm.storyShowing + `</text>` },
+        title() { 
+            return `<text style='color:gray'>Hokma's Quotes > Story ` + player.Hkm.storyShowing + 
+                   ` (Page ${currentPage}/${totalPages})</text>` 
+        },
         text() { return tmp.Hkm.storyContent[player.Hkm.storyShowing].text },
-        buttons: {
-            1: {
-                text: `01`,
-                onClick() {
-                    player.Hkm.storyShowing = 1
-                },
-                unlocked() { return true }
-            },
-            2: {
-                text: `02`,
-                onClick() {
-                    player.Hkm.storyShowing = 2
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 1 }
-            },
-            3: {
-                text: `03`,
-                onClick() {
-                    player.Hkm.storyShowing = 3
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 2 }
-            },
-            4: {
-                text: `04`,
-                onClick() {
-                    player.Hkm.storyShowing = 4
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 3 }
-            },
-            5: {
-                text: `05`,
-                onClick() {
-                    player.Hkm.storyShowing = 5
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 4 }
-            },
-            6: {
-                text: `06`,
-                onClick() {
-                    player.Hkm.storyShowing = 6
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 5 }
-            },
-            7: {
-                text: `07`,
-                onClick() {
-                    player.Hkm.storyShowing = 7
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 6 }
-            },
-            8: {
-                text: `08`,
-                onClick() {
-                    player.Hkm.storyShowing = 8
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 7 }
-            },
-            9: {
-                text: `09`,
-                onClick() {
-                    player.Hkm.storyShowing = 9
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 8 }
-            },
-            10: {
-                text: `10`,
-                onClick() {
-                    player.Hkm.storyShowing = 10
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 9 }
-            },
-            11: {
-                text: `11`,
-                onClick() {
-                    player.Hkm.storyShowing = 11
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 10 }
-            },
-            12: {
-                text: `12`,
-                onClick() {
-                    player.Hkm.storyShowing = 12
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 11 }
-            },
-            13: {
-                text: `13`,
-                onClick() {
-                    player.Hkm.storyShowing = 13
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 13 }
-            },
-            14: {
-                text: `14`,
-                onClick() {
-                    player.Hkm.storyShowing = 14
-                },
-                unlocked() { return player.Hkm.storyUnlocked >= 14 }
-            },
-        }
+        buttons: buttons
     })
 }
 addLayer("Ain", {

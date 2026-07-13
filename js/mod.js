@@ -13,17 +13,19 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "Hkm.Hbc.11.3",
+	num: "Hkm.Hbc.11.4",
 	name: "Final Frontier",
 }
 
 let changelog =
 	`
-<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:30px;'>vHkm.Hbc.11.3</span><br>More text fixes.<br>Made the current late-game slightly faster.<br>
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.4</span><br>More text fixes.<br>Fixed some visual glitches.<br>
 <br><br>
-<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:30px;'>vHkm.Hbc.11.2</span><br>More text fixes.<br>
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.3</span><br>More text fixes.<br>Made the current late-game slightly faster.<br>
 <br><br>
-<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:30px;'>vHkm.Hbc.11.1</span><br>Fixed some typos and grammar mistakes, and rephrased many descriptions.<br>Some typos are too hard to fix, as fixing it may break your save.<br>Added an Easter egg.<br>
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.2</span><br>More text fixes.<br>
+<br><br>
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.1</span><br>Fixed some typos and grammar mistakes, and rephrased many descriptions.<br>Some typos are too hard to fix, as fixing it may break your save.<br>Added an Easter egg.<br>
 `
 
 let winText = `Congratulations! You have reached the end and beaten this game, but for now...`
