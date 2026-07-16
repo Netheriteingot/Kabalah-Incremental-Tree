@@ -13,12 +13,14 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "Hkm.Hbc.11.4",
+	num: "Hkm.Hbc.11.5",
 	name: "Final Frontier",
 }
 
 let changelog =
 	`
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.5</span><br>Even more text fixes.<br>Fixed the problem of typo correction corrupting savefiles.<br>Hokma story is yet to be fixed but I will fix it in the next updates.<br>
+<br><br>
 <span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.4</span><br>More text fixes.<br>Fixed some visual glitches.<br>
 <br><br>
 <span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>vHkm.Hbc.11.3</span><br>More text fixes.<br>Made the current late-game slightly faster.<br>
@@ -260,22 +262,25 @@ function maxTickLength() {
 // you can cap their current resources with this.
 function fixOldSave(oldVersion) {
 	console.log("Fixing save for version " + oldVersion)
-	if (player.Ktr.stallar !== undefined && player.Ktr.stellar.eq(0)) {
-		// Migrate old stallar data to stellar
-		player.Ktr.stellar = player.Ktr.stallar
-		delete player.Ktr.stallar
-		console.log("Migrated stallar to stellar: " + format(player.Ktr.stellar))
+	function migrateProperty(obj, oldKey, newKey) {
+		if (
+			obj[oldKey] !== undefined &&
+			obj[newKey] !== undefined &&
+			obj[newKey].eq(0)
+		) {
+			obj[newKey] = obj[oldKey]
+			delete obj[oldKey]
+			console.log(`Migrated ${oldKey} to ${newKey}: ${format(obj[newKey])}`)
+		}
 	}
-	if (player.Ktr.stallarFreeze !== undefined && player.Ktr.stellarFreeze.eq(0)) {
-		player.Ktr.stellarFreeze = player.Ktr.stallarFreeze
-		delete player.Ktr.stallarFreeze
-		console.log("Migrated stallarFreeze to stellarFreeze: " + format(player.Ktr.stellarFreeze))
-	}
-	if (player.Hkm.foems !== undefined && player.Hkm.foams.eq(0)) {
-		player.Hkm.foams = player.Hkm.foems
-		delete player.Hkm.foems
-		console.log("Migrated foems to foams: " + format(player.Hkm.foams))
-	}
+	[
+		[player.Ktr, "stallar", "stellar"],
+		[player.Ktr, "stallarFreeze", "stellarFreeze"],
+		[player.Hkm, "foems", "foams"],
+		[player.Hkm, "timeThroem", "timeTheorem"],
+		[player.Hkm, "totalTimeThroem", "totalTimeTheorem"],
+		[player.Hkm, "batteryThroem", "batteryTheorem"],
+	].forEach(([obj, oldKey, newKey]) => migrateProperty(obj, oldKey, newKey))
 }
 
 addNode("P", {

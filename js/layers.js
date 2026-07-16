@@ -259,164 +259,165 @@ addLayer("Ktr", {
     storyContent: {
         1: {
             text() {
-                let text = `<text style='color:#FFFFFF; font-size: 30px; text-shadow: 2px 2px 7px white'>My lifelong pursuit is the ultimate beauty of sensibility and the true knowledge of reason.</text><br>
-	        	<text style='color:#FFFFFF; font-size: 30px; text-shadow: 2px 2px 7px white'>I want to stand at the highest point of the city and take another look at the Miracle Continent amidst the starry sky.
-                I want to always remember its beautiful appearance.——Kether</text><br><br>
-        		<text style='color: #999999'>[Illustration] In the year 680 of the lunar calendar, the Miracle Continent was destroyed. In order to change the fate of its destruction, Ain traveled to the Miracle Continent. Through repeated attempts and cycles, she have come to understand that her destiny is a constant repetition, but it can never change the fate of the Miracle Continent. In order to change this outcome, she pay the price of forgetting her predetermined destiny, summoning some of your consciousness into the spiritual world through the Heart Gate, rebuilding the order of the Kabalah Tree, and attempting to break the trajectory of her predetermined destiny—— Preface to Kabalah Incremental Tree</text><br>
-		        <text style='color:magenta'>[Ain] Let me think again... I have traveled through time and space, back to the miraculous continent 680 years ago... I passed through a door, and there I met...</text><br>`
+                let text = `<text style='color:#FFFFFF; font-size: 30px; text-shadow: 2px 2px 7px white'>My life's pursuit has ever been the sublime beauty of feeling and the pure knowledge of reason.</text><br>
+                <text style='color:#FFFFFF; font-size: 30px; text-shadow: 2px 2px 7px white'>I wish to stand at the city's highest peak and gaze once more upon the Miracle Continent beneath the stars.
+                I wish to remember forever how beautiful it was. — Kether</text><br><br>
+                <text style='color: #999999'>[Illustration] In the year 680 of the Lunar Calendar, the Miracle Continent was destroyed. To change this fate, Ain traveled back through time to the Miracle Continent. Through countless cycles and attempts, she came to understand that her destiny is one of endless repetition — yet never able to alter the fate of the Miracle Continent. To break this outcome, she paid the price of forgetting her own predetermined destiny, summoning a fragment of your consciousness into the spiritual world through the Heart Gate, rebuilding the order of the Kabbalah Tree, and attempting to defy the trajectory of fate itself — Preface to the Kabbalah Incremental Tree</text><br>
+                <text style='color:magenta'>[Ain] Let me think once more... I have traveled through time and space, back to the Miracle Continent of 680 years ago... I passed through a door, and there I met...</text><br>`
                 if (player.Ktr.storyUnlocked < 1) text += `<br><br>
-                <i style='color: #444444'>[Locked] Reach 1 kether point to continue.(Tips: Press the prestige button in the kether layer to gain kether points. You will lost all your essence you have.)</i>`
+                <i style='color: #444444'>[Locked] Reach 1 kether point to continue. (Tips: Press the prestige button in the kether layer to gain kether points. You will lose all your essence.)</i>`
                 if (player.Ktr.storyUnlocked >= 1) text += `
-                <text style='color:magenta'>[Ain] You are the person I met at the Heart Gate, and we are in a state of conscious connection. You can see what happens on the Miracle Continent.</text><br>
-                <text style='color:magenta'>[Ain] Perhaps because we all come from the same world, we can...</text><br>`
+                <text style='color:magenta'>[Ain] You are the one I met at the Heart Gate. Our consciousnesses are now connected. You can see all that unfolds upon the Miracle Continent.</text><br>
+                <text style='color:magenta'>[Ain] Perhaps because we come from the same world, we can...</text><br>`
                 return text
             }
         },
         2: {
             text() {
-                let text = `<text style='color:#999999'>[Illustration] The scene presented to Ain was a strange city.</text><br>
-                <text style='color:magenta'>[Ain] Crown Town Hospital, where is this?</text><br>
-                <text style='color:magenta'>[Ain] There is a clothing store ahead, let's go and inquire about the situation in this world first.</text><br>
-                <text style='color:#999999'>[Illustration] For some reason, Ain's mind suddenly flashed with a scene of a sea of stars.</text><br>
-                <text style='color:#999999'>[Illustration] In that moment, she remembered a dream she had had when she was a child.</text><br>
-                <text style='color:#999999'>[Illustration] When she was six years old, she once dreamed of a sea of stars.</text><br>
-                <text style='color:#999999'>[Illustration] There is a stargazing platform on the sea, and a silent writer between the starry seas.</text><br>
-                <text style='color:#999999'>[Illustration] The hood blocked his eyes, and he reached out his pen, pointing towards the starry sky. The stars seemed to be manipulated by him, moving out of their brilliant orbits.</text><br>
-                <text style='color:white'>[Kether] This is the only answer, all galaxies are destined to be destroyed.</text><br>`
+                let text = `<text style='color:#999999'>[Illustration] What unfolded before Ain's eyes was a strange and unfamiliar city.</text><br>
+                <text style='color:magenta'>[Ain] Crown Town Hospital... where is this place?</text><br>
+                <text style='color:magenta'>[Ain] There is a clothing store ahead. Let us go and inquire about this world first.</text><br>
+                <text style='color:#999999'>[Illustration] For reasons she could not explain, a vision of a sea of stars flashed through Ain's mind.</text><br>
+                <text style='color:#999999'>[Illustration] In that fleeting instant, she recalled a dream she once held as a child.</text><br>
+                <text style='color:#999999'>[Illustration] When she was six years old, she had dreamed of a sea of stars.</text><br>
+                <text style='color:#999999'>[Illustration] Upon that sea stood a stargazing platform, and upon that platform, a silent writer amidst the starry seas.</text><br>
+                <text style='color:#999999'>[Illustration] His hood concealed his eyes. He reached out with his pen, pointing toward the heavens, and the stars seemed to bend to his will, drifting from their brilliant orbits.</text><br>
+                <text style='color:white'>[Kether] This is the only answer. All galaxies are destined for destruction.</text><br>`
                 if (player.Ktr.storyUnlocked == 1) text += `<br><br>
-                <i style='color: #444444'>[Locked] Have at least 1 kether upgrade to continue. "Upgrade" is a tool can be bought by using Kether points, and boost your game production. It can only be bought once to become effective.</i>`
+                <i style='color: #444444'>[Locked] Have at least 1 kether upgrade to continue. "Upgrade" is a tool that can be purchased using kether points, boosting your production. Each can only be purchased once to take effect.</i>`
                 if (player.Ktr.storyUnlocked >= 2) text += `
-                <text style='color:#999999'>[Illustration] He doesn't seem to be talking to anyone, focusing on describing the picture in his heart.</text><br>
-                <text style='color:white'>[Kether] I observed the only outcome, but left behind a small unpredictable factor. Will the outcome change as a result?</text><br>
+                <text style='color:#999999'>[Illustration] He did not seem to be speaking to anyone, lost in depicting the vision within his heart.</text><br>
+                <text style='color:white'>[Kether] I observed the only outcome, yet left behind a single unpredictable variable. Will the outcome change because of it?</text><br>
                 <text style='color:magenta'>[Ain lv.6] Who are you?</text><br>
-                <text style='color:white'>[Kether] It is the person who endows you with destiny.</text><br>
-                <text style='color:#999999'>[Illustration] For some reason, the memories in this dream suddenly became particularly clear.</text><br>
-                <text style='color:#999999'>[Illustration] Ain had not yet recovered from his previous mood when many people suddenly entered the clothing store.</text><br>
-                <text style='color:#999999'>[Illustration] But they were not shopping, they were directly surrounding Ain.</text><br>
+                <text style='color:white'>[Kether] I am the one who bestowed destiny upon you.</text><br>
+                <text style='color:#999999'>[Illustration] For some reason, the memories within this dream suddenly became vividly clear.</text><br>
+                <text style='color:#999999'>[Illustration] Ain had not yet gathered herself when suddenly many people entered the clothing store.</text><br>
+                <text style='color:#999999'>[Illustration] They had not come to shop. Instead, they surrounded Ain without hesitation.</text><br>
                 <text style='color:white'>[Kether-9718] This guest, you are...</text><br>
-                <text style='color:white'>[Kether-19] The girl with long hair, is you? You looks so featureless... Of course, the one who possesses the power of Saphirah's Shadow.</text><br>
-                <text style='color:#999999'>[Illustration] The door of the clothing store was closed, with two people standing at the entrance, not allowing anyone to enter.</text><br>
-                <text style='color:#999999'>[Illustration] The sexy girl be numbered as Kether-19 is coming towards the power of Saphirah's shadow.</text><br>`
+                <text style='color:white'>[Kether-19] The long-haired girl — is it you? You look so plain... and yet, the one who possesses the power of Sephirah's Shadow.</text><br>
+                <text style='color:#999999'>[Illustration] The clothing store doors were shut, two figures standing guard at the entrance, allowing no one to pass.</text><br>
+                <text style='color:#999999'>[Illustration] The alluring girl known as Kether-19 stepped toward the power of Sephirah's Shadow.</text><br>`
                 return text
             }
         },
         3: {
             text() {
-                let text = `<text style='color:magenta'>[Ain] I think you may have misunderstood something, I don't have this power.</text><br>
-                <text style='color:white'>[Kether-19] Do you have it or not? Let's give it a try and we'll know!</text><br>
-                <text style='color:#999999'>[Illustration] Kether-19 suddenly pulled Ain into [Battle of Recollection]!!</text><br>
-                <text style='color:#999999'>[Illustration] This time, Ain felt a different state of mind than before, a deeper power was awakened, and a strange voice appeared in her heart.</text><br>
-                <text style='color:white'>[Kether] What should you, who has lost your memory, use to fight?</text><br>`
+                let text = `<text style='color:magenta'>[Ain] I believe you may be mistaken. I possess no such power.</text><br>
+                <text style='color:white'>[Kether-19] Whether you do or not, let us find out!</text><br>
+                <text style='color:#999999'>[Illustration] Kether-19 suddenly dragged Ain into the [Battle of Recollection]!!</text><br>
+                <text style='color:#999999'>[Illustration] This time, Ain felt a different state of mind than before. A deeper power stirred within her, and a strange voice echoed in her heart.</text><br>
+                <text style='color:white'>[Kether] With your memories lost, what will you fight with?</text><br>`
                 if (player.Ktr.storyUnlocked == 2) text += `<br><br>
-                <i style='color: #444444'>[Locked] Reach 200,000 essences to continue. This may require much stronger upgrade effect.</i>`
+                <i style='color: #444444'>[Locked] Reach 200,000 essence to continue. This may require a much stronger upgrade effect.</i>`
                 if (player.Ktr.storyUnlocked >= 3) text += `
-                <text style='color:#999999'>[Illustration] The scene in front of Ain quickly twisted, and Ain found herself appearing among a sea of stars. Ain looked around in confusion, feeling so familiar.</text><br>
-                <text style='color:magenta'>[Ain] Where is there?</text><br>
-                <text style='color:white'>[Kether] Your mental world, the real battlefield of recollection battle.</text><br>
-                <text style='color:white'>[Kether] The true battle of recollection is a competition between memories and emotions placed on essence, and the power of memories from within can influence the outcome of the battle. I am just a memory projection, not your teacher. Now, do you remember? The true power hidden in memory is the key to changing the battlefield.</text><br>
-                <text style='color:#999999'>[Illustration] Ain returned to the Battle of Recollection, relying on his powerful memory to defeat the woman. After the Battle of Recollection, the starry sea dissipated and everything returned to tranquility, but the memories hidden in Ain's heart gradually became clear.</text><br>
-                <text style='color:white'>[Kether-9718] The powerful power of memory can change a person's spiritual world, can we say Has Kether-19's spiritual world been altered? Is the rumor true?</text><br>
-                <text style='color:#999999'>[Illustration] Ain murmured to herself, everything that was once beautiful will disappear into thin air, and civilization is like it has never existed before, leaving no trace. All of this is because...</text><br>
-                <text style='color:#999999'>[Illustration] "The story of the Miracle Continent should come to an end." Kether stood in the distance, her silver hair stirred by the wind of the apocalypse, making the final judgment for the destruction of the Miracle Continent.</text><br>`
+                <text style='color:#999999'>[Illustration] The world before Ain twisted and dissolved. She found herself standing amidst a sea of stars. She gazed around in bewilderment — it felt so achingly familiar.</text><br>
+                <text style='color:magenta'>[Ain] Where is this?</text><br>
+                <text style='color:white'>[Kether] Your spiritual world — the true battlefield of the Battle of Recollection.</text><br>
+                <text style='color:white'>[Kether] The true Battle of Recollection is a contest of memories and emotions woven into essence. The power of memories from within can sway the outcome of the battle. I am but a memory projection, not your teacher. Now, do you remember? The true power concealed within memory is the key to turning the tide.</text><br>
+                <text style='color:#999999'>[Illustration] Ain returned to the Battle of Recollection and, drawing upon the strength of her memories, defeated the woman. After the battle, the starry sea dissolved and all returned to tranquility — yet the memories hidden within Ain's heart grew ever clearer.</text><br>
+                <text style='color:white'>[Kether-9718] The power of memory can reshape a person's spiritual world. Can we say that Kether-19's spiritual world has been altered? Could the rumor be true?</text><br>
+                <text style='color:#999999'>[Illustration] Ain murmured to herself. All that was once beautiful would vanish into nothingness. Civilization would fade as though it had never existed, leaving not a trace behind. And all of this, because...</text><br>
+                <text style='color:#999999'>[Illustration] "The story of the Miracle Continent must come to an end." Kether stood in the distance, his silver hair stirred by the winds of apocalypse, pronouncing final judgment upon the Miracle Continent's destruction.</text><br>`
                 return text
             }
         },
         4: {
             text() {
-                let text = `<text style='color:magenta'>[Ain] No, this is not true. The Miracle Continent has been destroyed I actually witnessed its destruction with my own eyes.</text><br>`
+                let text = `<text style='color:magenta'>[Ain] No... this cannot be true. The Miracle Continent has been destroyed — I witnessed its destruction with my own eyes.</text><br>`
                 if (player.Ktr.storyUnlocked == 3) text += `<br><br>
-                <i style='color: #444444'>[Locked] Reach 200 stellar points to continue. Create a giant gas planet to start collecting it.</i>`
+                <i style='color: #444444'>[Locked] Reach 200 stellar points to continue. Create a giant gas planet to begin collecting them.</i>`
                 if (player.Ktr.storyUnlocked >= 4) text += `
-                <text style='color:white'>[Kether] This world is plunged into conflict and chaos, and on a memory level, everyone is endowed with the ability to change the memories of others. Your desires are hidden in your heart, your dreams seem so unattainable, all because of your weakness. Come on, let me give you the power to change the situation.</text><br>
-                <text style='color:#999999'>[Illustration] Ain's mind flashed with many memories, unwilling to lose more, unable to face fate anymore, and unwilling to accept the predetermined outcome!</text><br>
-                <text style='color:#999999'>[Illustration] Kether's stargazing platform was parked in front of Ain, and the seawater seemed to follow Kether's guidance and surge up, blocking the sunlight from the sky.</text><br>
-                <text style='color:magenta'>[Ain] It's you, Kether.</text><br>
-                <text style='color:white'>[Kether] I told you before that Sephirah's Shadow is just a memory projection.</text><br>
+                <text style='color:white'>[Kether] This world is steeped in conflict and chaos. On the level of memory, everyone is endowed with the ability to reshape the memories of others. Your desires lie hidden within your heart, your dreams seem forever beyond reach — all because of your weakness. Come, let me grant you the power to change this.</text><br>
+                <text style='color:#999999'>[Illustration] Countless memories flashed through Ain's mind — the refusal to lose more, the inability to face fate any longer, the rejection of a predetermined outcome!</text><br>
+                <text style='color:#999999'>[Illustration] Kether's stargazing platform appeared before Ain. The seawater seemed to follow his guidance, surging upward to eclipse the sunlight from the sky.</text><br>
+                <text style='color:magenta'>[Ain] It is you, Kether.</text><br>
+                <text style='color:white'>[Kether] I told you before — Sephirah's Shadow is but a memory projection.</text><br>
                 <text style='color:magenta'>[Ain] Sephirah's Shadow?</text><br>
-                <text style='color:white'>[Kether] I exist based on your soul, I am just a memory drifting in an endless ocean of memories.</text><br>
-                <text style='color:magenta'>[Ain] Why you selected me?</text><br>
-                <text style='color:white'>[Kether] Fate has chosen you, I am just an observer of fate.</text><br>
-                <text style='color:magenta'>[Ain] The observer of fate? It is you who manipulated the fate of the Miracle Continent, leading it towards destruction!</text><br>
-                <text style='color:white'>[Kether] Why do you consider as that?</text><br>
+                <text style='color:white'>[Kether] I exist through your soul. I am nothing more than a memory adrift in an endless ocean of memories.</text><br>
+                <text style='color:magenta'>[Ain] Why did you choose me?</text><br>
+                <text style='color:white'>[Kether] Fate chose you. I am merely an observer of fate.</text><br>
+                <text style='color:magenta'>[Ain] An observer of fate? It is you who manipulated the fate of the Miracle Continent, steering it toward destruction!</text><br>
+                <text style='color:white'>[Kether] Why do you see it that way?</text><br>
                 <text style='color:magenta'>[Ain] I saw it with my own eyes!</text><br>
-                <text style='color:white'>[Kether] What you see is not true, go and search for the answer you want in my memory.</text><br>`
+                <text style='color:white'>[Kether] What you see is not the truth. Go and seek the answer you desire within my memories.</text><br>`
                 if (player.Ktr.storyUnlocked == 4) text += `<br><br>
-                <i style='color: #444444'>[Locked] Build 3 arks to continue. Everytime you build a ark you will lost all stars as well as stellar points.</i>`
+                <i style='color: #444444'>[Locked] Build 3 arks to continue. Each time you build an ark, you will lose all stars as well as stellar points.</i>`
                 if (player.Ktr.storyUnlocked >= 5) text += `
-                <text style='color:white'>[Kether] Are you saying that my calculation is incorrect?</text><br>
-                <text style='color:magenta'>[Ain] I will not question your calculations. I am the insignificance in your mouth, and I cannot see the truth you speak in this starry sky; I am the stupidity in your mouth, and I will never compromise until the destruction is complete.</text><br>`
+                <text style='color:white'>[Kether] Are you saying my calculations are wrong?</text><br>
+                <text style='color:magenta'>[Ain] I will not question your calculations. I am the insignificance you speak of — I cannot see the truth you describe in this starry sky. I am the foolishness you speak of — and I will never surrender, not until the very end of destruction.</text><br>`
                 return text
             }
         },
         5: {
             text() {
-                let text = `<text style='color:magenta'>[Ain] You see all living beings as ants, and the joy of each day and the anticipation for tomorrow are short-lived things that all living beings will cherish.</text><br>
-                <text style='color:white'>[Kether] But no matter what, destruction will eventually come.</text><br>
-                <text style='color:magenta'>[Ain] I will go and change the future you have written about!</text><br>
-                <text style='color:#999999'>[Illustration] On the distant skyline, white appears, and the rising stars rise high.</text><br>
-                <text style='color:magenta'>[Ain] This is the fate you have chosen for me. You want me to break it, don't you? Teacher, thank you for telling me this. I'm leaving now.</text><br>
-                <text style='color:white'>[Kether] In this era, you are like a gravel thrown into boundless seawater. I can't see whether you will stir up a vortex or be silently swallowed up.</text><br>
-                <text style='color:#999999'>[Illustration] The ocean and the stars fade away, interweaving into Ain's clothes. Shake off the stars, clothes designed by Kether.</text><br>
-                <text style='color:white'>[Kether] Use its power to leave the starry sea.</text><br>
-                <text style='color:#999999'>[Illustration] The stars shake off, the tide fades, and the first ray of morning sunlight shines on Ain's sleeping face. Eyelashes twitched slightly, and Ain opened his eyes.</text><br>
-                <text style='color:#999999'>[Illustration] In the world of starry seas, the stargazing platform is still floating, and the starry seas have not disappeared, but Ain cannot see this scene anymore.</text><br>
-                <text style='color:white'>[Kether] The orbits of stars are independent of each other, and the appearance of interlocking is just an illusion of a certain angle. Each orbit is the fate of a world.</text><br>
+                let text = `<text style='color:magenta'>[Ain] You see all living beings as ants. Yet the joy of each passing day and the hope for tomorrow are fleeting treasures that all living beings hold dear.</text><br>
+                <text style='color:white'>[Kether] But no matter what, destruction will come in the end.</text><br>
+                <text style='color:magenta'>[Ain] Then I will go and change the future you have written!</text><br>
+                <text style='color:#999999'>[Illustration] Upon the distant horizon, a thread of white appeared, and the rising stars climbed high.</text><br>
+                <text style='color:magenta'>[Ain] This is the fate you chose for me. You want me to break it, do you not? Teacher... thank you for telling me this. I must go now.</text><br>
+                <text style='color:white'>[Kether] In this era, you are like a pebble cast into boundless waters. I cannot tell whether you will stir a vortex or be silently swallowed whole.</text><br>
+                <text style='color:#999999'>[Illustration] The ocean and the stars faded, interweaving into Ain's garments. Stars shook free — clothes designed by Kether.</text><br>
+                <text style='color:white'>[Kether] Use their power to leave the starry sea.</text><br>
+                <text style='color:#999999'>[Illustration] The stars fell away, the tide receded, and the first ray of morning light fell upon Ain's sleeping face. Her lashes fluttered, and she opened her eyes.</text><br>
+                <text style='color:#999999'>[Illustration] In the world of starry seas, the stargazing platform still floated. The starry seas had not yet vanished — but Ain could no longer see them.</text><br>
+                <text style='color:white'>[Kether] The orbits of stars are independent of one another. Their seeming interlock is but an illusion of perspective. Each orbit is the fate of a world.</text><br>
                 <text style='color:white'>[Kether] Are you looking for her? She has already returned to the real world.</text><br>`
                 if (player.Ktr.storyUnlocked == 5) text += `<br><br>
-                <i style='color: #444444'>[Locked] Let the ark reach the distant space to continue. Maybe you need more ark fuel.</i>`
+                <i style='color: #444444'>[Locked] Let the ark reach distant space to continue. Perhaps you need more ark fuel.</i>`
                 if (player.Ktr.storyUnlocked >= 6) text += `
-                <text style='color:#999999'>[Illustration] Kether seems to be talking to herself, but you think this man can feel your presence.</text><br>
-                <text style='color:pink'>[You] Are you saying to me?</text><br>
-                <text style='color:#999999'>[Illustration] Kether didn't answer you. He put down his pen and countless star tracks slid behind him, silently falling onto the sea of stars.</text><br>
-                <text style='color:white'>[Kether] I chose her, she will be the unknown of fate, perhaps able to break the predetermined fate of the Miracle Continent. She chose you to break her destiny. But in order to establish a connection with the Heart Gate, she paid the price and forgot what her fate was.</text><br>`
+                <text style='color:#999999'>[Illustration] Kether seemed to be speaking to himself, yet you sensed that this man could feel your presence.</text><br>
+                <text style='color:pink'>[You] Are you speaking to me?</text><br>
+                <text style='color:#999999'>[Illustration] Kether did not answer. He set down his pen, and countless star-trails silently glided behind him, falling upon the sea of stars.</text><br>
+                <text style='color:white'>[Kether] I chose her. She shall be the unknown in the equation of fate — perhaps able to break the predetermined destiny of the Miracle Continent. And she chose you, to break her own destiny. But to forge a connection through the Heart Gate, she paid a price: she forgot what her destiny was.</text><br>`
                 return text
             }
         },
         6: {
             text() {
                 let text = `<text style='color:pink'>[You] What is Ain's fate?</text><br>
-                <text style='color:white'>[Kether] No matter how many attempts, no matter the cost, nothing can be changed. This is her fate, but she chose you.</text><br>
-                <text style='color:#999999'>[Illustration] Kether reached out her hand as if touching an invisible "wall", causing ripples to form on the wall. Silver white borders gradually appeared around the wall, interspersed with crystals like stars. It was a mirror, and Kether was inside the mirror.</text><br>
-                <text style='color:pink'>[You] You haven't told me yet, how can I leave here?</text><br>
+                <text style='color:white'>[Kether] No matter the attempts, no matter the cost, nothing can be changed. That is her fate. And yet, she chose you.</text><br>
+                <text style='color:#999999'>[Illustration] Kether reached out as though touching an invisible "wall," and ripples spread across its surface. Silver-white borders gradually emerged around the wall, studded with crystals like stars. It was a mirror — and Kether stood within it.</text><br>
+                <text style='color:pink'>[You] You have not told me yet — how do I leave this place?</text><br>
                 <text style='color:white'>[Kether] Through the mirror, your consciousness can reconnect with her spiritual world.</text><br>
-                <text style='color:#999999'>[Illustration] Kether disappeared from the mirror, and the world in the mirror also changed. The sky and ocean still existed, and the stars gradually dimmed until they disappeared.</text><br>
-                <text style='color:pink'>[You] Is it me in the mirror, or am I seeing the mirror?</text><br>
-                <text style='color:white'>[Kether] Why not have a try?</text><br>
-                <text style='color:#999999'>[Illustration] You walked through the mirror, and a brand new world appeared before my eyes.</text><br>`
+                <text style='color:#999999'>[Illustration] Kether vanished from the mirror, and the world within it shifted. The sky and ocean endured, but the stars slowly dimmed and faded, until they were no more.</text><br>
+                <text style='color:pink'>[You] Am I within the mirror, or is the mirror within me?</text><br>
+                <text style='color:white'>[Kether] Why not find out for yourself?</text><br>
+                <text style='color:#999999'>[Illustration] You stepped through the mirror, and a brand-new world unfolded before your eyes.</text><br>`
                 if (player.Ktr.storyUnlocked == 6) text += `<br><br>
-                <i style='color: #444444'>[Locked] Let the ark reach the remote space to continue. Maybe you need more stellar points.</i>`
+                <i style='color: #444444'>[Locked] Let the ark reach distant space to continue. Perhaps you need more stellar points.</i>`
                 if (player.Ktr.storyUnlocked >= 7) text += `
-                <text style='color:#999999'>[Illustration] On the vast and calm sea surface, various magical buildings float: a serene garden, a museum like building, and a clock tower with dials and clocks separated. The tracks of a train connect these buildings like chains.</text><br>
-                <text style='color:pink'>[You] Is this what Kether called the ark that carries all the memories of civilization? What's going on? Aren't we in a world of stars? After waking up from that dream in the starry sea, everything returned to normal. I wanted to know what connection Saphirah's Shadow had with Kether, so I went back to the ark first.</text><br>
-                <text style='color:magenta'>[Ain] I forgot that you haven't come here yet. This is the sea of memories in the distant and deep sky, the ocean of human memory, connecting different worlds and consciousness. The Ark manages the Sea of Memory, and after the destruction of the Miracle Continent, I came to the Ark. By relying on the ark, I can cross back and thus connect with your consciousness.</text><br>
-                <text style='color:white'>[Kether-7] Ain? Fallen_ Cat? You all have returned!</text><br>
-                <text style='color:white'>[Kether-7] Wow, Fallen_ Cat, you are still so soft~</text><br>`
+                <text style='color:#999999'>[Illustration] Upon the vast and tranquil sea floated wondrous structures: a serene garden, a building akin to a museum, and a clock tower whose dials and clocks were set apart. The tracks of a train linked these buildings together like chains.</text><br>
+                <text style='color:pink'>[You] Is this the ark Kether spoke of — the vessel that carries all the memories of civilization? What is happening? Were we not in a world of stars?</text><br>
+                <text style='color:#999999'>[Illustration] After waking from that dream within the starry sea, all had returned to normal. I wished to understand what connection Sephirah's Shadow held with Kether, so I returned to the ark first.</text><br>
+                <text style='color:magenta'>[Ain] I had forgotten — you have never been here before. This is the Sea of Memories in the distant and fathomless sky, the ocean of human memory, bridging different worlds and consciousnesses. The Ark governs the Sea of Memory. After the destruction of the Miracle Continent, I came to the Ark. Through the ark, I can cross back, and thus connect with your consciousness.</text><br>
+                <text style='color:white'>[Kether-7] Ain? Fallen_Cat? You've both returned!</text><br>
+                <text style='color:white'>[Kether-7] Wow, Fallen_Cat, you're still so soft~</text><br>`
                 return text
             }
         },
         7: {
             text() {
-                let text = `<text style='color:#999999'>[Illustration] The little girl hugged you tightly and refused to let go. You are struggling hard.</text><br>
-                <text style='color:pink'>[You] Well, Ain, introduce her?</text><br>`
+                let text = `<text style='color:#999999'>[Illustration] The little girl clung to you tightly and refused to let go. You struggled in vain.</text><br>
+                <text style='color:pink'>[You] So, Ain — would you introduce us?</text><br>`
                 if (player.Ktr.storyUnlocked == 7) text += `<br><br>
-                <i style='color: #444444'>[Locked] Unlock all distant space upgrade to continue. That means getting at least 21 arks.</i>`
+                <i style='color: #444444'>[Locked] Unlock all distant space upgrades to continue. That means obtaining at least 21 arks.</i>`
                 if (player.Ktr.storyUnlocked >= 8) text += `
-                <text style='color:magenta'>[Ain] Ktr-7, one of the ark administrators, also has an administrator named Ktr-2, who is Ktr-7's brother. The numbers represent the strength ranking of their Saphirah Shadow power in the Kether field.</text><br>
-                <text style='color:#999999'>[Illustration] At this moment, a powerful palm lifted the Ktr-7 and it struggled vigorously in the air.</text><br>
-                <text style='color:white'>[Kether-2] Don't cause trouble, Ktr-7.</text><br>
-                <text style='color:white'>[Kether-7] I didn't cause any trouble! Let me down, brother!</text><br>
-                <text style='color:#999999'>[Illustration] You observed the man behind Ktr-7 and it seemed that he was Ktr-7's brother, another administrator of the ark, Ktr-2.</text><br>
-                <text style='color:white'>[Kether-2] Ain, I just took you to the Sephirah Shadow Museum, where all Sephirah shadows are stored in a mirror. The power you used in the battle before was the Sephirah Shadow, it seems that you can summon the Sephirah Shadow.</text><br>`
+                <text style='color:magenta'>[Ain] Ktr-7, one of the ark administrators. She has a brother called Ktr-2. The numbers denote the ranking of their Sephirah Shadow power within the Kether field.</text><br>
+                <text style='color:#999999'>[Illustration] Just then, a powerful hand reached down and lifted Ktr-7 into the air. She kicked and struggled vigorously.</text><br>
+                <text style='color:white'>[Kether-2] Enough trouble, Ktr-7.</text><br>
+                <text style='color:white'>[Kether-7] I wasn't causing any trouble! Put me down, brother!</text><br>
+                <text style='color:#999999'>[Illustration] You studied the man behind Ktr-7 — her brother, it seemed, and another administrator of the ark: Ktr-2.</text><br>
+                <text style='color:white'>[Kether-2] Ain, I brought you to the Sephirah Shadow Museum earlier. There, all Sephirah Shadows are preserved within mirrors. The power you wielded in your recent battle was one of the Sephirah Shadows — and it appears you can summon them.</text><br>`
                 if (player.Ktr.storyUnlocked == 8) text += `<br><br>
-                <i style='color: #444444'>[Locked] Unlock The Kether's Heart Gate to unlock. This is the ultimate challenge of Kether layer.</i>`
+                <i style='color: #444444'>[Locked] Unlock The Kether's Heart Gate to continue. This is the ultimate challenge of the Kether layer.</i>`
                 if (player.Ktr.storyUnlocked >= 9) text += `
-                <text style='color:white'>[Kether-2] I have found some new clues about Kether, and I will let you know once I have sorted them out.</text><br>
+                <text style='color:white'>[Kether-2] I have uncovered some new clues regarding Kether. I will share them with you once I have pieced everything together.</text><br>
                 <text style='color:magenta'>[Ain] Thank you, Ktr-2.</text><br>
-                <text style='color:white'>[Kether-2] It's okay, I was already looking for something about Kether.</text><br>
-                <text style='color:#999999'>[Illustration] Ain had no intention of staying in the ark anymore and decided to leave with you first. Kether-2 then took Ain and you to the Heart Gate to return. The gate of the heart is located in the center of the ark, and the core of the ark's operation, the "Ark's Heart," is located below the gate of the heart.</text><br>
+                <text style='color:white'>[Kether-2] Think nothing of it. I was already searching for answers about Kether.</text><br>
+                <text style='color:#999999'>[Illustration] Ain had no wish to linger in the ark. She decided to depart with you first. Kether-2 then led Ain and you to the Heart Gate to return. The Heart Gate stands at the center of the ark, and beneath it lies the "Ark's Heart" — the core that sustains the ark's operation.</text><br>
                 <text style='color:white'>[Kether-2] Are you ready, Ain?</text><br>
-                <text style='color:magenta'>[Ain] I'm ready.</text><br>
-                <text style='color:magenta'>[Ain] Let's go, together we can definitely change the future of the world, using our own matching power to cross the door of the heart.</text><br>`
+                <text style='color:magenta'>[Ain] I am ready.</text><br>
+                <text style='color:magenta'>[Ain] Let us go. Together, we can surely change the future of this world. With the power that matches us, we shall cross the door of the heart.</text><br>`
                 return text
             }
         },
@@ -1646,7 +1647,7 @@ addLayer("Ktr", {
                 else return { 'background-color': this.color(), 'color': 'black', 'border-color': 'green', 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px ' + this.color(), 'height': '130px', 'width': '130px' }
             },
             effect() {
-                let eff = player.Hkm.batteryThroem.add(1)
+                let eff = player.Hkm.batteryTheorem.add(1)
                 if (hasUpgrade('Ktr', 'Ktr-22')) eff = eff.pow(upgradeEffect('Ktr', 'Ktr-22'))
                 if (hasAchievement('Ain', 'Hkm-24')) eff = eff.mul(Decimal.pow(1.5, getBuyableAmount('Hkm', 'Hkm-b1').add(getBuyableAmount('Hkm', 'Hkm-b2')).add(getBuyableAmount('Hkm', 'Hkm-b3'))))
                 return eff
@@ -1824,7 +1825,7 @@ addLayer("Ktr", {
                 ['bar', 'Ktr-g3'],
                 "blank",
                 ['display-text', function () { if (player.Ktr.storyUnlocked >= 9) return '<h4>You have collected a total of   ' + quickBigColor(formatWhole(player.Ktr.memoryCrystal), 'white') + ' memory crystal. Itself boosts the effect of solar energy. (Unaffected by the nerf of heart gate)' }],
-                ['display-text', function () { if (player.Ktr.infinityPoint >= 1) return '<h4>You have   ' + quickBigColor(formatWhole(player.Ktr.infinityPoint), 'white') + ' Infinity Points, boosting your antimatter production by   ' + quickBigColor('×' + format(1), 'white')}],
+                ['display-text', function () { if (player.Ktr.infinityPoint >= 1) return '<h4>You have   ' + quickBigColor(formatWhole(player.Ktr.infinityPoint), 'white') + ' Infinity Points, boosting your antimatter production by   ' + quickBigColor('×' + format(1), 'white') }],
                 ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>Universal timespan: ' + quickBigColor(formatTime(player.Ktr.universalTime), 'white') }],
                 ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>Kether timespan: ' + quickBigColor(formatTime(player.Ktr.realTime), 'white') + ', translated to a stellar nerf of ' + quickBigColor('^' + format(tmp.Ktr.gateEff), 'white') }],
                 ['display-text', function () { if (player.Ktr.activeChallenge == 'Ktr-g1') return '<h4>You have ' + quickBigColor(formatWhole(tmp.Ktr.antimatter), 'white') + ' antimatter.' }],
@@ -1937,9 +1938,12 @@ addLayer("Hkm", {
             newStory: false,
             resetTimes: 0,
             timeEnergy: new Decimal(0),
-            timeThroem: new Decimal(0),
-            totalTimeThroem: new Decimal(0),
-            batteryThroem: new Decimal(0),
+            timeThroem: new Decimal(0), //compatibility
+            totalTimeThroem: new Decimal(0), //compatibility
+            batteryThroem: new Decimal(0), //compatibility
+            timeTheorem: new Decimal(0),
+            totalTimeTheorem: new Decimal(0),
+            batteryTheorem: new Decimal(0),
             gridTime: new Decimal(0),
             foams: new Decimal(0),
             foems: new Decimal(0), //compatibility
@@ -2015,14 +2019,14 @@ addLayer("Hkm", {
     totalCompressor() {
         return getBuyableAmount('Hkm', 'Hkm-t1').add(getBuyableAmount('Hkm', 'Hkm-t2')).add(getBuyableAmount('Hkm', 'Hkm-t3'))
     },
-    nextTimeThroem() {
-        let lim = new Decimal(1).mul(new Decimal(10).pow(player.Hkm.totalTimeThroem.add(1)))
-        if (player.Hkm.totalTimeThroem.gte(29)) lim = lim.mul(new Decimal(2).pow(player.Hkm.totalTimeThroem.sub(29)))
+    nextTimeTheorem() {
+        let lim = new Decimal(1).mul(new Decimal(10).pow(player.Hkm.totalTimeTheorem.add(1)))
+        if (player.Hkm.totalTimeTheorem.gte(29)) lim = lim.mul(new Decimal(2).pow(player.Hkm.totalTimeTheorem.sub(29)))
         if (hasGrid('Hkm', 104)) lim = lim.div(getEffect('', 104))
         return lim
     },
-    timeThroemEff() {
-        let eff = Decimal.pow(n(25), player.Hkm.totalTimeThroem)
+    timeTheoremEff() {
+        let eff = Decimal.pow(n(25), player.Hkm.totalTimeTheorem)
         return eff
     },
     gridStrength() {
@@ -2146,9 +2150,9 @@ addLayer("Hkm", {
             doPopup(type = "none", text = "New Hokma story unlocked!<br>(No. " + formatWhole(player[this.layer].storyUnlocked) + ")", title = "The gears of time quietly rotate...", timer = 5, color = "gray")
         }
         if (player.Hkm.storyUnlocked >= 2) player.Hkm.timeEnergy = player.Hkm.timeEnergy.add(tmp.Hkm.compressorEff.mul(diff))
-        if (player.Hkm.timeEnergy.gte(tmp.Hkm.nextTimeThroem)) {
-            player.Hkm.timeThroem = player.Hkm.timeThroem.add(1)
-            player.Hkm.totalTimeThroem = player.Hkm.totalTimeThroem.add(1)
+        if (player.Hkm.timeEnergy.gte(tmp.Hkm.nextTimeTheorem)) {
+            player.Hkm.timeTheorem = player.Hkm.timeTheorem.add(1)
+            player.Hkm.totalTimeTheorem = player.Hkm.totalTimeTheorem.add(1)
         }
         player.Hkm.gridTime = player.Hkm.gridTime.add(diff)
         if (player.Hkm.storyUnlocked >= 6) {
@@ -2684,8 +2688,8 @@ addLayer("Hkm", {
             direction: RIGHT,
             width: 600,
             height: 30,
-            display() { return formatWhole(player.Hkm.timeEnergy) + ' / ' + formatWhole(tmp.Hkm.nextTimeThroem) + ' time energy for next time throem' },
-            progress() { return player.Hkm.timeEnergy.div(tmp.Hkm.nextTimeThroem) },
+            display() { return formatWhole(player.Hkm.timeEnergy) + ' / ' + formatWhole(tmp.Hkm.nextTimeTheorem) + ' time energy for next time theorem' },
+            progress() { return player.Hkm.timeEnergy.div(tmp.Hkm.nextTimeTheorem) },
             borderStyle() { return { 'border-color': 'grey' } },
             fillStyle() { return { 'background-color': 'grey' } },
             style() { return { 'color': 'white' } },
@@ -2941,7 +2945,7 @@ addLayer("Hkm", {
         },
         'Hkm-19': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(4×4 → 5×5)<br>2.Divide 1e20 from the cost of time foam.<br>3.The gain of hokma points is softcapped.` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Expand time-space grid.(4×4 → 5×5)<br>2.Divide 1e20 from the cost of time foam.<br>3.The gain of hokma points is softcapped. (I'm sorry)` },
             req: n(1e150),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2952,7 +2956,7 @@ addLayer("Hkm", {
         },
         'Hkm-20': {
             requirementDescription() { return quickColor("Get " + formatWhole(this.req) + " Hokma Points (" + formatWhole(n(player.Hkm.points).div(tmp.Hkm.milestones[this.id].req).mul(100).min(100)) + "%)", hasMilestone(this.layer, this.id) ? 'green' : '') },
-            effectDescription() { return `———————————————————————————————————————————<br>1.Gain a free leaf battery.<br>2.The gain of Se-box is raised to 133%.<br>3.Double the effect of Hkm-b1.` },
+            effectDescription() { return `———————————————————————————————————————————<br>1.Gain a free leaf battery.<br>2.The gain of Se-box is raised to the power of ^1.33.<br>3.Double the effect of Hkm-b1.` },
             req: n(1e203),
             done() { return player.Hkm.points.gte(this.req) },
             style() {
@@ -2987,18 +2991,18 @@ addLayer("Hkm", {
             return true
         },
         getCanClick(data, id) {
-            return player.Hkm.timeThroem.gte(HokmaGridC[id]) && data != 1
+            return player.Hkm.timeTheorem.gte(HokmaGridC[id]) && data != 1
         },
         getTooltip(data, id) {
             let color = HokmaColor[id % 100]
             return "<h4 style='color:" + color + ";text-shadow:0px 0px 10px;'>[" + HokmaGridFullProfix[id % 100] + (Math.floor(id / 100)) + "]<h4><h4>Effect: " + HokmaGridDesc[id] + "<br>Currently: " + getProfix(data, id) + format(getEffect(data, id))
         },
         onClick(data, id) {
-            player.Hkm.timeThroem = player.Hkm.timeThroem.sub(HokmaGridC[id])
+            player.Hkm.timeTheorem = player.Hkm.timeTheorem.sub(HokmaGridC[id])
             player[this.layer].grid[id]++
         },
         getDisplay(data, id) {
-            return '<h1 style="font-size:25px">' + HokmaGridProfix[id % 100] + (Math.floor(id / 100)) + "<h3><br><br>Cost: " + HokmaGridC[id] + ' Time Threoms'
+            return '<h1 style="font-size:25px">' + HokmaGridProfix[id % 100] + (Math.floor(id / 100)) + "<h3><br><br>Cost: " + HokmaGridC[id] + ' Time theorems'
         },
         getStyle(data, id) {
             let color = HokmaColor[id % 100]
@@ -3375,7 +3379,7 @@ addLayer("Hkm", {
     clickables: {
         'Hkm-tr1': {
             title() { return "Respec" },
-            display() { return "Respec all gridables in Time-Space grid and take back all time throems." },
+            display() { return "Respec all gridables in Time-Space grid and take back all time theorems." },
             canClick() { return true },
             style() {
                 if (this.canClick()) return { 'box-shadow': '0px 0px 5px ' + (player.timePlayed % 2 + 5) + 'px grey', 'background': `repeating-linear-gradient(90deg, grey 0, grey 1px, black 0, black 100px)`, "background-position": player.timePlayed % 10 + '% ' + player.timePlayed % 10 + "%", 'background-size': `1000% 1000%`, 'color': 'white', 'height': '150px', 'width': '200px', 'border-radius': '5px', 'font-size': '13px', 'margin-left': '5px' }
@@ -3385,7 +3389,7 @@ addLayer("Hkm", {
                 for (id in player.Hkm.grid) {
                     player.Hkm.grid[id] = 0
                 }
-                player.Hkm.timeThroem = player.Hkm.totalTimeThroem.sub(player.Hkm.batteryThroem)
+                player.Hkm.timeTheorem = player.Hkm.totalTimeTheorem.sub(player.Hkm.batteryTheorem)
                 player.Hkm.gridTime = n(0)
             },
             unlocked() { return hasMilestone('Hkm', 'Hkm-13') }
@@ -3445,15 +3449,15 @@ addLayer("Hkm", {
             },
             onClick() {
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').sub(1))
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
             },
             unlocked() {
                 return player.Hkm.storyUnlocked >= 11
             }
         },
         'Hkm-fb-1-2': {
-            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + "<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time threoms" },
+            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + "<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time theorems" },
             canClick() { return false },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#444444', 10, '#666666'), 'color': 'white', 'min-height': '80px', 'width': '200px', 'border-radius': '0px', 'font-size': '10px', 'border-color': GlowingColor('#333333', 10, '#555555') }
@@ -3468,14 +3472,14 @@ addLayer("Hkm", {
         },
         'Hkm-fb-1-3': {
             title() { return "▲" },
-            canClick() { return player.Hkm.timeThroem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) },
+            canClick() { return player.Hkm.timeTheorem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#444444', 10, '#666666'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'border-color': GlowingColor('#333333', 10, '#555555') }
                 else return { 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'background-color': 'black', 'color': GlowingColor('#444444', 10, '#666666'), 'border-color': GlowingColor('#333333', 10, '#555555') }
             },
             onClick() {
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1))
             },
             unlocked() {
@@ -3501,15 +3505,15 @@ addLayer("Hkm", {
             },
             onClick() {
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').sub(1))
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
             },
             unlocked() {
                 return player.Hkm.storyUnlocked >= 13 && minBatteryLevel().gte(2)
             }
         },
         'Hkm-fb-2-2': {
-            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + " / 8<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time threoms" },
+            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + " / 8<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time theorems" },
             canClick() { return false },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#660000', 7, '#aa0000'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '10px', 'border-color': GlowingColor('#770000', 7, '#bb0000') }
@@ -3524,14 +3528,14 @@ addLayer("Hkm", {
         },
         'Hkm-fb-2-3': {
             title() { return "▲" },
-            canClick() { return player.Hkm.timeThroem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) && getBuyableAmount('Hkm', 'Hkm-fb-2-4').lt(7) },
+            canClick() { return player.Hkm.timeTheorem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) && getBuyableAmount('Hkm', 'Hkm-fb-2-4').lt(7) },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#660000', 7, '#aa0000'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'border-color': GlowingColor('#770000', 7, '#bb0000') }
                 else return { 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'background-color': 'black', 'color': GlowingColor('#660000', 7, '#aa0000'), 'border-color': GlowingColor('#770000', 7, '#bb0000') }
             },
             onClick() {
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1))
             },
             unlocked() {
@@ -3557,15 +3561,15 @@ addLayer("Hkm", {
             },
             onClick() {
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').sub(1))
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
             },
             unlocked() {
                 return player.Hkm.storyUnlocked >= 13 && minBatteryLevel().gte(3)
             }
         },
         'Hkm-fb-3-2': {
-            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + " / 8<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time threoms" },
+            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + " / 8<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time theorems" },
             canClick() { return false },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#006600', 5, '#006600'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '10px', 'border-color': GlowingColor('#007700', 5, '#00bb00') }
@@ -3580,14 +3584,14 @@ addLayer("Hkm", {
         },
         'Hkm-fb-3-3': {
             title() { return "▲" },
-            canClick() { return player.Hkm.timeThroem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) && getBuyableAmount('Hkm', 'Hkm-fb-2-4').lt(7) },
+            canClick() { return player.Hkm.timeTheorem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) && getBuyableAmount('Hkm', 'Hkm-fb-2-4').lt(7) },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#006600', 5, '#006600'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'border-color': GlowingColor('#007700', 5, '#00bb00') }
                 else return { 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'background-color': 'black', 'color': GlowingColor('#006600', 5, '#006600'), 'border-color': GlowingColor('#007700', 5, '#00bb00') }
             },
             onClick() {
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1))
             },
             unlocked() {
@@ -3613,15 +3617,15 @@ addLayer("Hkm", {
             },
             onClick() {
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').sub(1))
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
             },
             unlocked() {
                 return player.Hkm.storyUnlocked >= 13 && minBatteryLevel().gte(4)
             }
         },
         'Hkm-fb-4-2': {
-            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + " / 8<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time threoms" },
+            title() { return "Generation " + getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1) + " / 8<br>Gen up cost: " + formatWhole(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) + " time theorems" },
             canClick() { return false },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#222266', 3, '#3333aa'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '10px', 'border-color': GlowingColor('#222277', 3, '#3333bb') }
@@ -3636,14 +3640,14 @@ addLayer("Hkm", {
         },
         'Hkm-fb-4-3': {
             title() { return "▲" },
-            canClick() { return player.Hkm.timeThroem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) && getBuyableAmount('Hkm', 'Hkm-fb-2-4').lt(7) },
+            canClick() { return player.Hkm.timeTheorem.gte(tmp.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost) && getBuyableAmount('Hkm', 'Hkm-fb-2-4').lt(7) },
             style() {
                 if (this.canClick()) return { 'background': GlowingColor('#222266', 3, '#3333aa'), 'color': 'white', 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'border-color': GlowingColor('#222277', 3, '#3333bb') }
                 else return { 'min-height': '80px', 'width': '80px', 'border-radius': '0px', 'font-size': '13px', 'background-color': 'black', 'color': GlowingColor('#222266', 3, '#3333aa'), 'border-color': GlowingColor('#222277', 3, '#3333bb') }
             },
             onClick() {
-                player.Hkm.batteryThroem = player.Hkm.batteryThroem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
-                player.Hkm.timeThroem = player.Hkm.timeThroem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.batteryTheorem = player.Hkm.batteryTheorem.add(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
+                player.Hkm.timeTheorem = player.Hkm.timeTheorem.sub(layers.Hkm.buyables['Hkm-fb-' + this.id[7] + '-4'].cost())
                 setBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4', getBuyableAmount('Hkm', 'Hkm-fb-' + this.id[7] + '-4').add(1))
             },
             unlocked() {
@@ -3715,7 +3719,7 @@ addLayer("Hkm", {
         if (!hasMilestone('Hkm', 'Hkm-1')) return n(1)
         let eff = n(2).mul(player.Hkm.points.root(hasUpgrade('Hkm', 'Hkm-2') ? 1 : 2))
         if (hasMilestone('Hkm', 'Hkm-1')) eff = eff.mul(tmp.Ain.effect)
-        if (player.Hkm.storyUnlocked >= 2) eff = eff.mul(tmp.Hkm.timeThroemEff)
+        if (player.Hkm.storyUnlocked >= 2) eff = eff.mul(tmp.Hkm.timeTheoremEff)
         if (hasGrid('Hkm', 102)) eff = eff.mul(getEffect('', 102))
         if (hasGrid('Hkm', 202)) eff = eff.mul(getEffect('', 202))
         if (hasGrid('Hkm', 302)) eff = eff.mul(getEffect('', 302))
@@ -3769,7 +3773,7 @@ addLayer("Hkm", {
                 'blank',
                 ['display-text', function () { return '<h4>Total compressors: ' + quickBigColor(formatWhole(tmp.Hkm.totalCompressor), 'grey') + ' , They are generating ' + quickBigColor('+' + format(tmp.Hkm.compressorEff), 'grey') + ' time energy per second.' }],
                 ['bar', 'Hkm-t1'],
-                ['display-text', function () { return '<h4>Unused time throems: ' + quickBigColor(formatWhole(player.Hkm.timeThroem), 'grey') + ' , This provides a ' + quickBigColor('×' + format(tmp.Hkm.timeThroemEff), 'grey') + ' effect to Hokma’s effect.' }],
+                ['display-text', function () { return '<h4>Unused time theorems: ' + quickBigColor(formatWhole(player.Hkm.timeTheorem), 'grey') + ' , This provides a ' + quickBigColor('×' + format(tmp.Hkm.timeTheoremEff), 'grey') + ' effect to Hokma’s effect.' }],
                 ['display-text', function () { return '<h4>Time-Space grid strength: ' + quickBigColor(format(tmp.Hkm.gridStrength.mul(100)) + "%", 'grey') + ' , Influence all gridable effect and increases over time after respec.' }],
                 'blank',
                 ['clickable', 'Hkm-tr1'],
@@ -3914,22 +3918,22 @@ function ketherStory() {
 
 function hokmaStory() {
     player.Hkm.newStory = false
-    
+
     // Initialize pageCount if it doesn't exist
     if (player.Hkm.pageCount === undefined) {
         player.Hkm.pageCount = 1
     }
-    
+
     // Calculate pagination
     const totalPages = Math.ceil(TOTAL_HOKMA_STORIES / STORIES_PER_PAGE)
     const currentPage = Math.max(1, Math.min(player.Hkm.pageCount, totalPages))
     const startStory = (currentPage - 1) * STORIES_PER_PAGE + 1
     const endStory = Math.min(currentPage * STORIES_PER_PAGE, TOTAL_HOKMA_STORIES)
-    
+
     // Build buttons object dynamically
     let buttons = {}
     let buttonIndex = 1
-    
+
     // Previous button (visible on page 2+)
     if (currentPage > 1) {
         buttons[buttonIndex++] = {
@@ -3941,7 +3945,7 @@ function hokmaStory() {
             unlocked() { return true }
         }
     }
-    
+
     // Story buttons for current page
     for (let storyNum = startStory; storyNum <= endStory; storyNum++) {
         buttons[buttonIndex++] = {
@@ -3949,13 +3953,13 @@ function hokmaStory() {
             onClick() {
                 player.Hkm.storyShowing = storyNum
             },
-            unlocked() { 
+            unlocked() {
                 // Story 1 is always unlocked, others require storyUnlocked >= storyNum - 1
                 return storyNum === 1 || player.Hkm.storyUnlocked >= storyNum - 1
             }
         }
     }
-    
+
     // Next button (visible on pages before last)
     if (currentPage < totalPages) {
         buttons[buttonIndex++] = {
@@ -3967,12 +3971,12 @@ function hokmaStory() {
             unlocked() { return true }
         }
     }
-    
+
     Modal.show({
         color: 'gray',
-        title() { 
-            return `<text style='color:gray'>Hokma's Quotes > Story ` + player.Hkm.storyShowing + 
-                   ` (Page ${currentPage}/${totalPages})</text>` 
+        title() {
+            return `<text style='color:gray'>Hokma's Quotes > Story ` + player.Hkm.storyShowing +
+                ` (Page ${currentPage}/${totalPages})</text>`
         },
         text() { return tmp.Hkm.storyContent[player.Hkm.storyShowing].text },
         buttons: buttons
@@ -4077,8 +4081,8 @@ addLayer("Ain", {
         },
         'Hkm-8': {
             name() { return "Is this an AD reference?" },
-            tooltip() { return 'Have 5 time throems. (+1 AP, Bonus: Ain effect also appeals to time energy gain.)' },
-            done() { return player.Hkm.totalTimeThroem.gte(5) },
+            tooltip() { return 'Have 5 time theorems. (+1 AP, Bonus: Ain effect also appeals to time energy gain.)' },
+            done() { return player.Hkm.totalTimeTheorem.gte(5) },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(1)
             },
@@ -4185,8 +4189,8 @@ addLayer("Ain", {
         },
         'Hkm-20': {
             name() { return "Khalid" },
-            tooltip() { return 'Have 100 time throems. (+3 AP, get an extra eternal battery Mk.2HD and the foam constructors will never be reseted before Binah layer.)' },
-            done() { return player.Hkm.timeThroem.gte(100) },
+            tooltip() { return 'Have 100 time theorems. (+3 AP, get an extra eternal battery Mk.2HD and the foam constructors will never be reseted before Binah layer.)' },
+            done() { return player.Hkm.timeTheorem.gte(100) },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(3)
             },
@@ -4212,7 +4216,7 @@ addLayer("Ain", {
         },
         'Hkm-23': {
             name() { return "The hatred of the fireflies" },
-            tooltip() { return 'Unlock all of Kether upgrades.(25 upgrades) (+4 AP)' },
+            tooltip() { return 'Unlock all of Kether upgrades. (25 upgrades) (+4 AP)' },
             done() { return hasUpgrade('Ktr', 'Ktr-25') },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(4)
@@ -4230,8 +4234,8 @@ addLayer("Ain", {
         },
         'Hkm-25': {
             name() { return "Broken Sky" },
-            tooltip() { return 'Have 2<sup>7</sup> time throems. (+4 AP, sutract 20 from the cost of Te5.)' },
-            done() { return player.Hkm.timeThroem.gte(128) },
+            tooltip() { return 'Have 2<sup>7</sup> time theorems. (+4 AP, sutract 20 from the cost of Te5.)' },
+            done() { return player.Hkm.timeTheorem.gte(128) },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(4)
             },
@@ -4257,8 +4261,8 @@ addLayer("Ain", {
         },
         'Hkm-28': {
             name() { return "Electron" },
-            tooltip() { return 'Have 10×2<sup>4</sup> time throems. (+4 AP)' },
-            done() { return player.Hkm.timeThroem.gte(160) },
+            tooltip() { return 'Have 10×2<sup>4</sup> time theorems. (+4 AP)' },
+            done() { return player.Hkm.timeTheorem.gte(160) },
             onComplete() {
                 return player.Ain.points = player.Ain.points.add(4)
             },
