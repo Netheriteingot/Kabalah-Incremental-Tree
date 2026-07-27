@@ -6,15 +6,19 @@ var HBC_SLOT_COUNT = 3           // number of recipe slots (one per bar)
 var HBC_CHALLENGE_LENGTH = 600   // seconds before the challenge auto-exits (10 min)
 var HBC_REROLL_INTERVAL = 60     // seconds between slot re-rolls
 
+// NOTE: these two have side effects, so they must live OUTSIDE the layer.
+// Anything defined as a layer property is treated as a computed value and gets
+// called every tick while tmp is rebuilt, which would reset the state forever.
+
 // (Re)initialize all minigame state. Called from the challenge's onEnter.
 function hbcInit() {
-    Vue.set(player.Hbc, "resources", {})
-    Vue.set(player.Hbc, "challengeTime", 0)
-    Vue.set(player.Hbc, "rerollTime", 0)
+    player.Hbc.resources = {}
+    player.Hbc.challengeTime = 0
+    player.Hbc.rerollTime = 0
     let slots = []
     for (let i = 0; i < HBC_SLOT_COUNT; i++)
         slots.push({ recipe: rollHbcRecipe(), active: false, progress: 0 })
-    Vue.set(player.Hbc, "slots", slots)
+    player.Hbc.slots = slots
 }
 
 // Re-roll every slot that is NOT currently active (activated recipes are kept).
@@ -50,7 +54,7 @@ addLayer("Hbc", {
     // Crafting engine: timers, re-rolls, and running the active recipes.
     update(diff) {
         if (player.Hkm.activeChallenge != 'Hkm-bk1') return
-        if (!player.Hbc.slots || !player.Hbc.slots.length) hbcInit()
+        if (!player.Hbc.slots || !player.Hbc.slots.length) return
         diff = Math.max(0, diff)
 
         // Challenge timer -> auto-exit at the time limit.

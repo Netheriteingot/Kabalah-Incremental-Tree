@@ -19,27 +19,12 @@ let VERSION = {
 
 let changelog =
 	`
-<span style='color:#f7ecfb; text-shadow: 0 0 2px #8a2be2, 0 0 5px #8a2be2, 0 0 9px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:34px;'>
-vHkm.Hbc.12.0 — Assembly Apocalypse
+<span style='color:#f7ecfb; text-shadow: 0 0 2px #8a2be2, 0 0 5px #8a2be2, 0 0 9px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:28px;'>
+vHkm.Hbc.12.0
 </span><br>
-<span style='font-size:18px;'>
-- Added the Backward Clock challenge: a timed 10-minute crafting minigame.
-</span><br>
-<span style='font-size:18px;'>
-- Added the "Bars" tab with 3 recipe slots that reroll every minute from a weighted rarity pool.
-</span><br>
-<span style='font-size:18px;'>
-- Click a slot to activate its recipe; it crafts repeatedly until a resource runs out, then resumes automatically once you can afford it again. Activated recipes are never rerolled.
-</span><br>
-<span style='font-size:18px;'>
-- Added 149 recipes across 8 rarity tiers and 34 craftable resources, all feeding toward the ultimate goal: the Backward Clock.
-</span><br>
-<span style='font-size:18px;'>
-- Build a Backward Clock before time runs out to complete the challenge.
-</span><br>
-<span style='font-size:18px;'>
-- Reorganized game data (flavor text, news ticker, Hokma grid, crafting data) into dedicated files.
-</span><br>
+Added the Backward Clock challenge.<br>
+Refactored code.<br>
+Fixed Hokma story.<br>
 
 <br>
 <br>
@@ -133,7 +118,7 @@ function addedPlayerData() {
 
 // Determines when the game "ends"
 function isEndgame() {
-	return player.points.gte(new Decimal("e4050"))
+	return player.points.gte(new Decimal("e8266"))
 }
 
 
