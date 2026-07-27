@@ -1728,7 +1728,7 @@ addLayer("Ktr", {
             }
         },
     },
-    layerShown() { return true },
+    layerShown() { return player.Hkm.activeChallenge != 'Hkm-bk1' },
     tabFormat: {
         "The Sea of Floating Memory": {
             content: [
@@ -2322,17 +2322,17 @@ addLayer("Hkm", {
     storyContent: {
         1: {
             text() {
-                let text = `<text style='color:gray; font-size: 30px; text-shadow: 2px 2px 7px gray'>When the meteor falls, the star feathers stop and fall in the lake.</text><br>
-                <text style='color:gray; font-size: 30px; text-shadow: 2px 2px 7px gray'>I have never hated the seemingly approachable starry sky, the sinking illusion, like the meteor that people eagerly hope for. The meteor will not come, and my tomorrow is a deep darkness.——Hokma</text><br><br>
-        		<text style='color: #999999'>[Illustration] Ain had a dream about Kether, in which she mentioned that she had buried a key in Wonderland.</text><br>
-		        <text style='color: #999999'>[Illustration] When Ain woke up from her dream, she and I were riding on a wooden boat on the lake. I asked Ain where to go first, and Ain said that the clues provided by Ktr-2 pointed to Starfeather Town in the Kingdom of Niniel.</text><br>`
+                let text = `<text style='color:gray; font-size: 30px; text-shadow: 2px 2px 7px gray'>When the meteor falls, the star feathers still, and drift down into the lake.</text><br>
+                <text style='color:gray; font-size: 30px; text-shadow: 2px 2px 7px gray'>Never have I hated the starry sky that seems so near, that sinking illusion — like the meteor for which all hearts yearn. The meteor will not come, and my tomorrow is but a deep and abiding darkness. — Hokma</text><br><br>
+        		<text style='color: #999999'>[Illustration] Ain dreamed of Kether, and within that dream he told her that he had buried a key in Wonderland.</text><br>
+		        <text style='color: #999999'>[Illustration] When Ain woke from her dream, she and I were adrift upon the lake in a wooden boat. I asked her where we should go first, and Ain answered that the clues Ktr-2 had given us pointed toward Star Feather Town, in the Kingdom of Niniel.</text><br>`
                 if (player.Hkm.storyUnlocked < 1) text += `<br><br>
-                <i style='color: #444444'>[Locked] Reach 1 hokma point to continue.(Tips: Press the prestige button in the hokma layer to gain kether points. The requirement is 1e20 memory crystals and 1e330 stellar points. You will LOSE ALL PROGRESS IN THE KETHER LAYER!!)</i>`
+                <i style='color: #444444'>[Locked] Reach 1 hokma point to continue. (Tips: Press the prestige button in the hokma layer to gain hokma points. The requirement is 1e20 memory crystals and 1e330 stellar points. You will LOSE ALL PROGRESS IN THE KETHER LAYER!!)</i>`
                 if (player.Hkm.storyUnlocked >= 1) text += `
-                <text style='color: #999999'>[Illustration] On the way by boat, the girl rowing the boat chatted with Ain, introducing that the Kingdom of Niniel is a romantic fantasy land woven from fairy tales, and each city is a place where Niniel's different fairy tales take place. Ain was curious about the fairy tale of Star Feather Town, and the boating girl replied that it was a Star Feather Swan.</text><br>
-                <text style='color:magenta'>[Ain] Legend has it that Silver Moon Lake is a mirror left by the great designer Kether in the forest, which can reflect the beautiful starry sky. The true beauty is that it can summon a grand meteor shower, and the wishes made under the meteor shower will definitely come true.</text><br>
-                <text style='color: #777777'>[Hokma-46] Come on, girl, come to Silver Moon Lake. Ripples are the stage, starry nights are the curtain~Dance, spread your wings, dreams come true, please let me accompany you~When swans dance, their wings fall into shooting stars...</text><br>
-                <text style='color:magenta'>[Ain] Oh, may this be related to the design brochure that Kether-2 gave us?</text><br>
+                <text style='color: #999999'>[Illustration] As the boat drifted on, the girl at the oars fell into conversation with Ain, telling her that the Kingdom of Niniel is a romantic and fanciful land woven from fairy tales, and that each of its cities is the stage upon which one of Niniel's tales unfolds. Ain, curious about the tale of Star Feather Town, asked after it, and the boating girl answered that it was the tale of the Star Feather Swan.</text><br>
+                <text style='color:magenta'>[Ain] Legend tells that Silver Moon Lake is a mirror left within the forest by the great designer Kether, one that reflects the beauty of the starry sky. Its truest wonder is that it can summon a grand meteor shower, and any wish made beneath that shower is certain to come true.</text><br>
+                <text style='color: #777777'>[Hokma-768] Come, dear girl, come to Silver Moon Lake. The ripples are the stage, the starry night the curtain~ Dance, and spread your wings, and let dreams come true; pray, let me accompany you~ When the swans dance, their feathers fall as shooting stars...</text><br>
+                <text style='color:magenta'>[Ain] Oh — might this be tied to the design brochure that Kether-2 gave us?</text><br>
                 `
                 return text
             }
@@ -2340,17 +2340,17 @@ addLayer("Hkm", {
         2: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] There is a rule in the design brochure that when creating a set of records, it requires the designer's inspiration to echo. Now Ain has the design inspiration for "Meteor Feather" in the album. You suggest going to the design workshop in Star Feather Town to make it. Hokma-46, a boat girl, took Ain to the shore with you and introduced her name as Ah Huan. Welcome to Star Feather Town in the future and take her boat frequently, she said.</text><br>
-                <text style='color: #999999'>[Illustration] In the design workshop, Ain held the newly made bag and longed for the power of the Sephirah Shadow summoned after the design drawings of Meteor Feather were completed. She also longed to create more design drawings in the future and have stronger Sephirah power.</text><br>
+                <text style='color: #999999'>[Illustration] The design brochure holds a rule: to bring a design into being, the designer's own inspiration must resound in echo. Now the inspiration for "Meteor Feather" rested within Ain's album, and you suggested that we visit the design workshop of Star Feather Town to give it form. Hokma-768, the boat girl, brought Ain and you ashore, and told us her name was Ah Huan — bidding us welcome to Star Feather Town, and inviting us to take her boat often in the days to come.</text><br>
+                <text style='color: #999999'>[Illustration] Within the design workshop, Ain cradled the newly crafted piece and yearned for the power of the Sephirah Shadow that would be summoned once the Meteor Feather design was complete. She longed, too, to weave ever more designs in the days ahead, and to command a stronger Sephirah power.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 2) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock at least 7 achievements to continue. The more milestones you have, the faster the next Hokma run will be.</i>`
                 if (player.Hkm.storyUnlocked >= 2) text += `
-                <text style='color: #999999'>[Illustration] Ain was pulling out her wallet to pay for the production fee when a handsome young man in gorgeous attire approached the shop owner. He laid his eyes upon a pair of delicate gloves and wanted to buy them, but the shop owner offered them for free. The young man repeatedly thanked him, but Ain was very puzzled as to why it was free and whether there were any special discounts in the shop.</text><br>
-                <text style='color: #999999'>[Illustration] The handsome young man blinked at Ain and left. The shop owner explained to Ain that beauty is everything in Star Feather Town, and as a member of Star Feather Town, it is natural to give preferential treatment to beautiful people. Ain found this approach unbelievable. The shop owner said that people always think that Star Feather Town is a town that places too much emphasis on beauty, and there is no need to reject human nature. Instead, it is better to give more happiness to beautiful people like Star Feather Town, as unattractive people are not suitable to be born in Star Feather Town.</text><br>
-                <text style='color:magenta'>[Ain] Absurdly absurd, treating people differently based on their appearance?</text><br>
-                <text style='color: #999999'>[Illustration] Ain said that no one has a way to determine their natural beauty or ugliness. The shop owner An An said that you are already very beautiful and there is no need to underestimate yourself. Ain knew the shopkeeper had misunderstood him and explained that the evaluation system of Star Feather Town was just unreasonable.</text><br>
-                <text style='color: #999999'>[Illustration] Ain, walking out of the store, looked at the fairy tale like street view of Feather Town again and had a different feeling. She found that the people walking on the street were all very beautiful. In the Feather Town of the Stars, beauty is everything. So, where have people who are not good-looking gone?</text><br>
+                <text style='color: #999999'>[Illustration] Ain was drawing out her purse to pay the crafting fee when a handsome young man in resplendent attire approached the shopkeeper. His eyes settled upon a pair of delicate gloves, and he wished to buy them — yet the shopkeeper offered them for free. The young man thanked him again and again, while Ain looked on, bewildered as to why they were given freely, and whether the shop kept some special favor.</text><br>
+                <text style='color: #999999'>[Illustration] The handsome young man gave Ain a wink and departed. The shopkeeper explained that in Star Feather Town beauty is everything, and that, as one of its people, it is only natural to grant favor to the beautiful. Ain found this hard to believe. The shopkeeper said that folk always think Star Feather Town places too great a weight upon beauty, yet there is no need to deny human nature; better, he said, to grant the beautiful more happiness — as Star Feather Town does — for the plain were never suited to be born here.</text><br>
+                <text style='color:magenta'>[Ain] Absurd, truly absurd — to treat people differently by the measure of their faces?</text><br>
+                <text style='color: #999999'>[Illustration] Ain said that no one has any means to decree another's beauty or ugliness by birth. The shopkeeper answered that she was already very beautiful and had no need to think so little of herself. Ain saw that the shopkeeper had misunderstood her, and explained that it was the very system of judgment in Star Feather Town that was unreasonable.</text><br>
+                <text style='color: #999999'>[Illustration] Walking out of the shop, Ain gazed once more upon the fairy-tale streets of Star Feather Town, and felt something altogether different. She saw that all who walked the streets were beautiful. In Star Feather Town, beauty is everything. So then — where had all the plain ones gone?</text><br>
                 `
                 return text
             }
@@ -2358,23 +2358,23 @@ addLayer("Hkm", {
         3: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] Perhaps in the eyes of outsiders, Star Feather Town is pleasing and beautiful, but it makes Ain feel uncomfortable.</text><br>
-                <text style='color: #999999'>[Illustration] Thinking of coming to Star Feather Town to find clues about Kether, Ain decided to first search for news about the nursery rhyme sung by Ah Huan. As for the clues about this nursery rhyme, the people in the town coincidentally mentioned a person - an old fairy tale musician who lived in the town hospital for two years.</text><br>
-                <text style='color: #999999'>[Illustration] Ain arrived outside the old musician's ward, and before Ain could knock on the door, the old musician's voice had already come from inside.</text><br>
+                <text style='color: #999999'>[Illustration] Perhaps to the eyes of outsiders Star Feather Town is a pleasing and beautiful place, yet to Ain it brought only unease.</text><br>
+                <text style='color: #999999'>[Illustration] Having come to Star Feather Town in search of clues about Kether, Ain resolved first to seek word of the nursery rhyme that Ah Huan had sung. And as for that nursery rhyme, the townsfolk again and again spoke of one person — an old fairy-tale musician who had dwelt within the town hospital for two years.</text><br>
+                <text style='color: #999999'>[Illustration] Ain came to the door of the old musician's ward, and before she could knock, his voice had already drifted out from within.</text><br>
                 <text style='color: #777777'>[Hokma-3] Are you Hokma-9? Come in, please.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 3) text += `<br><br>
                 <i style='color: #444444'>[Locked] Expand your Time-Space grid to 1×1 to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 3) text += `
-                <text style='color: #777777'>[Hokma-3] Grey Grass, came over so early today. Did you finish the housework ahead of schedule? (Grey Grass=Hokma-9, Old Musician=Hokma-3)</text><br>
-                <text style='color:magenta'>[Ain] Hello Mr. Musician, I'm not Grey Grass, I'm Ain. Today is our first time visiting.</text><br>
-                <text style='color: #999999'>[Illustration] The old musician still muttered to himself, seemingly immersed in the world of two people chatting with "Grey Grass". As he spoke, the old musician stood up trembling from his wheelchair, and Ain quickly stepped forward to help him.</text><br>
-                <text style='color: #777777'>[Hokma-3] Meteor falling in the eye...</text><br>
-                <text style='color: #999999'>[Illustration] The sound of the piano is shattered, and the singing is hoarse.</text><br>
-                <text style='color: #999999'>[Illustration] The once legendary musician is now playing old songs in the hospital ward.</text><br>
-                <text style='color: #999999'>[Illustration] As Ain watched the old musician immerse himself in his performance, he decided to first ask his attending physician.</text><br>
-                <text style='color: #999999'>[Illustration] In the office, the attending doctor stated that the old musician has been living in the hospital since the fire at the Star Feather Swan Selection Competition two years ago.</text><br>
-                <text style='color: #777777'>[Hokma-768] After the fire, he became somewhat disoriented and seemed to have no memory of what happened that day. Afterwards, he gradually developed Alzheimer's disease and his heart has been struggling.</text><br>
+                <text style='color: #777777'>[Hokma-3] Grey Grass, you have come so early today. Have you finished your chores ahead of time? (Grey Grass = Hokma-9, Old Musician = Hokma-3)</text><br>
+                <text style='color:magenta'>[Ain] Hello, dear musician — I am not Grey Grass. I am Ain, and today is the first time we have come to visit.</text><br>
+                <text style='color: #999999'>[Illustration] Still the old musician murmured to himself, seemingly lost in a world where he and "Grey Grass" spoke as two old companions. As he spoke, he rose trembling from his wheelchair, and Ain hastened forward to steady him.</text><br>
+                <text style='color: #777777'>[Hokma-3] The meteor, falling in the eye...</text><br>
+                <text style='color: #999999'>[Illustration] The notes of the piano lay shattered, and the singing had grown hoarse.</text><br>
+                <text style='color: #999999'>[Illustration] The musician once spoken of as a legend now played only old songs within a hospital ward.</text><br>
+                <text style='color: #999999'>[Illustration] Watching the old musician lose himself in his playing, Ain resolved first to inquire of his attending physician.</text><br>
+                <text style='color: #999999'>[Illustration] In the office, the attending doctor said that the old musician had dwelt within the hospital ever since the fire at the Star Feather Swan Selection two years past.</text><br>
+                <text style='color: #777777'>[Hokma-768] After the fire he grew disoriented, and seemed to hold no memory of what befell that day. In time he slowly fell to Alzheimer's disease, and his heart has struggled ever since.</text><br>
                 `
                 return text
             }
@@ -2382,24 +2382,24 @@ addLayer("Hkm", {
         4: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] For the gray gray grass that the old musician often talks about, no one in the hospital knows who she is. Ain wondered why gray grass had not visited the old musician. The doctor didn't say anything, but only said that the old musician didn't have many relatives, and the medical expenses were always paid by the town band.</text><br>
-                <text style='color: #999999'>[Illustration] The clue seems to have broken, "I" suggested going back to the ark to ask Kether-2, perhaps there is some way. But a phone call suddenly ringing!</text><br>
-                <text style='color:white'>[Kether-9718] Hello, Ain? Do you remember what I told you about my friend who was collecting designer information? Her name is Vivian and she is a journalist. She is doing a column interview about design and needs help. Are you interested?</text><br>
-                <text style='color:white'>[Kether-9718] This column is called the Designer Intelligence Room, which allows you to get in touch with different designers through interviews, and you can also get a lot of non circulating design collectibles on the market.</text><br>
-                <text style='color:magenta'>[Ain] That's settled then.</text><br>
-                <text style='color: #999999'>[Illustration] Returning to the Sea of Memory, Ain found Kether-2, indicating the situation where the nursery rhyme clues were broken.</text><br>
-                <text style='color: #999999'>[Illustration] Kether-2 opened his portable notebook and retrieved Ain's experience in the Miracle Continent. Ain was very surprised by his abilities in this notebook.</text><br>
-                <text style='color:white'>[Kether-2] The clue to nursery rhymes was found in the information of a Sephirah Shadow, and you may be interested in its name.</text><br>
-                <text style='color:magenta'>[Ain] The name is?</text><br>
+                <text style='color: #999999'>[Illustration] As for the Grey Grass of whom the old musician so often spoke, none within the hospital knew who she was. Ain wondered why Grey Grass never came to visit him. The doctor said little, only that the old musician had few kin, and that his medical fees had always been borne by the town band.</text><br>
+                <text style='color: #999999'>[Illustration] The thread of clues seemed to have broken. I suggested we return to the ark and ask Kether-2 — perhaps there was some way yet. But then, all at once, a telephone rang!</text><br>
+                <text style='color:white'>[Kether-9718] Hello, is this Ain? Do you remember the friend I told you of, the one who was gathering word of designers? Her name is Vivian, and she is a journalist. She is preparing a column of interviews on design, and is in need of help. Are you interested?</text><br>
+                <text style='color:white'>[Kether-9718] The column is called the Designer's Intelligence Room. Through its interviews you may meet designers of every kind, and gather many design collectibles that never circulate upon the open market.</text><br>
+                <text style='color:magenta'>[Ain] Then it is settled.</text><br>
+                <text style='color: #999999'>[Illustration] Returning to the Sea of Memory, Ain sought out Kether-2 and told him how the thread of the nursery rhyme had come to break.</text><br>
+                <text style='color: #999999'>[Illustration] Kether-2 opened his portable notebook and drew forth the record of Ain's passage through the Miracle Continent. Ain marveled greatly at the powers held within that notebook.</text><br>
+                <text style='color:white'>[Kether-2] The clue to the nursery rhyme was found within the record of a certain Sephirah Shadow — and its name may be of interest to you.</text><br>
+                <text style='color:magenta'>[Ain] And the name is?</text><br>
                 <text style='color:white'>[Kether-2] Hokma-9!</text><br>
-                <text style='color:white'>[Kether-2] In each mirror of the ark, there is a Sephirah, and during battles, you use the power of the Sephirah Shadow in the mirror.</text><br>
+                <text style='color:white'>[Kether-2] Within each mirror of the ark dwells a Sephirah, and in battle you call upon the power of the Sephirah Shadow held within the mirror.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 4) text += `<br><br>
                 <i style='color: #444444'>[Locked] Expand your Time-Space grid to 2×2 to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 4) text += `
-                <text style='color:white'>[Kether-2] This mirror is the Sephirah Shadow of Grey Grass and Meteor Feather, and due to incomplete production, the mirror is not complete.</text><br>
-                <text style='color: #999999'>[Illustration] On the incomplete mirror, the sharp gaze of Grey Grass was revealed, which was a suppressed desire under the gaze.</text><br>
-                <text style='color: #999999'>[Illustration] Facing the gaze of Grey Grass, some images suddenly flashed in Ain's mind, and the real feeling made Ain grip his hands tightly.</text><br>
+                <text style='color:white'>[Kether-2] This mirror holds the Sephirah Shadow of Grey Grass and the Meteor Feather; yet because its making was never finished, the mirror too remains incomplete.</text><br>
+                <text style='color: #999999'>[Illustration] Upon the unfinished mirror, the sharp gaze of Grey Grass was revealed — and beneath that gaze lay a desire long suppressed.</text><br>
+                <text style='color: #999999'>[Illustration] Meeting the gaze of Grey Grass, images flashed all at once through Ain's mind, and the vividness of that feeling made her clench her hands tight.</text><br>
                 `
                 return text
             }
@@ -2407,25 +2407,25 @@ addLayer("Hkm", {
         5: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] When Ain came to his senses, he was already in a sea of fire. In the midst of the sea of fire, there stood an indistinct gray figure in the distance.</text><br>
-                <text style='color:magenta'>[Ain] Who are you? Where is this?</text><br>
-                <text style='color: #777777'>[Hokma-9] Meteor falling in the eye...</text><br>
-                <text style='color: #777777'>[Hokma-9] It's the person you awakened.</text><br>
-                <text style='color:magenta'>[Ain] Grey grass?</text><br>
-                <text style='color:white'>[?????] Grey grass has already died, and next, it's you!</text><br>
-                <text style='color:pink'>[You] Use the power of Sephirah's Shadow quickly!</text><br>
-                <text style='color: #999999'>[Illustration] The power of Sephirah's shadow emerged in the warm heart, and the sea of fire gradually faded away, leaving Ain alone on the empty lakeshore.</text><br>
+                <text style='color: #999999'>[Illustration] When Ain came to her senses, she stood already within a sea of fire. Amidst the flames, far off in the distance, there loomed an indistinct grey figure.</text><br>
+                <text style='color:magenta'>[Ain] Who are you? Where is this place?</text><br>
+                <text style='color: #777777'>[Hokma-9] The meteor, falling in the eye...</text><br>
+                <text style='color: #777777'>[Hokma-9] I am the one whom you have awakened.</text><br>
+                <text style='color:magenta'>[Ain] Grey Grass?</text><br>
+                <text style='color:white'>[?????] Grey Grass is already dead — and next, it shall be you!</text><br>
+                <text style='color:pink'>[You] Call upon the power of Sephirah's Shadow, quickly!</text><br>
+                <text style='color: #999999'>[Illustration] The power of Sephirah's Shadow arose within her warm heart, and the sea of fire slowly faded, leaving Ain alone upon the empty lakeshore.</text><br>
                 <text style='color:magenta'>[Ain] Where is that mysterious girl?</text><br>
-                <text style='color:magenta'>[Ain] What about that mysterious girl? So what I just saw was the designer's memory when designing this outfit?</text><br>
-                <text style='color:white'>[Kether-2] Every piece of clothing is a condensation of designer emotions and memories, which give birth to Sephirah's shadow in the reflection of the sea of memories.</text><br>
-                <text style='color:white'>[Kether-2] Sephirah Shadow only possesses the emotions and memories of the designer at the time, as these emotions are too intense. When using the power of Sephirah Shadow, be careful not to be backfired.</text><br>
-                <text style='color: #999999'>[Illustration] Ain thought for a moment, and only by summoning the Sephirah Shadow of Grey Grass can he know the truth about that memory. Only in this way can we know the relationship between nursery rhymes and Kether.</text><br>
+                <text style='color:magenta'>[Ain] What became of that mysterious girl? Then what I beheld just now was the designer's memory, from the time this garment was made?</text><br>
+                <text style='color:white'>[Kether-2] Every garment is a distillation of its designer's emotions and memories, and from them a Sephirah Shadow is born within the reflection of the Sea of Memory.</text><br>
+                <text style='color:white'>[Kether-2] A Sephirah Shadow holds only the emotions and memories the designer bore in that moment — and because those emotions run so fierce, take care, when you wield its power, that it does not turn upon you.</text><br>
+                <text style='color: #999999'>[Illustration] Ain thought a while, and understood that only by summoning the Sephirah Shadow of Grey Grass could she learn the truth of that memory. Only so could we come to know the bond between the nursery rhyme and Kether.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 5) text += `<br><br>
                 <i style='color: #444444'>[Locked] Expand your Time-Space grid to 3×3 to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 5) text += `
-                <text style='color: #999999'>[Illustration] Ain and his group met Ah Huan by chance, and Ah Huan invited them to experience a ferry tour around the lake. Ain politely declined, citing that he had something else to do.</text><br>
-                <text style='color: #999999'>[Illustration] Ah Huan was a bit curious, so Ain asked her if she had seen the Meteor Feather outfit before and showed her the picture.</text><br>
+                <text style='color: #999999'>[Illustration] Ain and her companions met Ah Huan by chance, and Ah Huan invited them to take a ferry tour about the lake. Ain gently declined, saying that she had another matter to attend to.</text><br>
+                <text style='color: #999999'>[Illustration] Ah Huan was a little curious, and so Ain asked whether she had ever seen the Meteor Feather garment before, and showed her its likeness.</text><br>
                 `
                 return text
             }
@@ -2433,23 +2433,23 @@ addLayer("Hkm", {
         6: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] Ahuan recognized Meteor Feather at a glance and said that even if I were to die, I wouldn't forget this outfit because the story about Meteor Feather couldn't be finished for a while. So Ahuan invited Ain and his team to board the ship and slowly told the story behind Meteor Feather.</text><br>
-                <text style='color: #999999'>[Illustration] Regarding the memory of Meteor Feather, Ah Huan said that she saw it during the promotion competition of the previous Star Feather Swan Selection Competition, shining brilliantly between the starry sky and the reflection.</text><br>
-                <text style='color: #999999'>[Illustration] Ain heard Ah Huan mention the Star Feather Swan Selection Competition, and it seems to have been heard somewhere in his memory. At this point, Ah Huan and Ain had already arrived at the stage of Star Feather Swan Selection, as there were no activities tonight and the stage was quiet.</text><br>
-                <text style='color: #777777'>[Hokma-768] This is the biennial election competition in the town, where the most beautiful girl is awarded the title of "Star Feather Swan". Although Xingyu Town is small, the selection of Xingyu Swan is a grand event that attracts nationwide attention.</text><br>
-                <text style='color: #777777'>[Hokma-768] The queen of Niniel, the queen whom I will always respect and aspire to, Lilith, left two years ago after winning the championship.</text><br>
-                <text style='color:magenta'>[Ain] What, isn't the queen hereditary?</text><br>
-                <text style='color: #777777'>[Hokma-768] The monarch of Niniel was elected - the person believed by the people of the whole country to best fit Niniel's temperament.</text><br>
-                <text style='color:magenta'>[Ain] So the queen is the most beautiful girl chosen by everyone in the country?</text><br>
-                <text style='color: #777777'>[Hokma-768] Yes, tomorrow is the selection of the Star Feather Swan, and this year's competition will be even more grand.</text><br>
-                <text style='color:magenta'>[Ain] The values of this country are truly extreme and terrifying.</text><br>
-                <text style='color: #777777'>[Hokma-768] Ain, I also want to sign up to participate. Can you accompany me to compete on stage once? The theme is my favorite "Nick of time"!</text><br>
+                <text style='color: #999999'>[Illustration] Ah Huan knew the Meteor Feather at a single glance, and said that even were she to die she could never forget this garment — for the tale of the Meteor Feather was not one that could be told in a moment. And so Ah Huan bade Ain and her companions aboard her boat, and slowly recounted the story behind the Meteor Feather.</text><br>
+                <text style='color: #999999'>[Illustration] Of her memory of the Meteor Feather, Ah Huan said she had beheld it during the qualifying round of the last Star Feather Swan Selection, shining in brilliance between the starry sky and its reflection upon the water.</text><br>
+                <text style='color: #999999'>[Illustration] As Ain heard Ah Huan speak of the Star Feather Swan Selection, it seemed to stir some faint echo within her memory. By now Ah Huan and Ain had come to the stage of the Star Feather Swan Selection; and as there were no festivities that night, the stage lay silent and still.</text><br>
+                <text style='color: #777777'>[Hokma-768] This is the town's selection, held once every two years, in which the most beautiful girl is crowned with the title of "Star Feather Swan". Though Star Feather Town is small, its Selection of the Swan is a grand event that draws the eyes of the whole nation.</text><br>
+                <text style='color: #777777'>[Hokma-768] The queen of Niniel — she whom I shall forever revere and aspire to, Lilith — departed two years ago, after she had won the crown.</text><br>
+                <text style='color:magenta'>[Ain] What? Is the throne not passed by blood?</text><br>
+                <text style='color: #777777'>[Hokma-768] The sovereign of Niniel is chosen by election — the one whom all the people of the land believe best embodies Niniel's spirit.</text><br>
+                <text style='color:magenta'>[Ain] So the queen is the most beautiful girl, chosen by all the people of the land?</text><br>
+                <text style='color: #777777'>[Hokma-768] Yes. Tomorrow is the Selection of the Star Feather Swan, and this year's contest shall be grander still.</text><br>
+                <text style='color:magenta'>[Ain] The values of this land are truly extreme, and truly terrifying.</text><br>
+                <text style='color: #777777'>[Hokma-768] Ain, I too wish to enter my name. Will you accompany me upon the stage, just once? The theme is my favorite — "Nick of Time"!</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 6) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock Time foam to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 6) text += `
-                <text style='color: #999999'>[Illustration] Ain awakened Sephirah's power and put on the headgear of Meteor Feather - Star Feather.</text><br>
-                <text style='color: #999999'>[Illustration] At this moment, Ah Huan was not aware of the seriousness of the problem, and the all-out Ain made Ah Huan feel the power of matching and was rubbed against the ground.</text><br>
+                <text style='color: #999999'>[Illustration] Ain awakened the power of the Sephirah and donned the headpiece of the Meteor Feather — the Star Feather.</text><br>
+                <text style='color: #999999'>[Illustration] Ah Huan did not yet grasp how grave the matter had become, and Ain, giving her all, let Ah Huan feel the full power of the art of pairing, and ground her utterly into the earth.</text><br>
                 `
                 return text
             }
@@ -2457,26 +2457,26 @@ addLayer("Hkm", {
         7: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] After the match, Ah Huan suggested that Ain participate in the Star Feather Swan selection tomorrow, thinking that this competition should be able to see different matching artists and designers, especially since Meteor Feather's outfit has shone on stage, she readily agreed.</text><br>
-                <text style='color: #777777'>[Hokma-768] After the players of Meteor Feather left, thick smoke drifted from the backstage.</text><br>
-                <text style='color:magenta'>[Ain] Is it the fire where the old musician was injured?</text><br>
-                <text style='color: #777777'>[Hokma-768] That fire was indeed quite bizarre. Everyone thought that the girl wearing Meteor Feather would win the championship, but unfortunately.</text><br>
-                <text style='color:magenta'>[Ain] How...?</text><br>
-                <text style='color: #777777'>[Hokma-768] Disfigured by the fire.</text><br>
-                <text style='color:magenta'>[Ain] Is it gray grass?</text><br>
-                <text style='color: #777777'>[Hokma-768] It doesn't seem like that name, but many girls participate in competitions to enter the entertainment and fashion circles, perhaps using stage names.</text><br>
-                <text style='color:magenta'>[Ain] So what happened to her afterwards?</text><br>
-                <text style='color: #777777'>[Hokma-768] Having suffered a great blow, living an ugly life in the small town is a terrible ending. I have seen a girl who always wears a mask when going out, has no friends, and is often bullied. I always felt sorry for her until I accidentally saw her face. I understood the reason why she was treated this way, and I was scared.</text><br>
-                <text style='color:pink'>[You] Why can't we have more sympathy for that girl? She must be in a lot of pain.</text><br>
-                <text style='color:magenta'>[Ain] Is beauty and ugliness really important? Isn't the meaning of pairing existence to enable all those who aspire to shine to realize themselves?</text><br>
+                <text style='color: #999999'>[Illustration] After the match, Ah Huan urged Ain to enter the Star Feather Swan Selection on the morrow, thinking she might there meet many artists and designers of the pairing craft — and all the more since the Meteor Feather had once shone upon that stage. Ain readily agreed.</text><br>
+                <text style='color: #777777'>[Hokma-768] After the ones who bore the Meteor Feather had gone, thick smoke came drifting from behind the stage.</text><br>
+                <text style='color:magenta'>[Ain] Was it that fire, the one in which the old musician was hurt?</text><br>
+                <text style='color: #777777'>[Hokma-768] That fire was a strange thing indeed. Everyone believed the girl who wore the Meteor Feather would win the crown — but alas.</text><br>
+                <text style='color:magenta'>[Ain] What became of her...?</text><br>
+                <text style='color: #777777'>[Hokma-768] Disfigured by the flames.</text><br>
+                <text style='color:magenta'>[Ain] Was it Grey Grass?</text><br>
+                <text style='color: #777777'>[Hokma-768] It does not seem to have been that name — though many girls enter these contests to make their way into the circles of stage and fashion, and so go by names not their own.</text><br>
+                <text style='color:magenta'>[Ain] And what befell her afterward?</text><br>
+                <text style='color: #777777'>[Hokma-768] To bear so great a blow, and then to live on as an ugly thing in this little town — that is a bitter ending. I once saw a girl who always wore a mask when she went abroad, who had no friends, and who was forever tormented by others. I pitied her always — until, by chance, I glimpsed her face. Then I understood why she was so treated, and I was afraid.</text><br>
+                <text style='color:pink'>[You] Why can we not spare that girl a little more compassion? She must be in such pain.</text><br>
+                <text style='color:magenta'>[Ain] Do beauty and ugliness truly matter so? Is not the very purpose of the pairing craft to let all who yearn to shine become truly themselves?</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 7) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock Time foam constructor to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 7) text += `
-                <text style='color: #777777'>[Hokma-768] If you are so interested in that fire, you can go to the police station to inquire, maybe the case record is still kept.</text><br>
-                <text style='color:magenta'>[Ain] Let's go now!</text><br>
-                <text style='color: #777777'>[Hokma-768] Ain, it's too late now. The police station cannot accept your request.</text><br>
-                <text style='color:magenta'>[Ain] I forgot it...</text><br>
+                <text style='color: #777777'>[Hokma-768] If that fire holds such interest for you, you might inquire at the police station — perhaps the record of the case is kept there still.</text><br>
+                <text style='color:magenta'>[Ain] Let us go now!</text><br>
+                <text style='color: #777777'>[Hokma-768] Ain, the hour is too late now. The police station will not receive your request.</text><br>
+                <text style='color:magenta'>[Ain] I had forgotten...</text><br>
                 `
                 return text
             }
@@ -2484,26 +2484,26 @@ addLayer("Hkm", {
         8: {
             text() {
                 let text = `
-                <text style='color: #777777'>[Hokma-768] Let's take you to the hotel first and ask tomorrow morning?</text><br>
+                <text style='color: #777777'>[Hokma-768] Shall we see you to the inn first, and make our inquiries in the morning?</text><br>
                 <text style='color:magenta'>[Ain] Thank you.</text><br>
-                <text style='color: #777777'>[Hokma-768] It's not a big deal. Competing with your memory has helped me find a direction for improvement and allowed me to experience the shadow of Sephirah. Tomorrow, I will confidently participate in the competition.</text><br>
-                <text style='color: #999999'>[Illustration] The second day.</text><br>
-                <text style='color: #999999'>[Illustration] Ain came to the police station as a fan of Meteor Feather to learn about the aftermath of the fire and the current situation of Grey Grass.</text><br>
-                <text style='color: #777777'>[Hokma-3200] Grey Grass is an arsonist, but how do you know about her? When reporting, she used an alias.</text><br>
-                <text style='color: #999999'>[Illustration] Ain is scared.</text><br>
-                <text style='color: #777777'>[Hokma-3200] I personally participated in the investigation, and I remember correctly that Grey Grey Grass was the arsonist who died in the fire. I want to know now, what is your relationship with her?</text><br>
-                <text style='color:magenta'>[Ain] How could it be? The Meteor Feather is clearly designed by Grey Grass.</text><br>
-                <text style='color: #777777'>[Hokma-3200] Don't you believe it? Come into the archives, I can show you something.</text><br>
-                <text style='color: #999999'>[Illustration] The police (Hokma-3200) showed them a video of Pepe dancing screaming while covering her disfigured face.</text><br>
-                <text style='color: #999999'>[Illustration] The warmth and big cat in front of the TV were stunned. No matter who the arsonist was, such a crime was terrifying. At this moment, the police handed over another photo.</text><br>
+                <text style='color: #777777'>[Hokma-768] It is nothing at all. To contend against your memory has shown me the way toward bettering myself, and let me feel the Shadow of the Sephirah. Tomorrow, I shall enter the contest with confidence.</text><br>
+                <text style='color: #999999'>[Illustration] The next day.</text><br>
+                <text style='color: #999999'>[Illustration] Ain came to the police station in the guise of an admirer of the Meteor Feather, to learn of the fire's aftermath and of what had become of Grey Grass.</text><br>
+                <text style='color: #777777'>[Hokma-3200] Grey Grass is an arsonist — but how is it that you know of her? When the matter was reported, she went by a false name.</text><br>
+                <text style='color: #999999'>[Illustration] Ain was seized with fear.</text><br>
+                <text style='color: #777777'>[Hokma-3200] I took part in the investigation myself, and if my memory serves, Grey Grass was the arsonist who perished in the fire. Now I would know — what is your bond with her?</text><br>
+                <text style='color:magenta'>[Ain] How can that be? The Meteor Feather was plainly the design of Grey Grass.</text><br>
+                <text style='color: #777777'>[Hokma-3200] You do not believe it? Come into the archives, and I shall show you something.</text><br>
+                <text style='color: #999999'>[Illustration] The officer (Hokma-3200) showed them a recording of Grey Grass, dancing and screaming as she covered her disfigured face.</text><br>
+                <text style='color: #999999'>[Illustration] Fallen_Cat and Ain stood stunned before the screen. Whoever the arsonist had been, such a crime was a terrible thing. At that moment, the officer held out yet another photograph.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 8) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock the second pack of Kether upgrades to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 8) text += `
-                <text style='color:magenta'>[Ain] Perhaps because she was too ugly, she was abandoned by her biological parents and became an adopted daughter. Because she was jealous of her sister's beauty, she committed such a crime.</text><br>
-                <text style='color: #777777'>[Hokma-3200] Many people say that dying in this fire was really cheap for her. That's not what I said, don't go out and talk nonsense.</text><br>
-                <text style='color:magenta'>[Ain] Thanks, I got it.</text><br>
-                <text style='color:magenta'>[Ain] Perhaps the whole thing is not so simple. Let's go to the hospital again to see the old musician.</text><br>
+                <text style='color:magenta'>[Ain] Perhaps, being too ugly, she was cast off by the parents who bore her and taken in as an adopted daughter. And out of envy for her sister's beauty, she committed so terrible a crime.</text><br>
+                <text style='color: #777777'>[Hokma-3200] Many say that to die in that fire was a mercy she scarcely deserved. Those are not my words, mind — do not go about repeating such things.</text><br>
+                <text style='color:magenta'>[Ain] Thank you. I understand.</text><br>
+                <text style='color:magenta'>[Ain] Perhaps this whole matter is not so simple. Let us return to the hospital and see the old musician once more.</text><br>
                 `
                 return text
             }
@@ -2511,27 +2511,27 @@ addLayer("Hkm", {
         9: {
             text() {
                 let text = `
-                <text style='color:magenta'>[Ain] Old musician, are you okay?</text><br>
-                <text style='color: #777777'>[Hokma-3] Grey grass, you come there again!</text><br>
-                <text style='color:magenta'>[Ain] I go there to see you. Old musician, do you still remember the outfit I designed?</text><br>
-                <text style='color: #777777'>[Hokma-3] Remember, how did the beautiful clothes go?</text><br>
-                <text style='color:magenta'>[Ain] We still need some materials, it's almost finished.</text><br>
-                <text style='color: #777777'>[Hokma-3] Well, when standing on stage, I will accompany you.</text><br>
-                <text style='color:magenta'>[Ain] Thank you Do I sing well?</text><br>
-                <text style='color: #777777'>[Hokma-3] It sounds great, you need to be confident. True beauty is not just about appearance, but also about sticking to your heart. No matter what others say, in my eyes you are very cute. Stand on that stage, put on the clothes you designed yourself, sing that song, and summon that meteor shower.</text><br>
-                <text style='color: #999999'>[Illustration] The words of the old musician seem so out of place in Xingyu Town, where beauty is everything.</text><br>
-                <text style='color: #777777'>[Hokma-3] Go ahead! Meteor showers will definitely fall!</text><br>
-                <text style='color:pink'>[You] Ain, let's go back to the ark and see the gray grass. She must be very lonely.</text><br>
+                <text style='color:magenta'>[Ain] Old musician, are you well?</text><br>
+                <text style='color: #777777'>[Hokma-3] Grey Grass, you have come again!</text><br>
+                <text style='color:magenta'>[Ain] I have come to see you. Old musician, do you still remember the garment I designed?</text><br>
+                <text style='color: #777777'>[Hokma-3] I remember. How fares that beautiful gown?</text><br>
+                <text style='color:magenta'>[Ain] We need a few materials yet — it is very nearly finished.</text><br>
+                <text style='color: #777777'>[Hokma-3] Good. When you stand upon that stage, I shall be there beside you.</text><br>
+                <text style='color:magenta'>[Ain] Thank you. Do I sing well?</text><br>
+                <text style='color: #777777'>[Hokma-3] It is a lovely sound; you need only believe in yourself. True beauty is not the face alone, but the holding fast to one's own heart. No matter what others may say, in my eyes you are lovely indeed. Stand upon that stage, wear the gown you fashioned with your own hands, sing that song, and summon that meteor shower.</text><br>
+                <text style='color: #999999'>[Illustration] The old musician's words seemed so out of place in Star Feather Town, where beauty is everything.</text><br>
+                <text style='color: #777777'>[Hokma-3] Go now! The meteor shower shall surely fall!</text><br>
+                <text style='color:pink'>[You] Ain, let us return to the ark and see Grey Grass. She must be so very lonely.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 9) text += `<br><br>
                 <i style='color: #444444'>[Locked] Expand your time-space grid to 4×4 to unlock.</i>`
                 if (player.Hkm.storyUnlocked >= 9) text += `
-                <text style='color:magenta'>[Ain] Go back to the ark and see the gray grass? The mirror hasn't been assembled yet, has it?</text><br>
-                <text style='color:pink'>[You] Well, let's go back. I do have something I want to say to Grey Grass.</text><br>
-                <text style='color: #999999'>[Illustration] The Ark of the Sea of Memory, in front of the Sephirah Shadow of Grey Grass</text><br>
-                <text style='color:magenta'>[Ain] Grey Grass, perhaps you have indeed committed an unforgivable mistake. I can feel your emotions and see those vague memory fragments, but is this ending what you want now?</text><br>
-                <text style='color: #777777'>[Hokma-9] Those who mock you will not change, and your pain will not end.</text><br>
-                <text style='color: #999999'>[Illustration] Ain reached out and lightly touched the mirror, causing ripples to spread on the surface without a cold touch. It was like a flame burning and jumping.</text><br>
+                <text style='color:magenta'>[Ain] Return to the ark and see Grey Grass? But the mirror is not yet whole, is it?</text><br>
+                <text style='color:pink'>[You] Even so, let us go back. There is something I truly wish to say to Grey Grass.</text><br>
+                <text style='color: #999999'>[Illustration] The Ark of the Sea of Memory — before the Sephirah Shadow of Grey Grass.</text><br>
+                <text style='color:magenta'>[Ain] Grey Grass, perhaps you have indeed done a wrong beyond forgiving. I can feel your emotions, and see those dim fragments of memory — yet is this ending truly the one you desire now?</text><br>
+                <text style='color: #777777'>[Hokma-9] Those who mock you will never change, and your pain will never end.</text><br>
+                <text style='color: #999999'>[Illustration] Ain reached out and lightly touched the mirror, and ripples spread across its surface — yet the touch held no chill. It was like a flame, burning and leaping.</text><br>
                 `
                 return text
             }
@@ -2539,29 +2539,29 @@ addLayer("Hkm", {
         10: {
             text() {
                 let text = `
-                <text style='color: #999999'>[Illustration] A figure intertwined with anger and sadness appeared in the dimly lit mirror, rushing towards Ain with a roaring flames and rolling her inside.</text><br>
+                <text style='color: #999999'>[Illustration] A figure woven of anger and sorrow arose within the dimly lit mirror, rushing upon Ain amid roaring flames and drawing her within.</text><br>
                 <text style='color:pink'>[You] Ain!</text><br>
                 <text style='color:magenta'>[Ain] Grey Grass, you...</text><br>
-                <text style='color:pink'>[You] Ain! Don't be devoured by the power of Sephirah's shadow, engage in a memory war with her!</text><br>
-                <text style='color:magenta'>[Ain] Grey grass, your pain cannot dominate me!!</text><br>
+                <text style='color:pink'>[You] Ain! Do not let the power of the Sephirah Shadow devour you — join her in the war of memory!</text><br>
+                <text style='color:magenta'>[Ain] Grey Grass, your pain shall not master me!!</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 10) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock eternal battery to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 10) text += `
-                <text style='color: #999999'>[Illustration] The stage that Grey Grass once dreamed of was burning with blazing flames, people scattered and fled, and Pepe stood trembling in fear in the sea of fire.</text><br>
-                <text style='color: #999999'>[Illustration] Grey grass held its head high, naked in the flames, like a queen patrolling her own territory.</text><br>
-                <text style='color: #777777'>[Hokma-9] If evil is beautiful, why don't I become a demon?</text><br>
-                <text style='color:magenta'>[Ain] Pain cannot be burned.</text><br>
-                <text style='color: #777777'>[Hokma-9] Don't think you can understand me, leave my memories!</text><br>
-                <text style='color: #999999'>[Illustration] The gray grass was infuriated, and the flames were swept by the strong wind towards Ain.</text><br>
+                <text style='color: #999999'>[Illustration] The stage of which Grey Grass had once dreamed blazed with roaring flames; the people scattered and fled, and Grey Grass stood trembling in terror amidst the sea of fire.</text><br>
+                <text style='color: #999999'>[Illustration] Grey Grass held her head high, bared to the flames, like a queen surveying a realm of her own.</text><br>
+                <text style='color: #777777'>[Hokma-9] If evil be beautiful, then why should I not become a demon?</text><br>
+                <text style='color:magenta'>[Ain] Pain cannot be burned away.</text><br>
+                <text style='color: #777777'>[Hokma-9] Do not imagine that you understand me — leave my memories!</text><br>
+                <text style='color: #999999'>[Illustration] Grey Grass was seized with fury, and the flames were swept upon Ain by a mighty wind.</text><br>
                 <text style='color: #999999'>[Illustration] The firelight drifted away, and Ain returned to the ark.</text><br>
-                <text style='color: #999999'>[Illustration] Ain looked at the quiet mirror, knowing that the raging fire had been burning in the heart of Grey Grass.</text><br>
-                <text style='color:pink'>[You] Grey grass seems to have enclosed itself in the fire, refusing everyone's approach.</text><br>
-                <text style='color:magenta'>[Ain] The flame will eventually go out, as long as the meteor shower falls.</text><br>
-                <text style='color:pink'>[You] If a true meteor shower were summoned in front of the gray grass, perhaps it could extinguish the flame in her heart?</text><br>
-                <text style='color:magenta'>[Ain] Well, I think so too. I have to give it a try no matter what. I have all the inspiration, let's go call for the meteor shower together.</text><br>
-                <text style='color: #999999'>[Illustration] On site registration.</text><br>
-                <text style='color: #777777'>[Hokma-768] Ain, you come here!</text><br>
+                <text style='color: #999999'>[Illustration] Ain gazed upon the silent mirror, knowing that the raging fire had been burning all this while within the heart of Grey Grass.</text><br>
+                <text style='color:pink'>[You] Grey Grass seems to have sealed herself within the fire, refusing all who draw near.</text><br>
+                <text style='color:magenta'>[Ain] The flame will die in the end — so long as the meteor shower falls.</text><br>
+                <text style='color:pink'>[You] If a true meteor shower were summoned before Grey Grass, perhaps it might quench the fire within her heart?</text><br>
+                <text style='color:magenta'>[Ain] Yes, I think so too. Come what may, I must try. I have all the inspiration now — let us go and call down the meteor shower together.</text><br>
+                <text style='color: #999999'>[Illustration] The registration on the day of the contest.</text><br>
+                <text style='color: #777777'>[Hokma-768] Ain, come here!</text><br>
                 `
                 return text
             }
@@ -2570,26 +2570,26 @@ addLayer("Hkm", {
             text() {
                 let text = `
                 <text style='color:magenta'>[Ain] Congratulations, Ah Huan!</text><br>
-                <text style='color: #777777'>[Hokma-768] The selection competition is still easy to pass, and I'm worried if you won't come.</text><br>
-                <text style='color:magenta'>[Ain] Sorry, it was delayed by some things.</text><br>
-                <text style='color:pink'>[You] A lot of things happened today, it's almost dark in the blink of an eye.</text><br>
-                <text style='color: #999999'>[Illustration] At this moment, the broadcast on the square announced that the Star Feather Swan selection qualification competition was about to end. Ain panicked and went to register, but was refused by the judges on the grounds that the selection competition had already ended.</text><br>
-                <text style='color:magenta'>[Ain] But the registration will only end in 5 minutes.</text><br>
+                <text style='color: #777777'>[Hokma-768] The qualifying round is not so hard to pass after all — I had feared you would not come.</text><br>
+                <text style='color:magenta'>[Ain] Forgive me; I was held up by certain matters.</text><br>
+                <text style='color:pink'>[You] So much has happened today; in the blink of an eye it is nearly dark.</text><br>
+                <text style='color: #999999'>[Illustration] Just then the broadcast across the square announced that the qualifying round of the Star Feather Swan Selection was about to close. Ain hurried in alarm to register, but the judges refused her, saying the selection had already ended.</text><br>
+                <text style='color:magenta'>[Ain] But the registration does not close for another five minutes.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 11) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock fuel battery to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 11) text += `
-                <text style='color: #777777'>[Hokma-768] Give us a chance, this game is very important to us.</text><br>
-                <text style='color: #777777'>[Hokma] Why didn't you come earlier? Is it okay to take responsibility for oneself? Do you want me to set an alarm for you? Go back!</text><br>
-                <text style='color: #777777'>[Hokma-768] But in previous years, there were additional spots added after the selection competition ended? Even the queen who participated in the last competition was only after the semi-finals——</text><br>
-                <text style='color: #777777'>[Hokma] What is the queen and who are you? The special channel is only open to beautiful people. You, like those girls on the street, have an ordinary appearance. It's not wrong to be ordinary, but it's your fault to have privileges despite your ordinary appearance!</text><br>
-                <text style='color:magenta'>[Ain] Are the judges of Star Feather Swan using this standard of evaluation?</text><br>
-                <text style='color: #777777'>[Hokma] What, do you have any objections?</text><br>
+                <text style='color: #777777'>[Hokma-768] Grant us this chance, I beg you — this contest means a great deal to us.</text><br>
+                <text style='color: #777777'>[Hokma] Why did you not come sooner? Can you not answer for yourself? Would you have me set an alarm for you? Away with you!</text><br>
+                <text style='color: #777777'>[Hokma-768] But in years past, further places were opened even after the selection had closed. Why, even the queen who entered the last contest joined only after the semi-finals——</text><br>
+                <text style='color: #777777'>[Hokma] What queen, and who are you? The special channel is opened to the beautiful alone. You, like those plain girls upon the street, are of common appearance. There is no wrong in being common — but to claim privilege despite that commonness, that is your fault!</text><br>
+                <text style='color:magenta'>[Ain] Is this the measure by which the judges of the Star Feather Swan pass their judgment?</text><br>
+                <text style='color: #777777'>[Hokma] What — do you have some objection?</text><br>
                 <text style='color:magenta'>[Ain] The standard of beauty is not absolute.</text><br>
-                <text style='color: #777777'>[Hokma] You actually insulted the judges and slandered the competition at the scene.</text><br>
-                <text style='color:magenta'>[Ain] Didn't you just say that the game has ended?</text><br>
-                <text style='color: #777777'>[Hokma] The shameless little girl, let me teach you a lesson. You can decide the theme of the memory competition.</text><br>
-                <text style='color: #999999'>[Illustration] Ah Huan panicked and quickly told Ain that this judge is a well-known senior matchmaker in the Sephirah Alliance, specifically responsible for commenting on the matching of contestants in the competition.</text><br>
+                <text style='color: #777777'>[Hokma] So now you insult the judges and slander the contest before all who stand here.</text><br>
+                <text style='color:magenta'>[Ain] Did you not just declare that the contest had ended?</text><br>
+                <text style='color: #777777'>[Hokma] Shameless little girl — let me teach you your place. You may name the theme of our contest of memory.</text><br>
+                <text style='color: #999999'>[Illustration] Ah Huan grew frightened, and quickly told Ain that this judge was a renowned senior master of the pairing craft within the Sephirah Alliance, charged with appraising the pairings of the contestants in the competition.</text><br>
                 `
                 return text
             }
@@ -2597,31 +2597,31 @@ addLayer("Hkm", {
         12: {
             text() {
                 let text = `
-                <text style='color:magenta'>[Ain] It's okay, I don't believe that someone with such a superficial understanding of Sephirah would have such strong memory power.</text><br>
-                <text style='color:magenta'>[Ain] So, let's set the theme as "highly respected judges".</text><br>
-                <text style='color: #777777'>[Hokma] Oh, I actually set a theme that I'm good at, arrogant!</text><br>
+                <text style='color:magenta'>[Ain] It is no matter. I do not believe that one whose understanding of the Sephirah is so shallow could command any great power of memory.</text><br>
+                <text style='color:magenta'>[Ain] So then — let the theme be "the most esteemed of judges".</text><br>
+                <text style='color: #777777'>[Hokma] Ha! You have named a theme in which I am well versed. How arrogant of you!</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 12) text += `<br><br>
                 <i style='color: #444444'>[Locked] Reach the first softcap of hokma points gain to unlock.</i>`
                 if (player.Hkm.storyUnlocked >= 12) text += `
-                <text style='color: #999999'>[Illustration] At this point, the judges had not yet realized the seriousness of the problem, and the battle had already ended at the beginning. He was rubbed against the ground by Ain's force.</text><br>
-                <text style='color: #999999'>[The Judge] I actually lost? impossible!</text><br>
-                <text style='color: #777777'>[Hokma-768] Ain, you're so powerful!</text><br>
-                <text style='color: magenta'>[Ain] The stage of the Star Feather Swan is a place where every girl shines, even if she hasn't become a 'Star Feather Swan', she can show everyone her shining points. Even so, my understanding of beauty is still shallow, but it cannot bring hope and beauty to people, and cannot be called true beauty.</text><br>
-                <text style='color: #999999'>[Illustration] The judge looked at the suddenly serious Ain, speechless. At this moment, Ain's phone suddenly rang.</text><br>
-                <text style='color: #999999'>[Illustration] "Hello, um, it was me who went to visit the old musician this afternoon. What? I'll be right there! "Ain was surprised, and the other end of the phone told her that the old musician had a sudden heart attack and was currently receiving emergency treatment!</text><br>
+                <text style='color: #999999'>[Illustration] Even now the judge had not grasped how grave the matter was, and yet the battle was ended almost as soon as it began. He was ground utterly into the earth by Ain's power.</text><br>
+                <text style='color: #999999'>[The Judge] I — lost? Impossible!</text><br>
+                <text style='color: #777777'>[Hokma-768] Ain, you are so mighty!</text><br>
+                <text style='color: magenta'>[Ain] The stage of the Star Feather Swan is a place where every girl may shine; even she who never becomes a 'Star Feather Swan' may show the world her own radiance. My own understanding of beauty is shallow still — yet a beauty that can bring neither hope nor wonder to others cannot be called true beauty at all.</text><br>
+                <text style='color: #999999'>[Illustration] The judge looked upon the suddenly solemn Ain, and could find no words. In that moment, Ain's phone rang all at once.</text><br>
+                <text style='color: #999999'>[Illustration] "Hello — yes, it was I who came to visit the old musician this afternoon. What? I shall come at once!" Ain was struck with alarm; the voice on the other end had told her that the old musician had suffered a sudden seizure of the heart, and was even now under emergency care!</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 13) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock all sorts of fuel batteries to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 13) text += `
-                <text style='color: #999999'>[Illustration] The door to the emergency room opened, and the attending doctor walked out.</text><br>
-                <text style='color: magenta'>[Ain] Hello doctor, how is the old musician doing?</text><br>
-                <text style='color: #999999'>[The Doctor] Now wake up, but .... There are probably only two days left. Are you gray grass?</text><br>
+                <text style='color: #999999'>[Illustration] The door of the emergency room opened, and the attending doctor came forth.</text><br>
+                <text style='color: magenta'>[Ain] Hello, doctor. How fares the old musician?</text><br>
+                <text style='color: #999999'>[The Doctor] He has woken now, but... there are likely only two days left to him. Are you Grey Grass?</text><br>
                 <text style='color: magenta'>[Ain] Why do you ask?</text><br>
-                <text style='color: #999999'>[The Doctor] Spend more time with him.</text><br>
-                <text style='color: magenta'>[Ain] I think what the old musician wants to see is not gray grass, but that she can overcome prejudice and regain hope.</text><br>
-                <text style='color: #777777'>[Hokma-3] You... Come... How is it going...(Struggling to say out words)</text><br>
-                <text style='color: magenta'>[Ain] Don't be in a hurry to talk, the registration went smoothly, I went in the Meteor Feather, and everyone complimented me on my design.</text><br>
+                <text style='color: #999999'>[The Doctor] Spend what time you can at his side.</text><br>
+                <text style='color: magenta'>[Ain] I believe what the old musician longs to see is not Grey Grass herself, but that she may overcome the world's prejudice and find her hope once more.</text><br>
+                <text style='color: #777777'>[Hokma-3] You... have come... how did it... go...(struggling to form the words)</text><br>
+                <text style='color: magenta'>[Ain] Do not hurry to speak. The registration went well; I wore the Meteor Feather, and everyone praised my design.</text><br>
                 `
                 return text
             }
@@ -2629,27 +2629,27 @@ addLayer("Hkm", {
         13: {
             text() {
                 let text = `
-                <text style='color: #777777'>[Hokma-3] Emm... Great.</text><br>
-                <text style='color: magenta'>[Ain] After a while, I will stand on the stage and sing, the meteor shower will fall, you must keep your eyes open!</text><br>
-                <text style='color: #999999'>[Illustration] The old musician looked out the window and nodded, his eyes shining with starlight, and they became a little brighter.</text><br>
+                <text style='color: #777777'>[Hokma-3] Mm... how wonderful.</text><br>
+                <text style='color: magenta'>[Ain] Before long, I shall stand upon the stage and sing, and the meteor shower will fall. You must keep your eyes open to behold it!</text><br>
+                <text style='color: #999999'>[Illustration] The old musician gazed out the window and nodded, his eyes shining with starlight, and grew a little brighter.</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 14) text += `<br><br>
                 <i style='color: #444444'>[Locked] Enable the leaf battery to continue.</i>`
                 if (player.Hkm.storyUnlocked >= 14) text += `
-                <text style='color:pink'>[You] We didn't register, so we couldn't participate in the competition. What's more, the hospital is so far away from the stage that the old musicians can't see it...</text><br>
-                <text style='color: magenta'>[Ain] We don't need that stage, let's go make the rest of the Meteor Feather, the gray grass is waiting for us.</text><br>
-                <text style='color: #999999'>[Illustration] When came out of the hospital, the night was already deep.</text><br>
-                <text style='color: #999999'>[Illustration] "Grey Grass, it's time for us to take the stage, " Ain held the necklace. At this moment, the Star Feather Swan competition should be underway, it must be very lively. The Gate of the Heart appeared, but the opposite side of the door was quiet and there was no echo.</text><br>
-                <text style='color:pink'>[You] She seemed like... She don't want to come out.</text><br>
-                <text style='color: #999999'>[Illustration] "Grey grass, the stage and costumes are ready for you. It's time to go on stage. Are you scared?</text><br>
-                <text style='color: #999999'>[Illustration] "What do you think you know? "Grey Grass rushed from the Heart Gate to Ain, then lowered her head a moment later, her bangs blocking her eyes.</text><br>
-                <text style='color:pink'>[You] You can no longer hurt Ain!</text><br>
-                <text style='color: #777777'>[Hokma-9] M ocking, trampling, mocking, clothes taken away, violin broken...</text><br>
-                <text style='color: #999999'>[Illustration] Some moments filled with resentment and angry.</text><br>
-                <text style='color: magenta'>[Ain] The fire did not burn away your pain, your hope is gone, the hope you want is a grand meteor shower. Come on, the old musician has been waiting for you to take the stage.</text><br>
-                <text style='color: #777777'>[Hokma-9] Don't be arrogant anymore, you don't even understand my feelings, you don't even know how powerful my heart is.</text><br>
-                <text style='color: #999999'>[Illustration] Ain suddenly be pulled into the battle of collection! But she beat grey grass after moments.</text><br>
-                <text style='color: #999999'>[Illustration] The tattered clothes on the gray grass transformed into meteor feathers dotted with stars.</text><br>
+                <text style='color:pink'>[You] We never registered, so we cannot take part in the contest. And what is more, the hospital lies so far from the stage that the old musician could never see it...</text><br>
+                <text style='color: magenta'>[Ain] We have no need of that stage. Let us go and finish the rest of the Meteor Feather — Grey Grass is waiting for us.</text><br>
+                <text style='color: #999999'>[Illustration] When they came out of the hospital, the night had already grown deep.</text><br>
+                <text style='color: #999999'>[Illustration] "Grey Grass, it is time for us to take the stage," said Ain, holding the necklace. By now the Star Feather Swan contest would surely be underway, and lively indeed. The Heart Gate appeared — yet beyond the door all was silent, and no echo answered.</text><br>
+                <text style='color:pink'>[You] It seems as though... she does not wish to come out.</text><br>
+                <text style='color: #999999'>[Illustration] "Grey Grass, the stage and the gown are ready for you. It is time to step upon the stage. Are you afraid?"</text><br>
+                <text style='color: #999999'>[Illustration] "What is it you think you understand?" Grey Grass rushed from the Heart Gate toward Ain, then a moment later lowered her head, her bangs falling to veil her eyes.</text><br>
+                <text style='color:pink'>[You] You shall not hurt Ain any longer!</text><br>
+                <text style='color: #777777'>[Hokma-9] Mocked, trampled, mocked again, my gown torn away, my violin broken...</text><br>
+                <text style='color: #999999'>[Illustration] Moments steeped in resentment and rage.</text><br>
+                <text style='color: magenta'>[Ain] The fire did not burn your pain away; your hope is lost — and the hope you long for is a grand meteor shower. Come; the old musician has been waiting for you to take the stage.</text><br>
+                <text style='color: #777777'>[Hokma-9] Be arrogant no longer. You do not understand my feelings; you do not know how mighty my heart can be.</text><br>
+                <text style='color: #999999'>[Illustration] Ain was drawn all at once into the Battle of Recollection! Yet in but a few moments, she overcame Grey Grass.</text><br>
+                <text style='color: #999999'>[Illustration] The tattered garments upon Grey Grass were transformed into a Meteor Feather, adorned with stars.</text><br>
                 `
                 return text
             }
@@ -2657,27 +2657,27 @@ addLayer("Hkm", {
         14: {
             text() {
                 let text = `
-                <text style='color:pink'>[You] Wearing the meteor feather on the gray grass is really beautiful!</text><br>
-                <text style='color: magenta'>[Ain] Yeah, we did it. Meteor shower beautiful!</text><br>
-                <text style='color: #999999'>[Illustration] In the surveillance ward, the old musician looked in surprise at the meteor shower pouring out of the window, and the bright starry sky illuminated the entire Silver Moon Lake. Grey grass wearing meteor feathers appeared in front of him, and she gently hugged him.</text><br>
-                <text style='color: magenta'>[Ain] The flames of the world in the mirror have extinguished, and I should not be consumed by the memories of Grey Grass.</text><br>
-                <text style='color:pink'>[You] Although I haven't received any further clues related to nursery rhymes, it's still worth letting go of the past for Grey Grass.Although I haven't received any further clues related to nursery rhymes, it's still worth letting go of the past for Grey Grass.</text><br>
-                <text style='color: #999999'>[Illustration] A sparkling diamond, resembling a shooting star, landed on the warm palm of my hand, with a faint swan like shape.</text><br>
-                <text style='color: magenta'>[Ain] Will this be left by Kether?</text><br>
+                <text style='color:pink'>[You] Grey Grass, wearing the Meteor Feather, is truly beautiful!</text><br>
+                <text style='color: magenta'>[Ain] Yes — we have done it. The meteor shower is beautiful!</text><br>
+                <text style='color: #999999'>[Illustration] In the quiet ward, the old musician gazed in wonder at the meteor shower pouring past his window, and the radiant starry sky lit all of Silver Moon Lake. Grey Grass, robed in the Meteor Feather, appeared before him, and gently held him in her arms.</text><br>
+                <text style='color: magenta'>[Ain] The flames of the world within the mirror are quenched, and I must not let myself be consumed by the memories of Grey Grass.</text><br>
+                <text style='color:pink'>[You] Though we have gained no further clue to the nursery rhyme, it was worth it all the same — to let Grey Grass lay down the past.</text><br>
+                <text style='color: #999999'>[Illustration] A glittering diamond, like a shooting star, came to rest upon my warm palm, faintly shaped like a swan.</text><br>
+                <text style='color: magenta'>[Ain] Could this have been left behind by Kether?</text><br>
                 `
                 if (player.Hkm.storyUnlocked < 15) text += `<br><br>
                 <i style='color: #444444'>[Locked] Unlock Backward Clock to continue. It's the ultimate challenge of Hokma layer.</i>`
                 if (player.Hkm.storyUnlocked >= 15) text += `
                 <text style='color: #999999'>[Illustration] ......</text><br>
-                <text style='color: magenta'>[Ain] Goodbye, old musician. Death is also the beginning of an unknown journey. Goodbye, old musician.</text><br>
-                <text style='color: #999999'>[Illustration] Ain heard a familiar voice and turned to see Binah in the crowd.</text><br>
-                <text style='color: magenta'>[Ain] Binah? Last time at the bar...</text><br>
+                <text style='color: magenta'>[Ain] Farewell, old musician. Death, too, is the beginning of an unknown journey. Farewell, old musician.</text><br>
+                <text style='color: #999999'>[Illustration] Ain heard a familiar voice, and turned to see Binah amidst the crowd.</text><br>
+                <text style='color: magenta'>[Ain] Binah? That time at the bar...</text><br>
                 <text style='color: #3a3a3a'>[Binah] We meet again, Ain and Fallen_Cat.</text><br>
-                <text style='color: magenta'>[Ain] Thank you... I misunderstood you before.</text><br>
-                <text style='color: #3a3a3a'>[Binah] It's my fault for not explaining clearly. Are you also attending the funeral of the old musician?</text><br>
-                <text style='color: magenta'>[Ain] Sure.</text><br>
-                <text style='color: #999999'>[Illustration] Ain's heart stirred as she stood in front of Binah and took out the Star Feather Diamond.</text><br>
-                <text style='color: #3a3a3a'>[Binah] Where did this come from? Hmm... I think the radiance of this diamond may point to another timeline parallel to our time and space, and we need to use the power of the clock of backtracking to help us complete the transition. Do you want to come together?</text><br>
+                <text style='color: magenta'>[Ain] Thank you... I misjudged you before.</text><br>
+                <text style='color: #3a3a3a'>[Binah] The fault was mine, for not explaining clearly. Have you too come to the old musician's funeral?</text><br>
+                <text style='color: magenta'>[Ain] Yes.</text><br>
+                <text style='color: #999999'>[Illustration] A stirring rose in Ain's heart as she stood before Binah and drew forth the Star Feather Diamond.</text><br>
+                <text style='color: #3a3a3a'>[Binah] Where did this come from? Hmm... I believe the radiance of this diamond may point toward another timeline, running parallel to our own space and time — and to cross over, we shall need the power of the Clock of Backtracking. Will you come with me?</text><br>
                 `
                 return text
             }
@@ -2978,7 +2978,7 @@ addLayer("Hkm", {
         },
     },
 
-    layerShown() { return player.Ktr.memoryCrystal.gte(1e20) || player.Hkm.storyUnlocked >= 1 },          // Returns a bool for if this layer's node should be visible in the tree.
+    layerShown() { return player.Hkm.activeChallenge != 'Hkm-bk1' && (player.Ktr.memoryCrystal.gte(1e20) || player.Hkm.storyUnlocked >= 1) },          // Returns a bool for if this layer's node should be visible in the tree.
     grid: {
         rows() { return tmp.Hkm.gridSize }, // If these are dynamic make sure to have a max value as well!
         cols() { return tmp.Hkm.gridSize },
@@ -3734,8 +3734,11 @@ addLayer("Hkm", {
             locked() { return player.Hkm.points.lt('1e225') || player.points.lt('1e4050') || player.Hkm.timeEnergy.lt('1e167') },
             exp: "",
             color: 'grey',
+            completionLimit: 1,
+            // Success condition: having built at least one Backward Clock.
+            canComplete() { return (player.Hbc.resources['backward_clock'] || 0) >= 1 },
             challengeDescription() {
-                let desc = "↑↑Click the symbol of current saphirah to start rebuilding the backward clock!<br>——————————————————<br>Coming soon."
+                let desc = "↑↑Click the symbol of current saphirah to start rebuilding the backward clock!<br>——————————————————<br>You have 10 minutes to craft a Backward Clock in the crafting minigame."
                 return desc
             },
             style() {
@@ -3743,7 +3746,11 @@ addLayer("Hkm", {
                 else return { 'background-color': '#444444', 'height': '400px' }
             },
             onEnter() {
-                player.Hkm.activeChallenge = ''
+                hbcInit()
+                showTab('Hbc')
+            },
+            onExit() {
+                if (player.tab == 'Hbc') showTab('Hkm')
             },
         },
     },
@@ -3819,9 +3826,6 @@ addLayer("Hkm", {
         },
         "Backward Clock": {
             content: [
-                ['bar', 'Hkm-bk1'],
-                ['bar', 'Hkm-bk2'],
-                ['bar', 'Hkm-bk3'],
                 ['row', [["column", [["raw-html", function () { }],
                     "blank", ['display-text', function () { return '<h3>' }],
                 ['column', ["blank", ["clickable", 'Hkm-bk1'], ["clickable", 'Hkm-bk2'], ["clickable", 'Hkm-bk3'], ["clickable", 'Hkm-bk4']]],
@@ -4270,7 +4274,7 @@ addLayer("Ain", {
         },
     },
     row: 'side', // Row the layer is in on the tree (0 is the first row)
-    layerShown() { return hasMilestone('Hkm', 'Hkm-1') },
+    layerShown() { return player.Hkm.activeChallenge != 'Hkm-bk1' && hasMilestone('Hkm', 'Hkm-1') },
     tabFormat: {
         "Achievements": {
             content: [
