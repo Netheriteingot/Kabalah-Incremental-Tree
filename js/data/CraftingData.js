@@ -9,7 +9,17 @@ var CRAFTING_DATA = {"resources":[{"id":"raw_matter","name":"Raw Matter","type":
 // Base weight of each rarity when rolling a recipe slot. May be tuned as the
 // game progresses (e.g. unlocking higher tiers by raising the trailing zeros).
 var HBC_RARITY_ORDER = ["common", "unusual", "rare", "epic", "legendary", "mythic", "transcendent", "celestial"]
-var HbcRarityWeights = [4, 3, 2, 1, 0, 0, 0, 0.01]
+// Base spawn weight per rarity. This is now defined by the Hbc layer's
+// HbcRarityWeights() function; call it via tmp.Hbc.HbcRarityWeights. This
+// constant is only a fallback for when tmp isn't ready yet.
+var HbcRarityWeightsDefault = [4, 3, 2, 1, 0, 0, 0, 0.01]
+
+// Current rarity spawn weights (from the layer, with a safe fallback).
+function hbcRarityWeights() {
+    return (typeof tmp !== "undefined" && tmp.Hbc && tmp.Hbc.HbcRarityWeights)
+        ? tmp.Hbc.HbcRarityWeights
+        : HbcRarityWeightsDefault
+}
 
 // --- Derived lookups (built once at load) --------------------------------
 var HBC_RECIPE_BY_ID = {}
@@ -28,6 +38,45 @@ CRAFTING_DATA.recipes.forEach(function (r) {
     HBC_RECIPES_BY_RARITY[r.rarity].push(r)
 })
 
+// A resource's rarity = the lowest rarity tier of any recipe that produces it
+// (its "discovery" tier). Built once at load. Falls back to "common".
+var HBC_RESOURCE_RARITY = {}
+CRAFTING_DATA.recipes.forEach(function (r) {
+    let idx = HBC_RARITY_ORDER.indexOf(r.rarity)
+    if (idx < 0) return
+    r.outputs.forEach(function (o) {
+        let cur = HBC_RESOURCE_RARITY[o.resource]
+        if (cur === undefined || idx < HBC_RARITY_ORDER.indexOf(cur))
+            HBC_RESOURCE_RARITY[o.resource] = r.rarity
+    })
+})
+
+// Border color per resource type (physical / arcane / other).
+var HBC_TYPE_BORDER = {
+    physical: "#5dade2",   // blue
+    arcane: "#af7ac5",     // purple
+    other: "#f5b041",      // amber
+}
+
+// Recipes sorted strictly by rarity (common -> celestial) then name. Used by
+// the Recipes tab so display order is stable and grouped by tier.
+var HBC_SORTED_RECIPES = CRAFTING_DATA.recipes.slice().sort(function (a, b) {
+    let ra = HBC_RARITY_ORDER.indexOf(a.rarity), rb = HBC_RARITY_ORDER.indexOf(b.rarity)
+    if (ra != rb) return ra - rb
+    return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0)
+})
+
+// Crafted resources (excluding the 3 currencies and the clock) sorted by
+// discovery rarity then name. Used by the Resources tab.
+var HBC_SORTED_RESOURCES = CRAFTING_DATA.resources.filter(function (r) {
+    return !HBC_CURRENCY_IDS[r.id] && r.id != "backward_clock"
+}).sort(function (a, b) {
+    let ra = HBC_RARITY_ORDER.indexOf(HBC_RESOURCE_RARITY[a.id])
+    let rb = HBC_RARITY_ORDER.indexOf(HBC_RESOURCE_RARITY[b.id])
+    if (ra != rb) return ra - rb
+    return a.name < b.name ? -1 : (a.name > b.name ? 1 : 0)
+})
+
 // --- Currency access -----------------------------------------------------
 // The three "infinite" currencies map onto existing game resources (Decimals):
 //   kether_points -> player.Ktr.points
@@ -39,6 +88,34 @@ function hbcCurrencyRef(id) {
     if (id == "time_energy") return { obj: player.Hkm, key: "timeEnergy" }
     if (id == "hokma_points") return { obj: player.Hkm, key: "points" }
     return null
+}
+
+// --- Currency cost scaling ----------------------------------------------
+// Currency inputs are hugely inflated versus the nominal recipe amount. A
+// recipe that nominally costs 1 unit of a currency actually costs `base`
+// below, and every extra nominal unit multiplies that cost by the per-unit
+// factor (given here as exponents of 10):
+//   kether_points: 1e4025 base, x1e25 per extra unit
+//   hokma_points:  1e222  base, x1e3  per extra unit
+//   time_energy:   1e166  base, x10   per extra unit
+var HBC_CURRENCY_COST = {
+    kether_points: { base: 4025, per: 25 },
+    hokma_points: { base: 222, per: 3 },
+    time_energy: { base: 166, per: 1 },
+}
+
+// Scaled cost (Decimal) for a currency input of the given nominal amount.
+function hbcCurrencyCost(id, amount) {
+    let c = HBC_CURRENCY_COST[id]
+    if (!c) return new Decimal(amount)
+    return Decimal.pow(10, c.base + c.per * (amount - 1))
+}
+
+// Real cost (Decimal) of a single recipe input: scaled for currencies, plain
+// otherwise.
+function hbcInputCost(inp) {
+    if (HBC_CURRENCY_IDS[inp.resource]) return hbcCurrencyCost(inp.resource, inp.amount)
+    return new Decimal(inp.amount)
 }
 
 // How much of a resource the player currently has, as a Decimal (for comparison).
@@ -57,18 +134,43 @@ function hbcAddAmount(id, amount) {
         return
     }
     let cur = player.Hbc.resources[id] || 0
-    Vue.set(player.Hbc.resources, id, Math.max(0, cur + amount))
+    // Key is guaranteed to exist (see hbcFreshResourceMap / hbcEnsureMaps), so
+    // plain assignment is reactive — no Vue.set needed.
+    player.Hbc.resources[id] = Math.max(0, cur + amount)
+}
+
+// A "starter" recipe has exactly one input, that input is a currency, and its
+// nominal amount is below 2 (i.e. it costs only the currency's base price).
+// At least one of the initial three slots is guaranteed to be one of these.
+function hbcIsStarterRecipe(recipeId) {
+    let r = HBC_RECIPE_BY_ID[recipeId]
+    if (!r || r.inputs.length != 1) return false
+    let inp = r.inputs[0]
+    return HBC_CURRENCY_IDS[inp.resource] && inp.amount < 2
+}
+
+// All recipe ids that qualify as starters (built once at load).
+var HBC_STARTER_RECIPES = CRAFTING_DATA.recipes
+    .filter(function (r) { return hbcIsStarterRecipe(r.id) })
+    .map(function (r) { return r.id })
+
+// Roll a starter recipe uniformly (respecting the rarity spawn weights among
+// starters). Falls back to a plain roll if none exist.
+function rollHbcStarterRecipe() {
+    if (!HBC_STARTER_RECIPES.length) return rollHbcRecipe()
+    return HBC_STARTER_RECIPES[Math.floor(Math.random() * HBC_STARTER_RECIPES.length)]
 }
 
 // --- Recipe rolling ------------------------------------------------------
 // Rarity-then-uniform: pick a rarity weighted by HbcRarityWeights (skipping
 // tiers with no recipes), then pick uniformly among that rarity's recipes.
 function rollHbcRecipe() {
+    let weights = hbcRarityWeights()
     let total = 0
     let entries = []
     for (let i = 0; i < HBC_RARITY_ORDER.length; i++) {
         let name = HBC_RARITY_ORDER[i]
-        let w = HbcRarityWeights[i] || 0
+        let w = weights[i] || 0
         let pool = HBC_RECIPES_BY_RARITY[name]
         if (w > 0 && pool && pool.length) {
             total += w
@@ -90,16 +192,125 @@ function rollHbcRecipe() {
 function hbcRecipeAfford(recipe) {
     if (!recipe) return false
     for (let inp of recipe.inputs)
-        if (hbcAmount(inp.resource).lt(inp.amount)) return false
+        if (hbcAmount(inp.resource).lt(hbcInputCost(inp))) return false
     return true
 }
 
 function hbcRecipeConsume(recipe) {
-    for (let inp of recipe.inputs) hbcAddAmount(inp.resource, -inp.amount)
+    for (let inp of recipe.inputs) {
+        if (HBC_CURRENCY_IDS[inp.resource]) {
+            let ref = hbcCurrencyRef(inp.resource)
+            if (ref) ref.obj[ref.key] = ref.obj[ref.key].sub(hbcInputCost(inp)).max(0)
+        } else {
+            hbcAddAmount(inp.resource, -inp.amount)
+        }
+    }
+}
+
+// --- Discovery-map construction -----------------------------------------
+// Every crafted (non-currency) resource id, and every recipe id. Built once.
+var HBC_ALL_RESOURCE_IDS = CRAFTING_DATA.resources
+    .filter(function (r) { return !HBC_CURRENCY_IDS[r.id] })
+    .map(function (r) { return r.id })
+var HBC_ALL_RECIPE_IDS = CRAFTING_DATA.recipes.map(function (r) { return r.id })
+
+// Fresh maps with EVERY key present up front. This is what makes plain direct
+// assignment (map[id] = value) reactive under Vue 2: Vue can only track keys
+// that already exist when it converts the object, so we never add keys later.
+function hbcFreshResourceMap() {
+    let m = {}
+    HBC_ALL_RESOURCE_IDS.forEach(function (id) { m[id] = 0 })
+    return m
+}
+function hbcFreshFlagMap(ids) {
+    let m = {}
+    ids.forEach(function (id) { m[id] = false })
+    return m
+}
+// Copy the known values of `src` onto a fully-populated fresh map.
+function hbcMergeFlags(fresh, src) {
+    if (src) for (let k in src) if (src[k]) fresh[k] = true
+    return fresh
+}
+
+// Ensure the discovery/seen maps exist AND contain every id. Saves (or an
+// in-progress challenge) that predate these fields leave them undefined or
+// only partially populated; a missing key can't be made reactive by direct
+// assignment, so we rebuild+reassign the whole object (which Vue converts to a
+// fully reactive object) whenever it's incomplete. Guarded so a complete map
+// is left untouched. Cheap to call on every access path.
+function hbcEnsureMaps() {
+    if (!player.Hbc.resources || !hbcMapHasAll(player.Hbc.resources, HBC_ALL_RESOURCE_IDS)) {
+        let m = hbcFreshResourceMap()
+        if (player.Hbc.resources) for (let k in player.Hbc.resources) m[k] = player.Hbc.resources[k]
+        player.Hbc.resources = m
+    }
+    if (!player.Hbc.gainedThisRun || !hbcMapHasAll(player.Hbc.gainedThisRun, HBC_ALL_RESOURCE_IDS))
+        player.Hbc.gainedThisRun = hbcMergeFlags(hbcFreshFlagMap(HBC_ALL_RESOURCE_IDS), player.Hbc.gainedThisRun)
+    if (!player.Hbc.gainedEver || !hbcMapHasAll(player.Hbc.gainedEver, HBC_ALL_RESOURCE_IDS))
+        player.Hbc.gainedEver = hbcMergeFlags(hbcFreshFlagMap(HBC_ALL_RESOURCE_IDS), player.Hbc.gainedEver)
+    if (!player.Hbc.seenRecipes || !hbcMapHasAll(player.Hbc.seenRecipes, HBC_ALL_RECIPE_IDS))
+        player.Hbc.seenRecipes = hbcMergeFlags(hbcFreshFlagMap(HBC_ALL_RECIPE_IDS), player.Hbc.seenRecipes)
+}
+
+// True if `map` already has a key for every id in `ids`.
+function hbcMapHasAll(map, ids) {
+    for (let i = 0; i < ids.length; i++) if (!(ids[i] in map)) return false
+    return true
 }
 
 function hbcRecipeProduce(recipe) {
-    for (let out of recipe.outputs) hbcAddAmount(out.resource, out.amount)
+    hbcEnsureMaps()
+    for (let out of recipe.outputs) {
+        hbcAddAmount(out.resource, out.amount)
+        hbcMarkGained(out.resource)
+    }
+    // A recipe becomes "seen" once it has completed at least once (any run).
+    if (recipe && !player.Hbc.seenRecipes[recipe.id]) player.Hbc.seenRecipes[recipe.id] = true
+}
+
+// --- Discovery tracking --------------------------------------------------
+// player.Hbc.gainedThisRun / player.Hbc.gainedEver are maps of
+// resourceId -> true. "This run" is cleared each time the challenge starts.
+function hbcMarkGained(id) {
+    if (HBC_CURRENCY_IDS[id]) return
+    hbcEnsureMaps()
+    if (!player.Hbc.gainedThisRun[id]) player.Hbc.gainedThisRun[id] = true
+    if (!player.Hbc.gainedEver[id]) player.Hbc.gainedEver[id] = true
+}
+
+// Discovery state of a resource: 2 = gained this run, 1 = gained a former run
+// only, 0 = never gained.
+function hbcDiscoveryState(id) {
+    if ((player.Hbc.resources[id] || 0) > 0 || player.Hbc.gainedThisRun[id]) return 2
+    if (player.Hbc.gainedEver[id]) return 1
+    return 0
+}
+
+// --- Color helpers (for the animated quit button) ------------------------
+function hbcHexToRGB(hex) {
+    hex = String(hex).replace("#", "")
+    if (hex.length === 3) hex = hex.split("").map(function (c) { return c + c }).join("")
+    return [parseInt(hex.slice(0, 2), 16), parseInt(hex.slice(2, 4), 16), parseInt(hex.slice(4, 6), 16)]
+}
+function hbcRGBToHex(a) {
+    return "#" + a.map(function (x) {
+        return Math.max(0, Math.min(255, Math.round(x))).toString(16).padStart(2, "0")
+    }).join("")
+}
+// Blend two hex colors: t is the weight of color b (0 -> a, 1 -> b).
+function hbcMixColor(a, b, t) {
+    let ca = hbcHexToRGB(a), cb = hbcHexToRGB(b)
+    return hbcRGBToHex([0, 1, 2].map(function (i) { return ca[i] * (1 - t) + cb[i] * t }))
+}
+// A color that cycles smoothly through all rarity colors over `period` seconds.
+function hbcRarityCycleColor(period) {
+    let colors = CRAFTING_DATA.rarities.map(function (r) { return r.color })
+    let n = colors.length
+    if (!n) return "#ffffff"
+    let f = (((Date.now() / 1000) / period) % 1 + 1) % 1 * n
+    let i = Math.floor(f)
+    return hbcMixColor(colors[i % n], colors[(i + 1) % n], f - i)
 }
 
 // Rarity color for a recipe id (falls back to white).
@@ -116,7 +327,242 @@ function hbcIngredientText(list) {
         let res = HBC_RESOURCE_BY_ID[x.resource]
         let name = res ? res.name : x.resource
         let cur = CRAFTING_DATA.currencies.find(function (c) { return c.id == x.resource })
-        if (cur) name = cur.name
+        if (cur) {
+            name = cur.name
+            // Currencies are shown at their real (scaled) cost.
+            return format(hbcCurrencyCost(x.resource, x.amount)) + "× " + name
+        }
         return x.amount + "× " + name
     }).join(", ")
+}
+
+// --- Resource display boxes ----------------------------------------------
+// Rarity color for a resource id (via its discovery tier).
+function hbcResourceRarityColor(id) {
+    let rar = HBC_RARITY_BY_NAME[HBC_RESOURCE_RARITY[id]]
+    return rar ? rar.color : "#cccccc"
+}
+
+// HTML for one currency box (kether points / time energy / hokma points).
+// These use their own layer color schemes and are always shown.
+function hbcCurrencyBox(id, mainColor) {
+    let cur = CRAFTING_DATA.currencies.find(function (c) { return c.id == id })
+    let name = cur ? cur.name : id
+    let amt = hbcAmount(id)
+    let bg = hbcMixColor("#000000", mainColor, 0.5)
+    return "<div style='display:inline-flex;flex-direction:column;align-items:center;justify-content:center;"
+        + "vertical-align:top;line-height:1.2;box-sizing:border-box;"
+        + "width:120px;height:64px;margin:4px;border-radius:5px;color:white;font-size:12px;"
+        + "border:3px solid " + mainColor + ";background-color:" + bg + "'>"
+        + "<b>" + name + "</b><span>" + format(amt) + "</span></div>"
+}
+
+// HTML for one crafted-resource box (the 33). Applies the discovery-based
+// main color (10% / 30% / 50% rarity into black) and type-based border.
+function hbcResourceBox(id) {
+    let res = HBC_RESOURCE_BY_ID[id]
+    let name = res ? res.name : id
+    let state = hbcDiscoveryState(id)
+    let rarityColor = hbcResourceRarityColor(id)
+    let border = HBC_TYPE_BORDER[res ? res.type : "other"] || "#888888"
+    // Main color: 10% / 30% / 50% rarity mixed into black by discovery state.
+    let mix = state == 2 ? 0.5 : (state == 1 ? 0.3 : 0.1)
+    let bg = hbcMixColor("#000000", rarityColor, mix)
+    let amt = player.Hbc.resources[id] || 0
+    let inner = (state == 0)
+        ? "???"
+        : "<b>" + name + "</b><span>" + format(amt) + "</span>"
+    return "<div style='display:inline-flex;flex-direction:column;align-items:center;justify-content:center;"
+        + "vertical-align:top;line-height:1.2;box-sizing:border-box;"
+        + "width:120px;height:64px;margin:4px;border-radius:5px;color:white;font-size:12px;"
+        + "border:3px solid " + border + ";background-color:" + bg + "'>" + inner + "</div>"
+}
+
+// The Backward Clock box, which is always shown (never "???").
+function hbcClockBox() {
+    let res = HBC_RESOURCE_BY_ID["backward_clock"]
+    let name = res ? res.name : "Backward Clock"
+    let rarityColor = hbcResourceRarityColor("backward_clock")
+    let bg = hbcMixColor("#000000", rarityColor, 0.5)
+    let amt = player.Hbc.resources["backward_clock"] || 0
+    return "<div style='display:inline-flex;flex-direction:column;align-items:center;justify-content:center;"
+        + "vertical-align:top;line-height:1.2;box-sizing:border-box;"
+        + "width:120px;height:64px;margin:4px;border-radius:5px;color:white;font-size:12px;"
+        + "border:3px solid " + rarityColor + ";background-color:" + bg + "'>"
+        + "<b>" + name + "</b><span>" + format(amt) + "</span></div>"
+}
+
+// Full HTML for the Resources tab.
+function hbcResourcesDisplay() {
+    hbcEnsureMaps()
+    let out = ""
+    // Row 1: the three currencies with their own color schemes.
+    // kether -> white/gold-ish Ktr, time energy + hokma -> grey Hkm.
+    out += "<div style='text-align:center'>"
+    out += hbcCurrencyBox("kether_points", "#ffd700")
+    out += hbcCurrencyBox("time_energy", "#aaaaaa")
+    out += hbcCurrencyBox("hokma_points", "#888888")
+    out += "</div>"
+
+    // Spacing, then the 33 crafted resources (all except backward_clock),
+    // sorted by rarity then name, in rows of 3 -> 11 rows.
+    out += "<div style='height:24px'></div>"
+    let crafted = HBC_SORTED_RESOURCES
+    out += "<div style='text-align:center'>"
+    for (let i = 0; i < crafted.length; i++) {
+        out += hbcResourceBox(crafted[i].id)
+        if ((i + 1) % 3 == 0) out += "<br>"
+    }
+    out += "</div>"
+
+    // Spacing, then the backward clock alone (always shown).
+    out += "<div style='height:24px'></div>"
+    out += "<div style='text-align:center'>" + hbcClockBox() + "</div>"
+    return out
+}
+
+// --- Recipe display boxes ------------------------------------------------
+// Absolute layout: every box reserves room for the largest recipe in the game
+// (4 inputs, 2 outputs), so the separator line sits at the same spot in every
+// box regardless of the actual input/output counts.
+var HBC_MAX_INPUTS = 4
+var HBC_MAX_OUTPUTS = 2
+var HBC_LINE_H = 18          // px per ingredient line
+
+// Text for one ingredient line ("N× Name"), currencies at their scaled cost.
+function hbcIngredientLine(x) {
+    let res = HBC_RESOURCE_BY_ID[x.resource]
+    let name = res ? res.name : x.resource
+    let cur = CRAFTING_DATA.currencies.find(function (c) { return c.id == x.resource })
+    if (cur) return format(hbcCurrencyCost(x.resource, x.amount)) + "× " + cur.name
+    return x.amount + "× " + name
+}
+
+// A recipe is "seen" if it has ever been completed.
+function hbcRecipeSeen(recipeId) {
+    return !!player.Hbc.seenRecipes[recipeId]
+}
+
+// HTML for one recipe box.
+function hbcRecipeBox(recipeId) {
+    let recipe = HBC_RECIPE_BY_ID[recipeId]
+    if (!recipe) return ""
+    let seen = hbcRecipeSeen(recipeId)
+    let rarityColor = hbcRecipeColor(recipeId)
+
+    // Section background colors by seen state.
+    let inMix = seen ? 0.5 : 0.25
+    let outMix = seen ? 1.0 : 0.5
+    let inBg = hbcMixColor("#000000", rarityColor, inMix)
+    let outBg = hbcMixColor("#000000", rarityColor, outMix)
+
+    // Input lines: one per input. If unseen, each input is a separate "???".
+    let inLines = recipe.inputs.map(function (inp) {
+        return "<div style='height:" + HBC_LINE_H + "px'>" + (seen ? hbcIngredientLine(inp) : "???") + "</div>"
+    }).join("")
+
+    // Output lines: each output shown faithfully only if that resource has ever
+    // been gained; otherwise "???".
+    let outLines = recipe.outputs.map(function (out) {
+        let known = player.Hbc.gainedEver[out.resource] || HBC_CURRENCY_IDS[out.resource]
+        return "<div style='height:" + HBC_LINE_H + "px'>" + (known ? hbcIngredientLine(out) : "???") + "</div>"
+    }).join("")
+
+    // Fixed section heights (absolute layout for the largest recipe). Inputs
+    // and outputs are vertically centered within their sections.
+    let inSectionH = HBC_MAX_INPUTS * HBC_LINE_H
+    let outSectionH = HBC_MAX_OUTPUTS * HBC_LINE_H
+
+    return "<div style='display:inline-block;vertical-align:top;box-sizing:border-box;width:190px;margin:5px;"
+        + "border:2px solid " + rarityColor + ";border-radius:5px;overflow:hidden;color:white;font-size:12px'>"
+        // Input section (vertically centered), colored at inMix.
+        + "<div style='background-color:" + inBg + ";height:" + inSectionH + "px;padding:2px 4px;box-sizing:border-box;"
+        + "display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center'>"
+        + inLines
+        + "</div>"
+        // Separator line.
+        + "<div style='height:2px;background-color:white'></div>"
+        // Output section (vertically centered), colored at outMix.
+        + "<div style='background-color:" + outBg + ";height:" + outSectionH + "px;padding:2px 4px;box-sizing:border-box;"
+        + "display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center'>"
+        + outLines
+        + "</div>"
+        + "</div>"
+}
+
+// Number of recipe pages (6 recipes per page).
+var HBC_RECIPES_PER_PAGE = 6
+// HBC_PAGES_PER_GROUP ("big page" = a group of this many small pages) is
+// softcoded on the Hbc layer; read it via tmp.Hbc.HBC_PAGES_PER_GROUP.
+function hbcRecipePageCount() {
+    return Math.ceil(CRAFTING_DATA.recipes.length / HBC_RECIPES_PER_PAGE)
+}
+// The big page (0-indexed group) that the current page falls in.
+function hbcRecipeBigPage() {
+    return Math.floor((player.Hbc.recipePage || 0) / tmp.Hbc.HBC_PAGES_PER_GROUP)
+}
+function hbcRecipeBigPageCount() {
+    return Math.ceil(hbcRecipePageCount() / tmp.Hbc.HBC_PAGES_PER_GROUP)
+}
+
+// Click handlers for the recipe pager (called from inline onclick).
+function hbcGotoRecipePage(p) {
+    player.Hbc.recipePage = Math.max(0, Math.min(hbcRecipePageCount() - 1, p))
+}
+function hbcRecipeShiftGroup(dir) {
+    let g = Math.max(0, Math.min(hbcRecipeBigPageCount() - 1, hbcRecipeBigPage() + dir))
+    hbcGotoRecipePage(g * tmp.Hbc.HBC_PAGES_PER_GROUP)
+}
+
+// The pager row, built from the same .tabButton class, size and color scheme
+// as the Hokma story modal buttons (layers.js hokmaStory). Layer color is grey
+// (the Hkm scheme); the active page button is filled with that scheme.
+function hbcRecipePagerHTML() {
+    let scheme = layers.Hbc.color   // "grey" — same as the Hkm modal color
+    let cur = Math.max(0, Math.min(hbcRecipePageCount() - 1, player.Hbc.recipePage || 0))
+    let big = hbcRecipeBigPage()
+    // All buttons share a fixed width so page-number buttons don't grow with
+    // the digit count. `hidden` keeps the group-nav buttons occupying space
+    // (visibility:hidden) when they don't apply, instead of collapsing.
+    let btn = function (label, onclick, active, hidden) {
+        // Match the modal buttons: .tabButton + margin:0 5px; border-color set
+        // to the layer color scheme. Active page uses the Hkm scheme as a fill.
+        let extra = active ? "background-color:" + scheme + ";color:black;" : ""
+        if (hidden) extra += "visibility:hidden;"
+        return "<button class='tabButton' style='width:60px;box-sizing:border-box;padding:5px 0;margin:0 5px;"
+            + "border-color:" + scheme + ";" + extra + "'"
+            + " onclick='" + onclick + "'>" + label + "</button>"
+    }
+    let out = "<div style='text-align:center;margin-bottom:6px'>"
+    // Prev-group: hidden (but space-occupying) on the first group.
+    out += btn("&lt;", "hbcRecipeShiftGroup(-1)", false, big <= 0)
+    // Page-number buttons for this group.
+    let pagesPerGroup = tmp.Hbc.HBC_PAGES_PER_GROUP
+    for (let s = 0; s < pagesPerGroup; s++) {
+        let p = big * pagesPerGroup + s
+        if (p >= hbcRecipePageCount()) break
+        out += btn(String(p + 1), "hbcGotoRecipePage(" + p + ")", p == cur, false)
+    }
+    // Next-group: hidden (but space-occupying) on the last group.
+    out += btn("&gt;", "hbcRecipeShiftGroup(1)", false, big >= hbcRecipeBigPageCount() - 1)
+    out += "</div>"
+    return out
+}
+
+// Full HTML for the current page of the Recipes tab.
+function hbcRecipesDisplay() {
+    hbcEnsureMaps()
+    let pages = hbcRecipePageCount()
+    let page = Math.max(0, Math.min(pages - 1, player.Hbc.recipePage || 0))
+    let start = page * HBC_RECIPES_PER_PAGE
+    let slice = HBC_SORTED_RECIPES.slice(start, start + HBC_RECIPES_PER_PAGE)
+
+    let out = hbcRecipePagerHTML()
+    out += "<div style='text-align:center'>"
+    for (let i = 0; i < slice.length; i++) {
+        out += hbcRecipeBox(slice[i].id)
+        if ((i + 1) % 3 == 0) out += "<br>"   // 3 per row -> 2 rows per page
+    }
+    out += "</div>"
+    return out
 }

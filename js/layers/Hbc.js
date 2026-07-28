@@ -2,9 +2,8 @@
 // A self-contained crafting minigame that only exists while the Hkm-bk1
 // challenge is active. Recipe data + helpers live in js/data/CraftingData.js.
 
-var HBC_SLOT_COUNT = 3           // number of recipe slots (one per bar)
-var HBC_CHALLENGE_LENGTH = 600   // seconds before the challenge auto-exits (10 min)
-var HBC_REROLL_INTERVAL = 60     // seconds between slot re-rolls
+// Tunable constants live on the layer (tmp.Hbc.HBC_SLOT_COUNT, etc.) so they
+// can be read through the temp system. See addLayer("Hbc", ...) below.
 
 // NOTE: these two have side effects, so they must live OUTSIDE the layer.
 // Anything defined as a layer property is treated as a computed value and gets
@@ -12,12 +11,29 @@ var HBC_REROLL_INTERVAL = 60     // seconds between slot re-rolls
 
 // (Re)initialize all minigame state. Called from the challenge's onEnter.
 function hbcInit() {
-    player.Hbc.resources = {}
+    // Reset per-run state: reassign whole fresh, fully-keyed maps (Vue 2 tracks
+    // reassignment of an existing property and makes the new object reactive).
+    player.Hbc.resources = hbcFreshResourceMap()
+    player.Hbc.gainedThisRun = hbcFreshFlagMap(HBC_ALL_RESOURCE_IDS)  // gainedEver persists
+    // Guarantee the persistent maps exist and are fully populated (saves
+    // predating these fields, or a challenge that started before they were
+    // added, leave them undefined/partial -> both production and the Recipes
+    // tab would otherwise break, and missing keys can't be made reactive).
+    hbcEnsureMaps()
+    if (player.Hbc.recipePage === undefined) player.Hbc.recipePage = 0
     player.Hbc.challengeTime = 0
     player.Hbc.rerollTime = 0
+    let slotCount = tmp.Hbc.HBC_SLOT_COUNT
     let slots = []
-    for (let i = 0; i < HBC_SLOT_COUNT; i++)
+    for (let i = 0; i < slotCount; i++)
         slots.push({ recipe: rollHbcRecipe(), active: false, progress: 0 })
+    // Guarantee at least one affordable starter recipe among the initial slots
+    // (single currency input, cost < 2 of that currency), unless one already
+    // rolled naturally.
+    if (slotCount > 0 && !slots.some(function (s) { return hbcIsStarterRecipe(s.recipe) })) {
+        let idx = Math.floor(Math.random() * slotCount)
+        slots[idx] = { recipe: rollHbcStarterRecipe(), active: false, progress: 0 }
+    }
     player.Hbc.slots = slots
 }
 
@@ -32,16 +48,24 @@ function hbcRerollSlots() {
 
 addLayer("Hbc", {
     startData() {
+        // Every key is present up front. Vue 2 can only track keys that exist
+        // when it converts an object to reactive, so pre-populating here (and,
+        // for old saves, via fixData filling the missing keys from these
+        // defaults) lets plain direct assignment stay reactive later.
         return {
             unlocked: true,
             points: new Decimal(0),
-            resources: {},          // crafted resource id -> plain-number amount
+            resources: hbcFreshResourceMap(),      // crafted resource id -> plain-number amount
+            gainedThisRun: hbcFreshFlagMap(HBC_ALL_RESOURCE_IDS),  // resource id -> gained this challenge
+            gainedEver: hbcFreshFlagMap(HBC_ALL_RESOURCE_IDS),     // resource id -> gained in any challenge
+            seenRecipes: hbcFreshFlagMap(HBC_ALL_RECIPE_IDS),      // recipe id -> completed in any challenge
+            recipePage: 0,          // current page in the Recipes tab
             slots: [],              // [{ recipe, active, progress }, ...]
             challengeTime: 0,       // seconds since entering the challenge
             rerollTime: 0,          // seconds since the last slot re-roll
         }
     },
-    symbol() { return "♀" },
+    symbol() { return "Hbc" },
     color: "grey",                       // Same color scheme as the Hkm layer.
     resource: "backward clock",
     row: 1,
@@ -51,6 +75,20 @@ addLayer("Hbc", {
     tooltip() { return "Backward Clock" },
     layerShown() { return player.Hkm.activeChallenge == 'Hkm-bk1' },
 
+    // Base spawn weight per rarity, common -> celestial. Change this to tune
+    // which recipes can roll as the game progresses. Read via
+    // tmp.Hbc.HbcRarityWeights (the temp system evaluates this each tick).
+    HbcRarityWeights() {
+        return [4, 3, 2, 1, 0, 0, 0, 0.01]
+    },
+
+    // Tunable constants, softcoded so they are read through the temp system.
+    // Reference them as tmp.Hbc.HBC_SLOT_COUNT (no trailing () needed).
+    HBC_SLOT_COUNT() { return 3 },          // number of recipe slots (one per bar)
+    HBC_CHALLENGE_LENGTH() { return 600 },  // seconds before the challenge auto-exits (10 min)
+    HBC_REROLL_INTERVAL() { return 60 },    // seconds between slot re-rolls
+    HBC_PAGES_PER_GROUP() { return 5 },     // "big page" = a group of this many small pages
+
     // Crafting engine: timers, re-rolls, and running the active recipes.
     update(diff) {
         if (player.Hkm.activeChallenge != 'Hkm-bk1') return
@@ -59,15 +97,16 @@ addLayer("Hbc", {
 
         // Challenge timer -> auto-exit at the time limit.
         player.Hbc.challengeTime += diff
-        if (player.Hbc.challengeTime >= HBC_CHALLENGE_LENGTH) {
+        if (player.Hbc.challengeTime >= tmp.Hbc.HBC_CHALLENGE_LENGTH) {
             startChallenge('Hkm', 'Hkm-bk1')   // toggles the active challenge off
             return
         }
 
         // Periodic re-roll of non-active slots.
         player.Hbc.rerollTime += diff
-        while (player.Hbc.rerollTime >= HBC_REROLL_INTERVAL) {
-            player.Hbc.rerollTime -= HBC_REROLL_INTERVAL
+        let rerollInterval = tmp.Hbc.HBC_REROLL_INTERVAL
+        while (player.Hbc.rerollTime >= rerollInterval) {
+            player.Hbc.rerollTime -= rerollInterval
             hbcRerollSlots()
         }
 
@@ -105,15 +144,34 @@ addLayer("Hbc", {
         "Bars": {
             content: [
                 ['display-text', function () {
-                    let left = Math.max(0, HBC_CHALLENGE_LENGTH - (player.Hbc.challengeTime || 0))
+                    let left = Math.max(0, tmp.Hbc.HBC_CHALLENGE_LENGTH - (player.Hbc.challengeTime || 0))
                     let clocks = Math.floor(player.Hbc.resources['backward_clock'] || 0)
                     return "<h3>Rebuild the Backward Clock before time runs out.</h3>"
                         + "<h3>Time left: " + formatTime(left) + " &nbsp;|&nbsp; Backward Clocks built: " + clocks + "</h3>"
                 }],
                 'blank',
-                ['row', [['clickable', 0], ['clickable', 1], ['clickable', 2]]],
+                ['clickable', 0],
                 'blank',
-                ['row', [['bar', 0], ['bar', 1], ['bar', 2]]],
+                ['clickable', 1],
+                'blank',
+                ['clickable', 2],
+            ],
+            unlocked() { return true },
+        },
+        "Resources": {
+            content: [
+                ['display-text', function () { return hbcResourcesDisplay() }],
+            ],
+            unlocked() { return true },
+        },
+        "Recipes": {
+            content: [
+                ['display-text', function () { return hbcRecipesDisplay() }],
+            ],
+            unlocked() { return true },
+        },
+        "Quit": {
+            content: [
                 'blank',
                 ['clickable', 'quit'],
             ],
@@ -130,7 +188,19 @@ addLayer("Hbc", {
             display() { return "Exit the Backward Clock challenge." },
             canClick() { return true },
             onClick() { startChallenge('Hkm', 'Hkm-bk1') },
-            style() { return { 'width': '200px', 'min-height': '40px', 'background-color': '#888888', 'color': 'black' } },
+            style() {
+                // Cycle through the rarity colors. When the challenge can be
+                // completed (a Backward Clock exists) the button glows the full
+                // rarity color; otherwise it's muted toward the Hokma (grey)
+                // color scheme (30% rarity + 70% grey).
+                let completeable = (player.Hbc.resources['backward_clock'] || 0) >= 1
+                let rarityColor = hbcRarityCycleColor(8)
+                let bg = completeable ? rarityColor : hbcMixColor("#808080", rarityColor, 0.3)
+                return {
+                    'height': '150px', 'width': '300px', 'border-radius': '5px', 'font-size': '13px',
+                    'background-color': bg, 'color': 'black', 'border-color': rarityColor, 'margin-left': '5px'
+                }
+            },
             unlocked() { return true },
         },
     },
@@ -141,7 +211,9 @@ addLayer("Hbc", {
 // --- Recipe slot clickables (one per slot) -------------------------------
 // Clicking toggles the slot's active state. Activated recipes are never
 // re-rolled and run continuously in update().
-for (let i = 0; i < HBC_SLOT_COUNT; i++) {
+// This runs at load time (tmp doesn't exist yet), so read the count straight
+// off the layer function rather than through tmp.Hbc.
+for (let i = 0; i < layers.Hbc.HBC_SLOT_COUNT(); i++) {
     (function (idx) {
         layers.Hbc.clickables[idx] = {
             display() {
@@ -154,12 +226,16 @@ for (let i = 0; i < HBC_SLOT_COUNT; i++) {
                     ? (hbcRecipeAfford(recipe) ? "<span style='color:#7CFC00'>ACTIVE</span>"
                         : "<span style='color:salmon'>STALLED</span>")
                     : "<span style='color:#dddddd'>Inactive</span>"
+                let prog = slot.progress / Math.max(0.05, recipe.time)
+                let progText = format(slot.progress) + ' / ' + format(Math.max(0.05, recipe.time)) + ' s'
                 return "<h3 style='color:" + color + "'>" + recipe.name + "</h3>"
                     + "<span style='font-size:11px;color:" + color + "'>[" + recipe.rarity + "]</span><br>"
                     + "<span style='font-size:12px'>In: " + hbcIngredientText(recipe.inputs) + "</span><br>"
                     + "<span style='font-size:12px'>Out: " + hbcIngredientText(recipe.outputs) + "</span><br>"
                     + "<span style='font-size:12px'>Cycle: " + format(recipe.time) + "s</span><br>"
-                    + state
+                    + state + "<br>"
+                    + "<div style='margin-top:8px;height:30px;width:100%;background:linear-gradient(to right, grey 0%, grey " + (prog * 100) + "%, #333 " + (prog * 100) + "%, #333 100%);border:2px solid grey;border-radius:3px;display:flex;align-items:center;justify-content:center;color:white;font-size:13px'>"
+                    + progText + "</div>"
             },
             canClick() {
                 let slot = player.Hbc.slots[idx]
@@ -191,7 +267,7 @@ for (let i = 0; i < HBC_SLOT_COUNT; i++) {
         layers.Hbc.bars[idx] = {
             direction: RIGHT,
             width: 300,
-            height: 16,
+            height: 30,
             progress() {
                 let slot = player.Hbc.slots[idx]
                 if (!slot || !slot.recipe) return 0
@@ -199,13 +275,15 @@ for (let i = 0; i < HBC_SLOT_COUNT; i++) {
                 if (!recipe) return 0
                 return slot.progress / Math.max(0.05, recipe.time)
             },
-            display() { return "" },
-            fillStyle() {
+            display() {
                 let slot = player.Hbc.slots[idx]
-                let color = slot && slot.recipe ? hbcRecipeColor(slot.recipe) : "#999999"
-                return { 'background-color': color }
+                if (!slot || !slot.recipe) return ""
+                let recipe = HBC_RECIPE_BY_ID[slot.recipe]
+                if (!recipe) return ""
+                return format(slot.progress) + ' / ' + format(Math.max(0.05, recipe.time)) + ' s'
             },
-            borderStyle() { return { 'border-color': '#ffffff' } },
+            fillStyle() { return { 'background-color': 'grey' } },
+            borderStyle() { return { 'border-color': 'grey' } },
             style() { return { 'color': 'white' } },
             unlocked() { return true },
         }
