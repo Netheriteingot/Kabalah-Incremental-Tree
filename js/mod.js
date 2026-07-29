@@ -3,7 +3,7 @@ let modInfo = {
 	id: "FallenCat20231218",
 	author: "Fallen_Cat",
 	pointsName: "essences",
-	modFiles: ["data/HokmaGrid.js", "data/FlavorText.js", "data/NewsTicker.js", "data/CraftingData.js", "layers.js", "layers/Hbc.js", "tree.js"],
+	modFiles: ["tree.js"],  // data/* and layers/* are auto-loaded via loader.js
 
 	discordName: "",
 	discordLink: "",
@@ -19,6 +19,15 @@ let VERSION = {
 
 let changelog =
 	`
+<span style='color:#f7ecfb; text-shadow: 0 0 1px #8a2be2, 0 0 3px #8a2be2, 0 0 5px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:22px;'>
+vHkm.Hbc.12.1
+</span><br>
+Added canvas display for Backward Clock.<br>
+
+<br>
+<br>
+
+<span st
 <span style='color:#f7ecfb; text-shadow: 0 0 2px #8a2be2, 0 0 5px #8a2be2, 0 0 9px #8a2be2, 2px 2px 4px rgba(0, 0, 0, 0.2); font-size:28px;'>
 vHkm.Hbc.12.0
 </span><br>

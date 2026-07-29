@@ -11,10 +11,10 @@ function respecBuyables(layer) {
 
 function canAffordUpgrade(layer, id) {
 	let upg = tmp[layer].upgrades[id]
-	if(tmp[layer].deactivated) return false
+	if (tmp[layer].deactivated) return false
 	if (tmp[layer].upgrades[id].canAfford === false) return false
 	let cost = tmp[layer].upgrades[id].cost
-	if (cost !== undefined) 
+	if (cost !== undefined)
 		return canAffordPurchase(layer, upg, cost)
 
 	return true
@@ -119,7 +119,7 @@ function clickClickable(layer, id) {
 }
 
 function clickGrid(layer, id) {
-	if (!player[layer].unlocked  || tmp[layer].deactivated) return
+	if (!player[layer].unlocked || tmp[layer].deactivated) return
 	if (!run(layers[layer].grid.getUnlocked, layers[layer].grid, id)) return
 	if (!gridRun(layer, 'getCanClick', player[layer].grid[id], id)) return
 
@@ -144,7 +144,7 @@ var onTreeTab = true
 
 function showTab(name, prev) {
 	if (LAYERS.includes(name) && !layerunlocked(name)) return
-	if (player.tab !== name) clearParticles(function(p) {return p.layer === player.tab})
+	if (player.tab !== name) clearParticles(function (p) { return p.layer === player.tab })
 	if (tmp[name] && player.tab === name && isPlainObject(tmp[name].tabFormat)) {
 		player.subtabs[name].mainTabs = Object.keys(layers[name].tabFormat)[0]
 	}
@@ -160,11 +160,11 @@ function showTab(name, prev) {
 function showNavTab(name, prev) {
 	console.log(prev)
 	if (LAYERS.includes(name) && !layerunlocked(name)) return
-	if (player.navTab !== name) clearParticles(function(p) {return p.layer === player.navTab})
+	if (player.navTab !== name) clearParticles(function (p) { return p.layer === player.navTab })
 	if (tmp[name] && tmp[name].previousTab !== undefined) prev = tmp[name].previousTab
 	var toTreeTab = name == "tree-tab"
 	console.log(name + prev)
-	if (name!== "none" && prev && !tmp[prev]?.leftTab == !tmp[name]?.leftTab) player[name].prevTab = prev
+	if (name !== "none" && prev && !tmp[prev]?.leftTab == !tmp[name]?.leftTab) player[name].prevTab = prev
 	else if (player[name])
 		player[name].prevTab = ""
 	player.navTab = name
@@ -194,15 +194,15 @@ function layOver(obj1, obj2) {
 
 function prestigeNotify(layer) {
 	if (layers[layer].prestigeNotify) return layers[layer].prestigeNotify()
-	
+
 	if (isPlainObject(tmp[layer].tabFormat)) {
-		for (subtab in tmp[layer].tabFormat){
+		for (subtab in tmp[layer].tabFormat) {
 			if (subtabResetNotify(layer, 'mainTabs', subtab))
 				return true
 		}
 	}
 	for (family in tmp[layer].microtabs) {
-		for (subtab in tmp[layer].microtabs[family]){
+		for (subtab in tmp[layer].microtabs[family]) {
 			if (subtabResetNotify(layer, family, subtab))
 				return true
 		}
@@ -219,12 +219,12 @@ function notifyLayer(name) {
 }
 
 function subtabShouldNotify(layer, family, id) {
-    let subtab = {}
-    if (family == "mainTabs") subtab = tmp[layer].tabFormat[id]
-    else subtab = tmp[layer].microtabs[family][id]
+	let subtab = {}
+	if (family == "mainTabs") subtab = tmp[layer].tabFormat[id]
+	else subtab = tmp[layer].microtabs[family][id]
 	if (!subtab.unlocked) return false
-    if (subtab.embedLayer) return tmp[subtab.embedLayer].notify
-    else return subtab.shouldNotify
+	if (subtab.embedLayer) return tmp[subtab.embedLayer].notify
+	else return subtab.shouldNotify
 }
 
 function subtabResetNotify(layer, family, id) {
@@ -345,11 +345,11 @@ document.title = modInfo.name
 // Converts a string value to whatever it's supposed to be
 function toValue(value, oldValue) {
 	if (oldValue instanceof Decimal) {
-		value = new Decimal (value)
+		value = new Decimal(value)
 		if (checkDecimalNaN(value)) return decimalZero
 		return value
 	}
-	if (!isNaN(oldValue)) 
+	if (!isNaN(oldValue))
 		return parseFloat(value) || 0
 	return value
 }
@@ -415,10 +415,21 @@ function gridRun(layer, func, data, id) {
 		return layers[layer].grid[func];
 }
 
-function softcap(name,type,start,power)
-{
-    if(type == 'root'){
-        name = name.div(start).root(power).mul(start)
-    }
-    return name
+function softcap(name, type, start, power) {
+	if (type == 'root') {
+		name = name.div(start).root(power).mul(start)
+	}
+	return name
+}
+
+
+function onReset(layer) {
+	if (layer == 'Hkm' && player.Hkm.resetTime < player.Ain.bestReset) player.Ain.bestReset = player.Hkm.resetTime
+	if (layer == 'Hkm' && player.Ktr.resetedMemory == false) player.Ain.hkm4unlocked = true
+	if (layer == 'Hkm' && player.Ktr.respeced == false) player.Ain.hkm6unlocked = true
+	if (layer == 'Hkm' && (tmp.Ktr.celestialLevel[0].lt(1) || tmp.Ktr.celestialLevel[1].lt(1) || tmp.Ktr.celestialLevel[2].lt(1) || tmp.Ktr.celestialLevel[3].lt(1) || tmp.Ktr.celestialLevel[4].lt(1))) player.Ain.hkm5unlocked = true
+}
+
+function hasGrid(layer, id) {
+	return player[layer].grid[id] >= 1
 }

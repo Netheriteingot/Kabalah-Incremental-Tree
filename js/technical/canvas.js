@@ -30,6 +30,7 @@ function drawTree() {
 	for (layer in layers){
 		if (document.getElementById('Ktr') != null) Ketherpath()
 		if (player.Hkm.storyUnlocked >= 1 && document.getElementById('Hkm') != null) Hokmapath()
+		if (player.Hkm.activeChallenge == 'Hkm-bk1' && document.getElementById('Hbc') != null) Hbcpath()
 		if (tmp[layer].layerShown == true && tmp[layer].branches){
 			for (branch in tmp[layer].branches)
 				{
@@ -145,6 +146,37 @@ function Hokmapath(){
 	ctx.lineTo(xk, yk);
 	ctx.stroke();
 	if(player.points.gte(1e6400)){
+	    ctx.moveTo(xk-225, yk-25);
+		ctx.lineTo(xk-200, yk);
+		ctx.arc(xk-228,yk-28,5,0,2*Math.PI)
+		ctx.stroke();
+	}
+}
+function Hbcpath(){
+	ctx.lineWidth = '3';
+	ctx.strokeStyle = 'grey';
+	let s1 = document.getElementById('Hbc').getBoundingClientRect();
+	let xk = s1.left + (s1.width / 2) + document.body.scrollLeft;
+    let yk = s1.top + (s1.height / 2) + document.body.scrollTop;
+	ctx.beginPath();
+	ctx.moveTo(xk-200, yk);
+	ctx.lineTo(xk, yk);
+	ctx.stroke();
+	ctx.beginPath();
+	ctx.arc(xk-228,yk-28,5,0,2*Math.PI)
+	ctx.moveTo(xk-225, yk-25);
+	ctx.lineTo(xk-200, yk);
+	ctx.stroke();
+	ctx.strokeStyle = 'red';
+	ctx.beginPath();
+	// Calculate remaining time percentage: starts at 200 (full) and decreases to 0
+	let timeRemaining = Math.max(0, tmp.Hbc.HBC_CHALLENGE_LENGTH - player.Hbc.challengeTime);
+	let timePercentage = timeRemaining / tmp.Hbc.HBC_CHALLENGE_LENGTH;
+	let progressLength = timePercentage * 200; // 200 is the total length
+	ctx.moveTo(xk-progressLength, yk);
+	ctx.lineTo(xk, yk);
+	ctx.stroke();
+	if(timeRemaining <= 0){
 	    ctx.moveTo(xk-225, yk-25);
 		ctx.lineTo(xk-200, yk);
 		ctx.arc(xk-228,yk-28,5,0,2*Math.PI)
