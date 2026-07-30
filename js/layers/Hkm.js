@@ -113,6 +113,10 @@ addLayer("Hkm", {
             if (hasGrid('Hkm', i)) strength = strength.add(getEffect('', i))
         }
         if (hasAchievement('Ain', 'Hkm-14')) strength = strength.add(buyableEffect('Hkm', 'Hkm-f2'))
+        // Backward Clock resource discovery bonus: +1% per resource discovered (via tmp.Hbc.resourceDiscoveryBoost)
+        if (tmp.Hbc && tmp.Hbc.resourceDiscoveryBoost !== undefined) {
+            strength = strength.add(tmp.Hbc.resourceDiscoveryBoost)
+        }
         return strength
     },
     compressorEff() {
@@ -184,6 +188,9 @@ addLayer("Hkm", {
     PeBoxEff() {
         let eff = player.Hkm.PeBox.add(1).pow(tmp.Hkm.PeBoxExp).pow(tmp.Hkm.NeBoxEff)
         if (hasAchievement('Ain', 'Hkm-14')) eff = eff.pow(buyableEffect('Hkm', 'Hkm-f5'))
+        if (tmp.Hbc && tmp.Hbc.recipeDiscoveryBoost !== undefined) {
+            eff = eff.mul(tmp.Hbc.recipeDiscoveryBoost)
+        }
         return eff
     },
     PeBoxGain() {

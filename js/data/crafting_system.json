@@ -149,7 +149,7 @@
     },
     {
       "id": "essence",
-      "name": "Essence",
+      "name": "Extract",
       "type": "arcane",
       "description": "Concentrated magical essence",
       "value": 8

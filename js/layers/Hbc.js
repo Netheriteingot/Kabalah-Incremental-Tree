@@ -301,6 +301,30 @@ function hbcMixColor(a, b, t) {
     let ca = hbcHexToRGB(a), cb = hbcHexToRGB(b)
     return hbcRGBToHex([0, 1, 2].map(function (i) { return ca[i] * (1 - t) + cb[i] * t }))
 }
+// Return a copy of a hex color with its HSL saturation doubled (clamped to 100%).
+function hbcDoubleHexSaturation(hex) {
+    let rgb = hbcHexToRGB(hex).map(function (v) { return v / 255 })
+    let max = Math.max(rgb[0], rgb[1], rgb[2]), min = Math.min(rgb[0], rgb[1], rgb[2])
+    let l = (max + min) / 2
+    if (max === min) return hex  // achromatic — saturation already 0
+    let d = max - min
+    let s = Math.min(1, (l > 0.5 ? d / (2 - max - min) : d / (max + min)) * 2)
+    let h
+    if (max === rgb[0]) h = (rgb[1] - rgb[2]) / d + (rgb[1] < rgb[2] ? 6 : 0)
+    else if (max === rgb[1]) h = (rgb[2] - rgb[0]) / d + 2
+    else h = (rgb[0] - rgb[1]) / d + 4
+    h /= 6
+    function hue2rgb(p, q, t) {
+        if (t < 0) t += 1; if (t > 1) t -= 1
+        if (t < 1 / 6) return p + (q - p) * 6 * t
+        if (t < 1 / 2) return q
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6
+        return p
+    }
+    let q = l < 0.5 ? l * (1 + s) : l + s - l * s
+    let p = 2 * l - q
+    return hbcRGBToHex([hue2rgb(p, q, h + 1 / 3), hue2rgb(p, q, h), hue2rgb(p, q, h - 1 / 3)].map(function (v) { return v * 255 }))
+}
 // A color that cycles smoothly through all rarity colors over `period` seconds.
 function hbcRarityCycleColor(period) {
     let colors = CRAFTING_DATA.rarities.map(function (r) { return r.color })
@@ -363,9 +387,11 @@ function hbcResourceBox(id) {
     let state = hbcDiscoveryState(id)
     let rarityColor = hbcResourceRarityColor(id)
     let border = HBC_TYPE_BORDER[res ? res.type : "other"] || "#888888"
-    // Main color: 10% / 30% / 50% rarity mixed into black by discovery state.
-    let mix = state == 2 ? 0.5 : (state == 1 ? 0.3 : 0.1)
+    // Main color: 20% / 35% / 50% rarity mixed into black by discovery state.
+    let mix = state == 2 ? 0.5 : (state == 1 ? 0.35 : 0.2)
+    let mix_border = mix * 2
     let bg = hbcMixColor("#000000", rarityColor, mix)
+    let bg_border = hbcMixColor("#000000", rarityColor, mix_border)
     let amt = player.Hbc.resources[id] || 0
     let inner = (state == 0)
         ? "???"
@@ -373,7 +399,9 @@ function hbcResourceBox(id) {
     return "<div style='display:inline-flex;flex-direction:column;align-items:center;justify-content:center;"
         + "vertical-align:top;line-height:1.2;box-sizing:border-box;"
         + "width:120px;height:64px;margin:4px;border-radius:5px;color:white;font-size:12px;"
-        + "border:3px solid " + border + ";background-color:" + bg + "'>" + inner + "</div>"
+        + "border-left:5px solid " + border + ";border-right: 2px solid " + bg_border + ";"
+        + "border-top:2px solid " + bg_border + ";border-bottom: 2px solid " + bg_border + ";"
+        + "background-color:" + bg + "'>" + inner + "</div>"
 }
 
 // The Backward Clock box, which is always shown (never "???").
@@ -394,10 +422,23 @@ function hbcClockBox() {
 function hbcResourcesDisplay() {
     hbcEnsureMaps()
     let out = ""
+
+    // Discovery counter at the top (excludes backward_clock).
+    let discoveredCount = 0
+    for (let i = 0; i < HBC_SORTED_RESOURCES.length; i++) {
+        if (player.Hbc.gainedEver[HBC_SORTED_RESOURCES[i].id]) discoveredCount++
+    }
+    let totalResources = HBC_SORTED_RESOURCES.length
+    let boostPercent = discoveredCount
+    out += "<div style='text-align:center;margin-bottom:12px'>"
+    out += "<h4>You have discovered a total of " + quickBigColor(discoveredCount + "/" + totalResources, 'grey')
+    out += " resources, giving a " + quickBigColor("+" + boostPercent + "%", 'grey') + " boost to time-space grid effect.</h4>"
+    out += "</div>"
+
     // Row 1: the three currencies with their own color schemes.
     // kether -> white/gold-ish Ktr, time energy + hokma -> grey Hkm.
     out += "<div style='text-align:center'>"
-    out += hbcCurrencyBox("kether_points", "#ffd700")
+    out += hbcCurrencyBox("kether_points", "#ffffff")
     out += hbcCurrencyBox("time_energy", "#aaaaaa")
     out += hbcCurrencyBox("hokma_points", "#888888")
     out += "</div>"
@@ -449,8 +490,8 @@ function hbcRecipeBox(recipeId) {
     let rarityColor = hbcRecipeColor(recipeId)
 
     // Section background colors by seen state.
-    let inMix = seen ? 0.5 : 0.25
-    let outMix = seen ? 1.0 : 0.5
+    let inMix = seen ? 0.25 : 0.12
+    let outMix = seen ? 0.5 : 0.25
     let inBg = hbcMixColor("#000000", rarityColor, inMix)
     let outBg = hbcMixColor("#000000", rarityColor, outMix)
 
@@ -471,7 +512,7 @@ function hbcRecipeBox(recipeId) {
     let inSectionH = HBC_MAX_INPUTS * HBC_LINE_H
     let outSectionH = HBC_MAX_OUTPUTS * HBC_LINE_H
 
-    return "<div style='display:inline-block;vertical-align:top;box-sizing:border-box;width:190px;margin:5px;"
+    return "<div style='position:relative;display:inline-block;vertical-align:top;box-sizing:border-box;width:190px;margin:5px;"
         + "border:2px solid " + rarityColor + ";border-radius:5px;overflow:hidden;color:white;font-size:12px'>"
         // Input section (vertically centered), colored at inMix.
         + "<div style='background-color:" + inBg + ";height:" + inSectionH + "px;padding:2px 4px;box-sizing:border-box;"
@@ -485,7 +526,68 @@ function hbcRecipeBox(recipeId) {
         + "display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center'>"
         + outLines
         + "</div>"
+        // Diagonal "shine" overlay. Position-driven by hbcShineTick() so the
+        // 45deg bands stay aligned across every box (and on window resize).
+        + "<div class='hbc-recipe-shine' style='position:absolute;inset:0;pointer-events:none;"
+        + "background-image:repeating-linear-gradient(135deg,"
+        + "transparent 0px,transparent " + (HBC_SHINE_PERIOD - HBC_SHINE_BAND) + "px,"
+        + "rgba(255,255,255,0.10) " + (HBC_SHINE_PERIOD - HBC_SHINE_BAND) + "px,rgba(255,255,255,0.10) " + HBC_SHINE_PERIOD + "px);"
+        // Tile = square of side period*sqrt(2). This holds a whole number of
+        // 45deg periods, so background-repeat tiles it seamlessly (no seam
+        // inside the box when background-position shifts the pattern).
+        + "background-size:" + (HBC_SHINE_PERIOD * Math.SQRT2) + "px " + (HBC_SHINE_PERIOD * Math.SQRT2) + "px;"
+        + "background-repeat:repeat'></div>"
         + "</div>"
+}
+
+// --- Diagonal shine animation -------------------------------------------
+// Each recipe box has an overlay painted with a 45deg repeating gradient. To
+// make the bands read as ONE continuous sweep across all boxes (aligned, and
+// resize-safe), every box must render the same pattern in *viewport* space.
+//
+// background-position is measured from each element's own top-left corner, so
+// a box whose top-left sits at viewport point (ox, oy) will, at background-
+// position P, sample the gradient at (localOffset - P). Setting
+//     P = phase - (ox, oy)
+// makes the sampled coordinate = localOffset + (ox,oy) - phase = viewportPoint
+// - phase, i.e. a single global pattern shifted by `phase`. Same `phase` for
+// every box => perfectly aligned, no per-box/relative math, no per-axis wrap.
+//
+// The gradient is periodic only ALONG its axis (unit vector (√½,−√½) for a
+// 45deg gradient), with period = the stop length (HBC_SHINE_PERIOD px measured
+// along that axis). Moving `phase` along that axis animates the bands; wrapping
+// the scalar distance by the period keeps values bounded with no visible jump.
+//
+// hbcRecipesDisplay() is re-injected via v-html frequently, which would reset a
+// CSS animation — so we drive it from a rAF loop, re-reading rects each frame.
+var HBC_SHINE_PERIOD = 75    // gradient tile length, measured along the 135deg axis
+var HBC_SHINE_BAND = 22       // px width of the bright band within a tile
+var HBC_SHINE_SPEED = 60      // px/sec the bands travel along the axis
+var hbcShineRAF = null
+var hbcShineStartTime = Date.now() - 20000  // session anchor so phase starts at zero
+
+function hbcShineTick() {
+    let nodes = document.getElementsByClassName('hbc-recipe-shine')
+    if (nodes.length) {
+        // Distance travelled along the gradient axis (unbounded — no modulo wrap,
+        // since wrapping would trigger TMT's animation interpolation from the
+        // high value back to zero, causing a visible stutter each cycle).
+        let s = ((Date.now() - hbcShineStartTime) / 1000) * HBC_SHINE_SPEED
+        // Axis unit vector for a 135deg CSS gradient (points down-right: +x, +y).
+        // This creates "/" bars that sweep toward the top-right.
+        let phaseX = s * Math.SQRT1_2
+        let phaseY = s * Math.SQRT1_2
+        for (let i = 0; i < nodes.length; i++) {
+            let r = nodes[i].getBoundingClientRect()
+            // P = phase - viewportOrigin  =>  shared global pattern for all boxes.
+            nodes[i].style.backgroundPosition = (phaseX - r.left) + "px " + (phaseY - r.top) + "px"
+        }
+    }
+    hbcShineRAF = requestAnimationFrame(hbcShineTick)
+}
+// Start the loop once (idempotent).
+if (typeof requestAnimationFrame !== "undefined" && hbcShineRAF === null) {
+    hbcShineRAF = requestAnimationFrame(hbcShineTick)
 }
 
 // Number of recipe pages (6 recipes per page).
@@ -550,12 +652,22 @@ function hbcRecipePagerHTML() {
 // Full HTML for the current page of the Recipes tab.
 function hbcRecipesDisplay() {
     hbcEnsureMaps()
+
+    // Recipe discovery counter at the top
+    let discoveredCount = tmp.Hbc.recipesDiscovered
+    let totalRecipes = CRAFTING_DATA.recipes.length
+    let boostPercent = format(tmp.Hbc.recipeDiscoveryBoost)
+    let out = "<div style='text-align:center;margin-bottom:12px'>"
+    out += "<h4>You have discovered a total of " + quickBigColor(discoveredCount + "/" + totalRecipes, 'grey')
+    out += " recipes, giving a " + quickBigColor(boostPercent + "×", 'grey') + " boost to Pe-box effect.</h4>"
+    out += "</div>"
+
     let pages = hbcRecipePageCount()
     let page = Math.max(0, Math.min(pages - 1, player.Hbc.recipePage || 0))
     let start = page * HBC_RECIPES_PER_PAGE
     let slice = HBC_SORTED_RECIPES.slice(start, start + HBC_RECIPES_PER_PAGE)
 
-    let out = hbcRecipePagerHTML()
+    out += hbcRecipePagerHTML()
     out += "<div style='text-align:center'>"
     for (let i = 0; i < slice.length; i++) {
         out += hbcRecipeBox(slice[i].id)
@@ -656,6 +768,36 @@ addLayer("Hbc", {
     HBC_CHALLENGE_LENGTH() { return 600 },  // seconds before the challenge auto-exits (10 min)
     HBC_REROLL_INTERVAL() { return 60 },    // seconds between slot re-rolls
     HBC_PAGES_PER_GROUP() { return 5 },     // "big page" = a group of this many small pages
+
+    // Resource discovery bonus: +1% per discovered resource (excluding currencies and backward_clock)
+    resourceDiscoveryBoost() {
+        if (!player.Hbc.gainedEver) return 0
+        let count = 0
+        for (let id in player.Hbc.gainedEver) {
+            if (player.Hbc.gainedEver[id] && id !== 'backward_clock' && !HBC_CURRENCY_IDS[id]) count++
+        }
+        return count / 100
+    },
+
+    // Recipe discovery bonus: (100)^(x^0.75) where x = discovered recipes
+    recipeDiscoveryBoost() {
+        if (!player.Hbc.seenRecipes) return new Decimal(0)
+        let count = 0
+        for (let id in player.Hbc.seenRecipes) {
+            if (player.Hbc.seenRecipes[id]) count++
+        }
+        return Decimal.pow(100, Math.pow(count, 0.75))
+    },
+
+    // Total number of recipes discovered
+    recipesDiscovered() {
+        if (!player.Hbc.seenRecipes) return 0
+        let count = 0
+        for (let id in player.Hbc.seenRecipes) {
+            if (player.Hbc.seenRecipes[id]) count++
+        }
+        return count
+    },
 
     // Crafting engine: timers, re-rolls, and running the active recipes.
     update(diff) {
@@ -766,9 +908,11 @@ addLayer("Hbc", {
                 let completeable = (player.Hbc.resources['backward_clock'] || 0) >= 1
                 let rarityColor = hbcRarityCycleColor(8)
                 let bg = completeable ? rarityColor : hbcMixColor("#808080", rarityColor, 0.3)
+                let glowColor = completeable ? rarityColor : hbcMixColor("#808080", rarityColor, 0.3)
                 return {
                     'height': '150px', 'width': '300px', 'border-radius': '5px', 'font-size': '13px',
-                    'background-color': bg, 'color': 'black', 'border-color': rarityColor, 'margin-left': '5px'
+                    'background-color': bg, 'color': 'black', 'border-color': rarityColor, 'margin-left': '5px',
+                    'box-shadow': 'inset 0 0 18px 4px ' + rarityColor,
                 }
             },
             unlocked() { return true },
@@ -798,8 +942,7 @@ for (let i = 0; i < layers.Hbc.HBC_SLOT_COUNT(); i++) {
                     : "<span style='color:#dddddd'>Inactive</span>"
                 let prog = slot.progress / Math.max(0.05, recipe.time)
                 let progText = format(slot.progress) + ' / ' + format(Math.max(0.05, recipe.time)) + ' s'
-                return "<h3 style='color:" + color + "'>" + recipe.name + "</h3>"
-                    + "<span style='font-size:11px;color:" + color + "'>[" + recipe.rarity + "]</span><br>"
+                return "<span style='font-size:11px;color:" + color + "'>[" + recipe.rarity + "]</span><br>"
                     + "<span style='font-size:12px'>In: " + hbcIngredientText(recipe.inputs) + "</span><br>"
                     + "<span style='font-size:12px'>Out: " + hbcIngredientText(recipe.outputs) + "</span><br>"
                     + "<span style='font-size:12px'>Cycle: " + format(recipe.time) + "s</span><br>"

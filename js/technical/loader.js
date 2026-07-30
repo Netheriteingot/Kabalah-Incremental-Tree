@@ -26,7 +26,7 @@ allFiles.push(...otherFiles);
 for (let i = 0; i < allFiles.length; i++) {
     let script = document.createElement("script");
     script.setAttribute("src", "js/" + allFiles[i]);
-    script.setAttribute("async", "false");
+    script.async = false;
     document.head.insertBefore(script, document.getElementById("temp"));
 }
 
